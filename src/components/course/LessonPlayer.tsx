@@ -83,7 +83,7 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
         <ProgressBar percent={percent} className="mt-2" />
       </div>
 
-      <nav className="flex-1 overflow-y-auto p-3">
+      <nav className="drawer-scroll safe-bottom flex-1 overflow-y-auto p-3">
         {course.modules.map((mod, mi) => (
           <div key={mod.id} className="mb-4">
             <p className="px-2 pb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-ink-400">
@@ -143,12 +143,12 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
   return (
     <div className="min-h-dvh bg-paper-100">
       {/* ----------------------------------------------- slim top bar */}
-      <header className="sticky top-0 z-40 border-b border-ink-900/8 bg-ink-950 text-white">
+      <header className="safe-top sticky top-0 z-40 border-b border-ink-900/8 bg-ink-950 text-white">
         <div className="flex h-14 items-center gap-3 px-4 md:px-6">
           <Link
             href={`/courses/${course.slug}`}
             lang={lang}
-            className="focus-ring flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm font-medium text-ink-200 transition hover:text-white"
+            className="focus-ring flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-medium text-ink-200 transition hover:text-white"
           >
             <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 5l-5 5 5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -172,7 +172,7 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
             onClick={() => setSidebarOpen((v) => !v)}
             aria-expanded={sidebarOpen}
             lang={lang}
-            className="focus-ring rounded-lg border border-white/15 px-3 py-2 text-xs font-semibold text-ink-100 transition hover:bg-white/8 lg:hidden"
+            className="focus-ring inline-flex min-h-11 items-center rounded-lg border border-white/15 px-3.5 text-xs font-semibold text-ink-100 transition hover:bg-white/8 lg:hidden"
           >
             {t("Lessons", "పాఠాలు")}
           </button>
@@ -226,7 +226,7 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
                   type="button"
                   onClick={() => setTab(id)}
                   lang={lang}
-                  className={`focus-ring -mb-px rounded-t-lg border-b-2 px-4 py-2.5 text-sm font-semibold transition ${
+                  className={`focus-ring -mb-px inline-flex min-h-11 items-center rounded-t-lg border-b-2 px-4 text-sm font-semibold transition ${
                     tab === id
                       ? "border-gold-500 text-ink-900"
                       : "border-transparent text-ink-400 hover:text-ink-700"
@@ -393,7 +393,7 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
             onClick={() => setSidebarOpen(false)}
             className="absolute inset-0 bg-ink-950/50 backdrop-blur-sm"
           />
-          <div className="absolute inset-y-0 right-0 w-[min(22rem,88vw)] bg-white shadow-2xl">
+          <div className="safe-top absolute inset-y-0 right-0 w-[min(22rem,88vw)] bg-white shadow-2xl">
             {curriculum}
           </div>
         </div>

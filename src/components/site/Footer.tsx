@@ -55,13 +55,13 @@ export function Footer() {
             <h3 lang={lang} className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-400">
               {t(col.head[0], col.head[1])}
             </h3>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <ul className="mt-2 text-sm md:mt-4 md:space-y-2.5">
               {col.links.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
                     lang={lang}
-                    className="focus-ring rounded text-ink-200 transition hover:text-gold-300"
+                    className="tap focus-ring rounded text-ink-200 transition hover:text-gold-300"
                   >
                     {t(l.en, l.te)}
                   </Link>

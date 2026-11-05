@@ -25,7 +25,7 @@ export function Header() {
   if (pathname.includes("/learn/")) return null;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-900/8 bg-paper-100/85 backdrop-blur-md">
+    <header className="safe-top sticky top-0 z-50 border-b border-ink-900/8 bg-paper-100/85 backdrop-blur-md">
       <div className="container-tic flex h-16 items-center justify-between gap-4">
         <Link href="/" className="focus-ring rounded-lg" aria-label="TIC AI home">
           <Logo />
@@ -89,7 +89,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 lang={lang}
-                className="focus-ring rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-900/5"
+                className="tap focus-ring rounded-lg px-3 text-sm font-medium text-ink-700 hover:bg-ink-900/5"
               >
                 {t(item.en, item.te)}
               </Link>

@@ -88,6 +88,40 @@ Custom CSS sits inside `@layer base` and `@layer components`. Keep it there: unl
 outranks Tailwind's utility layer, and a global `*` border rule will silently beat
 `border-white/25` on every button that tries to override it.
 
+## Installable on mobile (PWA)
+
+The site is a progressive web app, so it can be added to a phone's home screen and
+opens without browser chrome.
+
+- `src/app/manifest.ts` — name, icons, theme colour, `display: standalone`, shortcuts
+- `public/sw.js` — service worker, registered from `ServiceWorker.tsx` **in production
+  only** (in dev it would cache the HMR shell and make edits look like they did not apply)
+- `InstallPrompt.tsx` — the add-to-home-screen card
+- `/offline` — what shows when a page was never visited and the network is gone
+- `public/icons/` — regenerate with the script in the commit history; maskable variants
+  keep the mark inside Android's circular safe zone
+
+**Two install paths, because the platforms differ.** Chrome, Edge and Samsung Internet
+fire `beforeinstallprompt`, which the card captures and replays on tap. iOS Safari fires
+nothing and exposes no API, so there the card shows the Share → Add to Home Screen steps
+instead of a button. A dismissal is remembered for 30 days.
+
+**What works offline:** pages already visited, plus the shell and fonts. **Videos never
+cache** — one lesson recording would exhaust the storage quota, so an offline learner
+gets the page and an honest message rather than a player that silently fails.
+
+Bump `VERSION` in `public/sw.js` when the shell changes, or returning visitors keep the
+old cached pages until their caches expire.
+
+## Mobile
+
+- Tap targets are at least 44px on phones via the `.tap` utility; chips and tabs use
+  `min-h-11`
+- `viewportFit: "cover"` plus `env(safe-area-inset-*)` keeps content clear of the notch,
+  and `.safe-top` / `.safe-bottom` handle the status bar when installed
+- Form fields are 16px minimum, which is what stops iOS Safari zooming on focus
+- Zoom is deliberately **not** locked — people enlarge Telugu text
+
 ## Not built yet
 
 - Accounts, payments and server-side enrolment

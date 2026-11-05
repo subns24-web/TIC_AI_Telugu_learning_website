@@ -136,7 +136,7 @@ export default function HomePage() {
             <Link
               href="/courses"
               lang={lang}
-              className="focus-ring rounded-lg text-sm font-semibold text-gold-700 hover:text-gold-800"
+              className="tap focus-ring rounded-lg text-sm font-semibold text-gold-700 hover:text-gold-800"
             >
               {t("All courses", "అన్ని కోర్సులు")} →
             </Link>

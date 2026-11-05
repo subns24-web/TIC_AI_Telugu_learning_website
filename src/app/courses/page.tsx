@@ -33,7 +33,7 @@ export default function CoursesPage() {
   }, [track, level, query]);
 
   const chip = (active: boolean) =>
-    `focus-ring rounded-full border px-3.5 py-1.5 text-sm font-medium transition ${
+    `focus-ring inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium transition ${
       active
         ? "border-ink-900 bg-ink-900 text-white"
         : "border-ink-900/15 bg-white text-ink-600 hover:border-ink-900/35"
