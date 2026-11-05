@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TIC AI — Telugu International Council of AI for Business
+   Deep ink ground for authority, gold for Telugu warmth,
+   teal for the "it works" moments. Light reading surfaces,
+   because people sit with these pages for hours.
+   ============================================================ */
+
+@theme {
+  /* Ink — brand ground */
+  --color-ink-50: #f4f6fb;
+  --color-ink-100: #e6eaf4;
+  --color-ink-200: #c7cfe4;
+  --color-ink-300: #9aa7c9;
+  --color-ink-400: #6a7aa6;
+  --color-ink-500: #465685;
+  --color-ink-600: #2f3d68;
+  --color-ink-700: #243053;
+  --color-ink-800: #18213c;
+  --color-ink-900: #0e1527;
+  --color-ink-950: #080d1a;
+
+  /* Gold — primary accent. Metallic, not orange: the 400-600 range is
+     where it reads as gold rather than amber. */
+  --color-gold-50: #fdfbf3;
+  --color-gold-100: #f8f0d8;
+  --color-gold-200: #efdfab;
+  --color-gold-300: #e3ca7d;
+  --color-gold-400: #d4b055;
+  --color-gold-500: #c29433;
+  --color-gold-600: #a37926;
+  --color-gold-700: #845f22;
+  --color-gold-800: #684b21;
+  --color-gold-900: #543d1e;
+
+  /* Silver — cool metal for hairlines, secondary text and quiet chrome */
+  --color-silver-50: #f8fafb;
+  --color-silver-100: #eef1f4;
+  --color-silver-200: #dde2e8;
+  --color-silver-300: #c3cbd4;
+  --color-silver-400: #a3adba;
+  --color-silver-500: #828e9d;
+  --color-silver-600: #68727f;
+  --color-silver-700: #525b66;
+  --color-silver-800: #3e454e;
+  --color-silver-900: #2b3138;
+
+  /* Teal — progress, success, "this is done" */
+  --color-teal-50: #effcf7;
+  --color-teal-100: #d6f7ea;
+  --color-teal-200: #afecd8;
+  --color-teal-300: #79dbc0;
+  --color-teal-400: #42c2a3;
+  --color-teal-500: #1fa689;
+  --color-teal-600: #14866f;
+  --color-teal-700: #136b5b;
+  --color-teal-800: #13554a;
+  --color-teal-900: #11473e;
+
+  /* Paper — reading surfaces */
+  --color-paper-50: #fffefb;
+  --color-paper-100: #fdfaf3;
+  --color-paper-200: #f7f2e7;
+  --color-paper-300: #ebe3d3;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-telugu: var(--font-telugu), var(--font-inter), sans-serif;
+
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.25rem;
+}
+
+@layer base {
+  :root {
+    --bg: var(--color-paper-100);
+    --fg: var(--color-ink-900);
+    color-scheme: light;
+  }
+
+  * {
+    border-color: color-mix(in srgb, var(--color-ink-900) 10%, transparent);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Telugu glyphs sit lower and need more room than Latin at the same size.
+     Anything tagged lang="te" gets the Telugu face and a looser line. */
+  :lang(te),
+  .te {
+    font-family: var(--font-telugu);
+    line-height: 1.7;
+    letter-spacing: 0;
+  }
+
+  h1:lang(te),
+  h2:lang(te),
+  h3:lang(te),
+  .te-display {
+    line-height: 1.35;
+    font-family: var(--font-telugu);
+  }
+}
+
+@layer components {
+  /* ------------------------- reusable pieces ------------------------- */
+
+  .container-tic {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-tic {
+      padding-inline: 2rem;
+    }
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid color-mix(in srgb, var(--color-ink-900) 8%, transparent);
+    border-radius: var(--radius-2xl);
+    box-shadow:
+      0 1px 2px color-mix(in srgb, var(--color-ink-900) 4%, transparent),
+      0 12px 32px -20px color-mix(in srgb, var(--color-ink-900) 22%, transparent);
+  }
+
+  .card-hover {
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--color-gold-500) 40%, transparent);
+    box-shadow:
+      0 2px 4px color-mix(in srgb, var(--color-ink-900) 6%, transparent),
+      0 22px 48px -24px color-mix(in srgb, var(--color-ink-900) 32%, transparent);
+  }
+
+  /* Faint lined-paper grid behind dark bands — keeps big ink areas alive */
+  .grid-ink {
+    background-image:
+      linear-gradient(color-mix(in srgb, #fff 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, #fff 6%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .glow-gold {
+    background: radial-gradient(
+      60% 60% at 50% 40%,
+      color-mix(in srgb, var(--color-gold-400) 38%, transparent),
+      transparent 70%
+    );
+  }
+
+  /* ---- metal ----
+     Gold and silver only read as metal when they shade across a surface.
+     Flat fills look like mustard, so every gold element gets a vertical
+     gradient plus a one-pixel highlight along its top edge. */
+
+  .text-metal {
+    background-image: linear-gradient(
+      175deg,
+      var(--color-gold-200) 0%,
+      var(--color-gold-400) 42%,
+      var(--color-gold-600) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-silver {
+    background-image: linear-gradient(
+      175deg,
+      #ffffff 0%,
+      var(--color-silver-300) 48%,
+      var(--color-silver-500) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn-gold {
+    background-image: linear-gradient(180deg, var(--color-gold-300), var(--color-gold-500));
+    border: 1px solid var(--color-gold-600);
+    color: var(--color-ink-950);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent),
+      0 1px 2px color-mix(in srgb, var(--color-ink-950) 18%, transparent),
+      0 10px 24px -14px color-mix(in srgb, var(--color-gold-700) 70%, transparent);
+  }
+
+  .btn-gold:hover {
+    background-image: linear-gradient(180deg, var(--color-gold-200), var(--color-gold-400));
+  }
+
+  /* A hairline that stays visible on ink without turning milky */
+  .hairline {
+    border-color: color-mix(in srgb, var(--color-silver-300) 22%, transparent);
+  }
+
+  /* Thin metal rule used to close off dark sections */
+  .rule-metal {
+    height: 1px;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-gold-400) 55%, transparent),
+      color-mix(in srgb, var(--color-silver-300) 35%, transparent),
+      transparent
+    );
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-gold-300) 70%, transparent);
+    color: var(--color-ink-900);
+  }
+
+  /* Lesson sidebar scrollbar — thin, not invisible */
+  .thin-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-ink-900) 22%, transparent) transparent;
+  }
+
+  .thin-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .thin-scroll::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-ink-900) 18%, transparent);
+    border-radius: 999px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
