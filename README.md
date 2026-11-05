@@ -122,6 +122,27 @@ old cached pages until their caches expire.
 - Form fields are 16px minimum, which is what stops iOS Safari zooming on focus
 - Zoom is deliberately **not** locked — people enlarge Telugu text
 
+## The mark and the load screen
+
+The logo is a die resting with the **3-face toward the viewer** — three being the
+Trinetra number. Two implementations, deliberately:
+
+- `Dice.tsx` — flat SVG for the header, footer and install card. Drawn in **cabinet
+  projection**, not true isometric: isometric puts a vertical *edge* at the front, leaving
+  no face to carry the pips.
+- `Splash.tsx` — a real six-faced CSS cube in 3D space, so the roll shows genuine side
+  faces instead of a flipbook. Opposite faces sum to seven, as on a real die.
+
+The cube settles at `rotateX(-16deg) rotateY(-21deg)`. That exact pair puts the 3 square
+to the viewer with the top and right faces raked back, matching the SVG. The positive-Y
+equivalent reveals the **left** face instead, putting a 6 next to the 3 — noisy, and
+inconsistent with the static mark. Face shading is by orientation (`--top`, `--side`,
+`--bottom`); one flat gradient across all six makes the cube look like a decal.
+
+The splash fades out **in CSS, not JavaScript**, so a script failure can never trap
+someone behind an overlay. JS only removes the node afterwards and lets a tap skip it.
+Total is about 2 seconds, and `prefers-reduced-motion` drops the tumble entirely.
+
 ## Not built yet
 
 - Accounts, payments and server-side enrolment

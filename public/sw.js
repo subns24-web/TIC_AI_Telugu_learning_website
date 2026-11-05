@@ -7,7 +7,7 @@
  * message rather than a silently broken player.
  */
 
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL = `ticai-shell-${VERSION}`;
 const ASSETS = `ticai-assets-${VERSION}`;
 const PAGES = `ticai-pages-${VERSION}`;

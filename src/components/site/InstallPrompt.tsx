@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useLang } from "@/lib/lang";
+import { Dice } from "./Dice";
 
 /* Add-to-home-screen, the two ways it actually works:
  *
@@ -112,14 +113,7 @@ export function InstallPrompt() {
       className="fixed inset-x-0 bottom-0 z-[60] p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:left-auto sm:right-4 sm:w-96"
     >
       <div className="hairline flex gap-3.5 rounded-2xl border bg-ink-950/95 p-4 text-white shadow-[0_24px_60px_-20px_rgba(0,0,0,.8)] backdrop-blur-lg">
-        <span className="btn-gold grid h-11 w-11 shrink-0 place-items-center rounded-xl">
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
-            <circle cx="6" cy="7" r="2.2" />
-            <circle cx="18" cy="7" r="2.2" />
-            <circle cx="12" cy="18" r="2.6" />
-            <path d="M6 7 L12 18 M18 7 L12 18 M6 7 L18 7" stroke="currentColor" strokeWidth="1.4" />
-          </svg>
-        </span>
+        <Dice id="install" className="h-11 w-11 shrink-0" />
 
         <div className="min-w-0 flex-1">
           <p lang={lang} className="font-semibold leading-snug">

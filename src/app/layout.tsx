@@ -5,6 +5,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ServiceWorker } from "@/components/site/ServiceWorker";
 import { InstallPrompt } from "@/components/site/InstallPrompt";
+import { Splash } from "@/components/site/Splash";
 import "./globals.css";
 
 const inter = Inter({
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="te" className={`${inter.variable} ${telugu.variable}`}>
       <body className="min-h-dvh flex flex-col">
+        <Splash />
         <LangProvider>
           <Header />
           <main className="flex-1">{children}</main>
