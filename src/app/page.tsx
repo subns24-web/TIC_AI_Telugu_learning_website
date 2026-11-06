@@ -150,6 +150,69 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ------------------------------------------------- Vyapar GPT */}
+      <section className="container-tic py-20 md:py-24">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-ink-950 text-white">
+          <div className="absolute inset-0 grid-ink opacity-50" />
+          <div className="glow-gold pointer-events-none absolute -right-20 -top-24 h-96 w-96 opacity-25" />
+
+          <div className="relative grid gap-10 p-8 md:grid-cols-[1.15fr_1fr] md:items-center md:p-14">
+            <div>
+              <span
+                lang={lang}
+                className="inline-flex items-center gap-2 rounded-full border border-gold-400/35 bg-gold-400/8 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-gold-200"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-gold-400 shadow-[0_0_8px_1px] shadow-gold-400/60" />
+                {t("Only on TIC AI", "TIC AI లో మాత్రమే")}
+              </span>
+
+              <h2 className="mt-6 font-telugu text-balance text-3xl font-bold leading-[1.3] tracking-tight sm:text-[2.3rem]">
+                <span className="text-metal">Vyapar GPT</span>
+                <br />
+                ప్రాంప్ట్ రాయడం మీ పని కాదు.
+              </h2>
+
+              <p lang={lang} className="mt-6 max-w-xl font-telugu leading-relaxed text-ink-200">
+                {t(
+                  "Most people fail with AI because they did not know what to give it, not because the wording was wrong. Pick your task — we name the exact file you need, show where it sits in Vyapar or Tally, and hand you a finished prompt in Telugu.",
+                  "ప్రాంప్ట్ తప్పు కాబట్టి కాదు — AI కి ఏం ఇవ్వాలో తెలియక చాలామంది విఫలమవుతారు. మీ పని ఎంచుకోండి — ఏ ఫైల్ కావాలి, అది Vyapar లేదా Tally లో ఎక్కడ ఉందో చూపించి, తెలుగులో సిద్ధమైన ప్రాంప్ట్ ఇస్తాం.",
+                )}
+              </p>
+
+              <div className="mt-8">
+                <ButtonLink href="/vyapar-gpt" size="lg" lang={lang}>
+                  {t("Open Vyapar GPT", "Vyapar GPT తెరవండి")}
+                </ButtonLink>
+              </div>
+            </div>
+
+            <ul className="space-y-3">
+              {(
+                [
+                  ["Say what you want done", "మీకు ఏం కావాలో చెప్పండి", "\"Follow up with customers who stopped buying\"", "\"కొనడం ఆపేసిన కస్టమర్లకు ఫాలో-అప్\""],
+                  ["We list what to bring", "ఏం తీసుకురావాలో చెబుతాం", "Your customer list — Vyapar → Parties → Export", "మీ కస్టమర్ల లిస్ట్ — Vyapar → Parties → Export"],
+                  ["Copy the finished prompt", "సిద్ధమైన ప్రాంప్ట్ కాపీ చేయండి", "Written in Telugu, ready to paste", "తెలుగులో రాసినది, అతికించడానికి సిద్ధం"],
+                ] as const
+              ).map(([enT, teT, enS, teS], i) => (
+                <li key={i} className="hairline flex gap-4 rounded-2xl border bg-white/4 p-5 backdrop-blur-sm">
+                  <span className="btn-gold grid h-9 w-9 shrink-0 place-items-center rounded-xl text-sm font-bold">
+                    {i + 1}
+                  </span>
+                  <div className="min-w-0">
+                    <p lang={lang} className="font-telugu font-semibold leading-snug">
+                      {t(enT, teT)}
+                    </p>
+                    <p lang={lang} className="mt-1.5 font-telugu text-sm leading-relaxed text-ink-300">
+                      {t(enS, teS)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* ------------------------------------------------ learning paths */}
       <section className="container-tic py-20 md:py-24">
         <SectionHead

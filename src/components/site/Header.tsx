@@ -9,6 +9,7 @@ import { LangToggle } from "./LangToggle";
 
 const NAV = [
   { href: "/courses", en: "Courses", te: "కోర్సులు" },
+  { href: "/vyapar-gpt", en: "Vyapar GPT", te: "Vyapar GPT" },
   { href: "/tracks", en: "Learning paths", te: "లెర్నింగ్ పాత్‌లు" },
   { href: "/my-learning", en: "My learning", te: "నా అభ్యాసం" },
   { href: "/community", en: "Community", te: "కమ్యూనిటీ" },

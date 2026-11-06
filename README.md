@@ -143,6 +143,45 @@ The splash fades out **in CSS, not JavaScript**, so a script failure can never t
 someone behind an overlay. JS only removes the node afterwards and lets a tap skip it.
 Total is about 2 seconds, and `prefers-reduced-motion` drops the tumble entirely.
 
+## Vyapar GPT
+
+The prompt builder, and the thing that makes this site different from a course library.
+
+The premise: a shop owner rarely fails because the *wording* of a prompt was wrong. They
+fail because nobody told them **what to give the AI**, or where that file lives in the app
+they already use. So a prompt here is not a block of text — it is a task with declared
+inputs.
+
+**Files**
+- `src/lib/vyapar-types.ts` — the model
+- `src/lib/vyapar.ts` — categories, business types, prompts, and `buildPrompt`
+- `src/lib/profile.ts` — the business profile, answered once, auto-filled everywhere
+- `src/components/vyapar/` — `FileCard`, `ProfileForm`, `PromptBuilder`
+- `/vyapar-gpt` and `/vyapar-gpt/[slug]`
+
+**Adding a prompt.** Append to `prompts` in `src/lib/vyapar.ts`. The parts that matter:
+
+- `files[]` — each one carries `why` (what the AI does with it), `contains` (the columns),
+  and `howToGet` (literal taps for Vyapar, Tally, or Google Sheets for people with no
+  software at all). This is the USP; a prompt without it is just text.
+- `fields[]` — set `fromProfile` on anything the saved profile already knows, so it fills
+  itself in. `PROFILE_FIELDS` and `TONE_FIELD` are ready to spread.
+- `template` — the prompt itself.
+
+**Template syntax**
+
+| Form | Behaviour |
+| --- | --- |
+| `{{id}}` | Straight substitution. Blank and required → rendered as a visible `[label]` so the owner can see what is missing |
+| `{{id\|prefix }}` | Writes `prefix value` when filled. When blank, **the whole line is dropped** |
+
+That second form exists because optional extras used to leave a dangling bullet in the
+output when nobody filled them in.
+
+**Reusable file definitions** — `SALES_FILE`, `CUSTOMER_LIST_FILE` and `STOCK_FILE` are
+shared across prompts; spread and override (`{ ...SALES_FILE, optional: true }`) rather
+than redefining the Vyapar and Tally steps each time.
+
 ## Not built yet
 
 - Accounts, payments and server-side enrolment
