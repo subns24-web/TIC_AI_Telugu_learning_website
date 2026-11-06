@@ -11,7 +11,7 @@ import { Button, ButtonLink } from "@/components/ui/Bits";
  * links land here too, already signed in, so the student can pick a new one. */
 function AccountInner() {
   const { t, lang } = useLang();
-  const { email, recovery, signOut } = useAuth();
+  const { email, recovery, signOut, plan } = useAuth();
   const router = useRouter();
 
   const [pw1, setPw1] = useState("");
@@ -40,6 +40,14 @@ function AccountInner() {
         <h1 className="text-2xl font-bold text-ink-900">{t("My account", "నా account")}</h1>
         <p className="mt-1 text-sm text-ink-500">
           {t("Logged in as", "Login అయిన email:")} <b className="text-ink-800">{email}</b>
+        </p>
+        <p className="mt-1 text-sm text-ink-500">
+          {t("Your plan:", "మీ plan:")}{" "}
+          <b className="text-ink-800">
+            {plan === "course"
+              ? t("Academy + full course (₹4999)", "Academy + పూర్తి course (₹4999)")
+              : t("Academy access (₹199 workshop)", "Academy access (₹199 workshop)")}
+          </b>
         </p>
 
         {recovery && (

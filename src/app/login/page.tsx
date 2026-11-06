@@ -7,17 +7,14 @@ import { supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { Button } from "@/components/ui/Bits";
 
-/* Only sends people back to a page on this site. */
-function safeNext(raw: string | null) {
-  return raw && raw.startsWith("/") && !raw.startsWith("//") ? raw : "/my-learning";
-}
+/* Every successful login lands on the academy home page. */
+const AFTER_LOGIN = "/";
 
 export default function LoginPage() {
   const { t, lang } = useLang();
   const { enabled, ready, session } = useAuth();
   const router = useRouter();
 
-  const [next, setNext] = useState("/my-learning");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
@@ -26,12 +23,8 @@ export default function LoginPage() {
   const [info, setInfo] = useState("");
 
   useEffect(() => {
-    setNext(safeNext(new URLSearchParams(window.location.search).get("next")));
-  }, []);
-
-  useEffect(() => {
-    if (ready && session) router.replace(next);
-  }, [ready, session, next, router]);
+    if (ready && session) router.replace(AFTER_LOGIN);
+  }, [ready, session, router]);
 
   async function onLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -48,7 +41,7 @@ export default function LoginPage() {
       ));
       return;
     }
-    router.replace(next);
+    router.replace(AFTER_LOGIN);
   }
 
   async function onForgot() {
