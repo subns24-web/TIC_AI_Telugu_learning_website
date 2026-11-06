@@ -338,7 +338,7 @@ export default function HomePage() {
               Santhosh Nimmani
             </h2>
             <p lang={lang} className="mt-1 font-telugu text-sm text-ink-500">
-              వ్యవస్థాపకుడు, SN Trinetra Global AI &amp; IT Solutions
+              ఫౌండర్, SN Trinetra Global AI &amp; IT Solutions
             </p>
             <p lang={lang} className="mt-5 max-w-2xl leading-relaxed text-ink-600">
               {t(

@@ -70,12 +70,13 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
       <div className="border-b border-ink-900/8 p-5">
         <Link
           href={`/courses/${course.slug}`}
+          lang={lang}
           className="focus-ring block rounded font-telugu font-bold leading-snug text-ink-900 hover:text-gold-700"
         >
-          {course.titleTe}
+          {t(course.title, course.titleTe)}
         </Link>
         <div className="mt-4 flex items-center justify-between text-xs font-semibold text-ink-400">
-          <span lang={lang}>{t("Progress", "ప్రగతి")}</span>
+          <span lang={lang}>{t("Progress", "ప్రోగ్రెస్")}</span>
           <span className="tabular-nums">
             {done.length}/{total}
           </span>
@@ -86,8 +87,8 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
       <nav className="drawer-scroll safe-bottom flex-1 overflow-y-auto p-3">
         {course.modules.map((mod, mi) => (
           <div key={mod.id} className="mb-4">
-            <p className="px-2 pb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-ink-400">
-              {t(`Module ${mi + 1}`, `మాడ్యూల్ ${mi + 1}`)} · {mod.titleTe}
+            <p lang={lang} className="px-2 pb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-ink-400">
+              {t(`Module ${mi + 1}`, `మాడ్యూల్ ${mi + 1}`)} · {t(mod.title, mod.titleTe)}
             </p>
             <ul className="space-y-0.5">
               {mod.lessons.map((l) => {
@@ -118,8 +119,8 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
                         )}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block font-telugu text-[0.86rem] font-medium leading-snug">
-                          {l.titleTe}
+                        <span lang={lang} className="block font-telugu text-[0.86rem] font-medium leading-snug">
+                          {t(l.title, l.titleTe)}
                         </span>
                         <span
                           className={`mt-0.5 block text-[0.7rem] tabular-nums ${
@@ -157,7 +158,9 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
           </Link>
 
           <div className="min-w-0 flex-1 text-center">
-            <p className="truncate font-telugu text-sm font-semibold">{lesson.titleTe}</p>
+            <p lang={lang} className="truncate font-telugu text-sm font-semibold">
+              {t(lesson.title, lesson.titleTe)}
+            </p>
             <p className="truncate text-[0.68rem] text-ink-400">
               {t(`Lesson ${index + 1} of ${total}`, `పాఠం ${index + 1} / ${total}`)}
             </p>
@@ -188,10 +191,15 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
           <div className="mt-7">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="min-w-0">
-                <h1 className="font-telugu text-balance text-2xl font-bold leading-snug tracking-tight text-ink-900">
-                  {lesson.titleTe}
+                <h1
+                  lang={lang}
+                  className="font-telugu text-balance text-2xl font-bold leading-snug tracking-tight text-ink-900"
+                >
+                  {t(lesson.title, lesson.titleTe)}
                 </h1>
-                <p className="mt-1.5 text-sm font-medium text-ink-500">{lesson.title}</p>
+                {lang === "te" && (
+                  <p className="mt-1.5 text-sm font-medium text-ink-500">{lesson.title}</p>
+                )}
               </div>
 
               <Button
@@ -216,8 +224,8 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
             <div className="mt-8 flex gap-1 border-b border-ink-900/10">
               {(
                 [
-                  ["overview", t("Overview", "సారాంశం")],
-                  ["resources", t("Resources", "వనరులు")],
+                  ["overview", t("Overview", "వివరం")],
+                  ["resources", t("Resources", "ఫైల్స్")],
                   ["notes", t("My notes", "నా నోట్స్")],
                 ] as const
               ).map(([id, label]) => (
@@ -251,7 +259,7 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
                     <p lang={lang} className="text-ink-400">
                       {t(
                         "No written summary for this lesson yet.",
-                        "ఈ పాఠానికి ఇంకా వ్రాతపూర్వక సారాంశం లేదు.",
+                        "ఈ పాఠానికి ఇంకా రాసిన వివరం లేదు.",
                       )}
                     </p>
                   )}
@@ -311,7 +319,7 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
                   >
                     {t(
                       "Notes are saved on this device as you type.",
-                      "మీరు టైప్ చేస్తుండగానే ఈ పరికరంలో నోట్స్ సేవ్ అవుతాయి.",
+                      "మీరు టైప్ చేస్తుండగానే ఈ ఫోన్‌లో నోట్స్ సేవ్ అవుతాయి.",
                     )}
                   </label>
                   <textarea
@@ -344,7 +352,9 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
                     <span lang={lang} className="block text-[0.68rem] uppercase tracking-wide text-ink-400">
                       {t("Previous", "ముందు")}
                     </span>
-                    <span className="block truncate font-telugu">{prev.titleTe}</span>
+                    <span lang={lang} className="block truncate font-telugu">
+                      {t(prev.title, prev.titleTe)}
+                    </span>
                   </span>
                 </ButtonLink>
               ) : (
@@ -365,7 +375,9 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
                     <span lang={lang} className="block text-[0.68rem] uppercase tracking-wide text-ink-300">
                       {t("Next lesson", "తరువాతి పాఠం")}
                     </span>
-                    <span className="block truncate font-telugu">{next.titleTe}</span>
+                    <span lang={lang} className="block truncate font-telugu">
+                      {t(next.title, next.titleTe)}
+                    </span>
                   </span>
                   <span className="shrink-0">→</span>
                 </ButtonLink>

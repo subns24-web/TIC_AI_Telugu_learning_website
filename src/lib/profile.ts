@@ -12,6 +12,8 @@ export type BusinessProfile = {
   city: string;
   sells: string;
   tone: string;
+  /** Which assistant they actually pay for; remembered across prompts. */
+  tool: string;
 };
 
 const KEY = "ticai.business";
@@ -22,6 +24,7 @@ export const EMPTY_PROFILE: BusinessProfile = {
   city: "",
   sells: "",
   tone: "warm and respectful",
+  tool: "chatgpt",
 };
 
 function read(): BusinessProfile {

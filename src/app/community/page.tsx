@@ -92,7 +92,7 @@ export default function CommunityPage() {
       <section className="container-tic py-20">
         <SectionHead
           eyebrow={t("How we meet", "ఎలా కలుస్తాం")}
-          title={t("Three standing commitments", "మూడు స్థిర నిబద్ధతలు")}
+          title={t("Three standing commitments", "మూడు పక్కా ఏర్పాట్లు")}
           lang={lang}
         />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -162,7 +162,7 @@ export default function CommunityPage() {
               <p lang={lang} className="mt-2 max-w-xl text-sm leading-relaxed text-ink-500">
                 {t(
                   "Board members host one session a quarter and help shape the curriculum. Tell us which sector you represent and what you would teach.",
-                  "బోర్డ్ సభ్యులు క్వార్టర్‌కు ఒక సెషన్ నిర్వహిస్తారు, పాఠ్యాంశాలు రూపొందించడంలో సహాయం చేస్తారు. మీరు ఏ రంగానికి ప్రాతినిధ్యం వహిస్తారు, ఏం బోధిస్తారో చెప్పండి.",
+                  "బోర్డ్ సభ్యులు క్వార్టర్‌కు ఒక సెషన్ నిర్వహిస్తారు, కోర్సులో ఏమేం ఉన్నాయి రూపొందించడంలో సహాయం చేస్తారు. మీరు ఏ రంగానికి ఉంటారు, ఏం బోధిస్తారో చెప్పండి.",
                 )}
               </p>
             </div>

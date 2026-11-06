@@ -40,11 +40,11 @@ export default function MyLearningPage() {
   return (
     <div className="container-tic py-14 md:py-20">
       <SectionHead
-        eyebrow={t("My learning", "నా అభ్యాసం")}
+        eyebrow={t("My learning", "నా కోర్సులు")}
         title={t("Pick up where you stopped", "ఆపిన దగ్గర నుంచి కొనసాగించండి")}
         blurb={t(
           "Progress is saved in this browser. Sign-in accounts arrive with paid enrolments — until then, use the same browser to keep your place.",
-          "ప్రగతి ఈ బ్రౌజర్‌లో సేవ్ అవుతుంది. పెయిడ్ ఎన్‌రోల్‌మెంట్‌లతో పాటు లాగిన్ ఖాతాలు వస్తాయి — అప్పటి వరకు అదే బ్రౌజర్ వాడండి.",
+          "ప్రోగ్రెస్ ఈ బ్రౌజర్‌లో సేవ్ అవుతుంది. పెయిడ్ ఎన్‌రోల్‌మెంట్‌లతో పాటు లాగిన్ ఖాతాలు వస్తాయి — అప్పటి వరకు అదే బ్రౌజర్ వాడండి.",
         )}
         lang={lang}
       />

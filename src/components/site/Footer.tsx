@@ -19,7 +19,7 @@ export function Footer() {
           <p lang={lang} className="mt-4 max-w-xs text-sm leading-relaxed text-ink-300">
             {t(
               "The Telugu International Council of AI for Business — a learning community for owners, teams and builders across Andhra Pradesh, Telangana and the Telugu diaspora.",
-              "Telugu International Council of AI for Business — ఆంధ్రప్రదేశ్, తెలంగాణ, ప్రవాస తెలుగు వారి కోసం ఒక అభ్యాస కమ్యూనిటీ.",
+              "Telugu International Council of AI for Business — ఆంధ్రప్రదేశ్, తెలంగాణ, ప్రవాస తెలుగు వారి కోసం ఒక నేర్చుకునే కమ్యూనిటీ.",
             )}
           </p>
         </div>
@@ -32,7 +32,7 @@ export function Footer() {
                 { href: "/courses", en: "All courses", te: "అన్ని కోర్సులు" },
                 { href: "/vyapar-gpt", en: "Vyapar GPT", te: "Vyapar GPT" },
                 { href: "/tracks", en: "Learning paths", te: "లెర్నింగ్ పాత్‌లు" },
-                { href: "/my-learning", en: "My learning", te: "నా అభ్యాసం" },
+                { href: "/my-learning", en: "My learning", te: "నా కోర్సులు" },
               ],
             },
             {

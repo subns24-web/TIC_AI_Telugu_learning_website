@@ -53,10 +53,15 @@ export function CourseDetail({ course }: { course: Course }) {
                 )}
               </div>
 
-              <h1 className="mt-6 font-telugu text-balance text-[2rem] font-bold leading-[1.3] tracking-tight sm:text-[2.6rem]">
-                {course.titleTe}
+              <h1
+                lang={lang}
+                className="mt-6 font-telugu text-balance text-[2rem] font-bold leading-[1.3] tracking-tight sm:text-[2.6rem]"
+              >
+                {t(course.title, course.titleTe)}
               </h1>
-              <p className="mt-2 text-lg font-medium text-ink-300">{course.title}</p>
+              {lang === "te" && (
+                <p className="mt-2 text-lg font-medium text-ink-300">{course.title}</p>
+              )}
 
               <p lang={lang} className="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-ink-200">
                 {t(course.tagline, course.taglineTe)}
@@ -100,7 +105,7 @@ export function CourseDetail({ course }: { course: Course }) {
                 {started && (
                   <div className="mt-5">
                     <div className="mb-2 flex items-center justify-between text-xs font-semibold text-ink-300">
-                      <span lang={lang}>{t("Your progress", "మీ ప్రగతి")}</span>
+                      <span lang={lang}>{t("Your progress", "మీ ప్రోగ్రెస్")}</span>
                       <span className="tabular-nums">
                         {done.length}/{total}
                       </span>
@@ -137,7 +142,7 @@ export function CourseDetail({ course }: { course: Course }) {
                           onClick={() => enrol(course.slug)}
                           className="w-full"
                         >
-                          {t("Save to my learning", "నా అభ్యాసంలో సేవ్ చేయండి")}
+                          {t("Save to my learning", "నా కోర్సులులో సేవ్ చేయండి")}
                         </Button>
                       ) : (
                         <Button
@@ -147,7 +152,7 @@ export function CourseDetail({ course }: { course: Course }) {
                           onClick={() => leave(course.slug)}
                           className="w-full text-ink-300 hover:bg-white/8 hover:text-white"
                         >
-                          {t("Remove from my learning", "నా అభ్యాసం నుంచి తీసేయండి")}
+                          {t("Remove from my learning", "నా కోర్సులు నుంచి తీసేయండి")}
                         </Button>
                       )}
                     </>
@@ -200,7 +205,7 @@ export function CourseDetail({ course }: { course: Course }) {
           <section>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <h2 lang={lang} className="text-2xl font-bold tracking-tight text-ink-900">
-                {t("Curriculum", "పాఠ్యాంశాలు")}
+                {t("Curriculum", "కోర్సులో ఏమేం ఉన్నాయి")}
               </h2>
               <p lang={lang} className="text-sm text-ink-400">
                 {course.modules.length} {t("modules", "మాడ్యూల్స్")} · {total}{" "}
@@ -224,11 +229,11 @@ export function CourseDetail({ course }: { course: Course }) {
                         {mi + 1}
                       </span>
                       <span className="flex-1">
-                        <span className="block font-telugu font-bold leading-snug text-ink-900">
-                          {mod.titleTe}
+                        <span lang={lang} className="block font-telugu font-bold leading-snug text-ink-900">
+                          {t(mod.title, mod.titleTe)}
                         </span>
-                        <span className="mt-0.5 block text-xs text-ink-400">
-                          {mod.title} · {mod.lessons.length} {t("lessons", "పాఠాలు")} · {modMins} min
+                        <span lang={lang} className="mt-0.5 block text-xs text-ink-400">
+                          {mod.lessons.length} {t("lessons", "పాఠాలు")} · {modMins} min
                         </span>
                       </span>
                       <svg
@@ -259,12 +264,17 @@ export function CourseDetail({ course }: { course: Course }) {
                                 )}
                               </span>
                               <span className="min-w-0 flex-1">
-                                <span className="block truncate font-telugu text-[0.95rem] font-medium text-ink-800">
-                                  {lesson.titleTe}
+                                <span
+                                  lang={lang}
+                                  className="block truncate font-telugu text-[0.95rem] font-medium text-ink-800"
+                                >
+                                  {t(lesson.title, lesson.titleTe)}
                                 </span>
-                                <span className="block truncate text-xs text-ink-400">
-                                  {lesson.title}
-                                </span>
+                                {lang === "te" && (
+                                  <span className="block truncate text-xs text-ink-400">
+                                    {lesson.title}
+                                  </span>
+                                )}
                               </span>
                               {lesson.preview && !complete && (
                                 <Badge tone="gold">{t("Free", "ఉచితం")}</Badge>
@@ -305,7 +315,7 @@ export function CourseDetail({ course }: { course: Course }) {
                 lang={lang}
                 className="focus-ring mt-5 rounded-lg text-sm font-medium text-ink-400 underline-offset-4 hover:text-ink-700 hover:underline"
               >
-                {t("Reset my progress for this course", "ఈ కోర్సు ప్రగతిని రీసెట్ చేయండి")}
+                {t("Reset my progress for this course", "ఈ కోర్సు ప్రోగ్రెస్ని రీసెట్ చేయండి")}
               </button>
             )}
           </section>
@@ -342,7 +352,7 @@ export function CourseDetail({ course }: { course: Course }) {
 
           <div className="card p-6">
             <h3 lang={lang} className="text-sm font-semibold uppercase tracking-[0.14em] text-ink-400">
-              {t("Your instructor", "మీ బోధకుడు")}
+              {t("Your instructor", "మీ టీచర్")}
             </h3>
             <div className="mt-4 flex items-center gap-3.5">
               <span className="text-metal grid h-12 w-12 place-items-center rounded-full bg-ink-900 text-sm font-bold">

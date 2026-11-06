@@ -60,7 +60,7 @@ export function FileCard({
               {t(file.name, file.nameTe)}
             </h4>
             {file.optional && (
-              <Badge tone="silver">{t("Optional", "ఐచ్ఛికం")}</Badge>
+              <Badge tone="silver">{t("Optional", "తప్పనిసరి కాదు")}</Badge>
             )}
           </div>
 

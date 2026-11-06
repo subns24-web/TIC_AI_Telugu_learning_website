@@ -182,6 +182,47 @@ output when nobody filled them in.
 shared across prompts; spread and override (`{ ...SALES_FILE, optional: true }`) rather
 than redefining the Vyapar and Tally steps each time.
 
+### Writing the Telugu
+
+Telugu on this site is written the way people **speak** it in Andhra and Telangana, not
+the way textbooks write it. The test: would a shop owner say this out loud to a friend?
+
+Keep the English words traders genuinely use — కస్టమర్, స్టాక్, ఆఫర్, బిల్లు, రేటు, ప్రాఫిట్,
+డెలివరీ. Translating them produces the stiff register people call "machine Telugu."
+
+| Don't write | Write |
+| --- | --- |
+| ఐచ్ఛికం | తప్పనిసరి కాదు |
+| పాఠ్యాంశాలు | కోర్సులో ఏమేం ఉన్నాయి |
+| వనరులు | ఫైల్స్ |
+| అభ్యాసం | కోర్సులు |
+| వ్యవస్థాపకుడు | ఫౌండర్ |
+| పరికరం | ఫోన్ |
+| ప్రగతి | ప్రోగ్రెస్ |
+| మూల్యాంకనం | టెస్ట్ చేయడం |
+
+The prompt templates also instruct the model to do this, since an AI asked for "Telugu"
+will default to the written register and produce exactly what we are avoiding.
+
+### The language toggle
+
+English must mean **English**. Course, module and lesson titles all carry a `titleTe`, and
+several components used to render it unconditionally — so switching to English still
+showed Telugu headings. Anything bilingual goes through `t(en, te)`. The only Telugu left
+in English mode is the footer motto, which is a brand signature, and whatever the owner
+typed themselves.
+
+### Attachments and the tool picker
+
+`ReferenceFiles.tsx` lets people add their own screenshots and files, like ChatGPT.
+**Nothing is uploaded** — there is no server here. The files stay in the browser; listing
+them carries the list into step 4 and names them inside the prompt so the model knows what
+is coming. Object URLs are revoked on unmount.
+
+All three assistants are offered on every prompt, and the choice is saved to the profile.
+`bestWith` only marks the recommendation — it never limits the options, because people use
+whichever one they already pay for.
+
 ## Not built yet
 
 - Accounts, payments and server-side enrolment

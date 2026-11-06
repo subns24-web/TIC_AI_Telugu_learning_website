@@ -35,8 +35,11 @@ export function CourseCard({ course, showProgress = false }: { course: Course; s
       >
         <div className="absolute inset-0 grid-ink opacity-50" />
         <div className="absolute inset-x-5 bottom-4 flex items-end justify-between gap-3">
-          <span className="font-telugu text-lg font-bold leading-tight text-white drop-shadow-sm">
-            {course.titleTe}
+          <span
+            lang={lang}
+            className="font-telugu text-lg font-bold leading-tight text-white drop-shadow-sm"
+          >
+            {t(course.title, course.titleTe)}
           </span>
         </div>
         {course.comingSoon && (
@@ -50,7 +53,9 @@ export function CourseCard({ course, showProgress = false }: { course: Course; s
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[1.05rem] font-bold leading-snug text-ink-900">{course.title}</h3>
+        {lang === "te" && (
+          <h3 className="text-[1.05rem] font-bold leading-snug text-ink-900">{course.title}</h3>
+        )}
         <p lang={lang} className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-500">
           {t(course.tagline, course.taglineTe)}
         </p>

@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { VyaparPrompt } from "@/lib/vyapar-types";
-import { buildPrompt, getCategory, missingFields, TOOL_LABEL } from "@/lib/vyapar";
+import { buildPrompt, getCategory, getTool, missingFields, TOOLS, type ToolId } from "@/lib/vyapar";
 import { useLang } from "@/lib/lang";
 import { useBusinessProfile } from "@/lib/profile";
 import { Badge, Button, ButtonLink } from "@/components/ui/Bits";
 import { FileCard } from "./FileCard";
 import { ProfileForm } from "./ProfileForm";
+import { ReferenceFiles, type Attachment } from "./ReferenceFiles";
 
 /* Four steps, always in the same order: what to bring, what to tell it,
  * the finished prompt, what to do with it. A shop owner should never have
@@ -58,17 +59,26 @@ function Step({
 
 export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
   const { t, lang } = useLang();
-  const { profile, isSet, ready } = useBusinessProfile();
+  const { profile, isSet, ready, save } = useBusinessProfile();
 
   const [values, setValues] = useState<Record<string, string>>({});
   const [haveFiles, setHaveFiles] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const [tool, setTool] = useState<ToolId>("chatgpt");
 
   const category = getCategory(prompt.category);
 
   /* Seed from the saved profile, and from each select's first option so the
      prompt is never built around a silently empty choice. */
+  useEffect(() => {
+    if (!ready) return;
+    // Their own tool wins; the prompt's recommendation is only a default.
+    const saved = TOOLS.find((x) => x.id === profile.tool);
+    setTool(saved ? (saved.id as ToolId) : prompt.bestWith[0]);
+  }, [ready, profile.tool, prompt.bestWith]);
+
   useEffect(() => {
     if (!ready) return;
     setValues((prev) => {
@@ -83,7 +93,13 @@ export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
   }, [ready, profile, prompt.fields]);
 
   const missing = useMemo(() => missingFields(prompt, values), [prompt, values]);
-  const built = useMemo(() => buildPrompt(prompt, values), [prompt, values]);
+  const built = useMemo(() => {
+    const base = buildPrompt(prompt, values);
+    if (attachments.length === 0) return base;
+    // Telling it what is attached stops the AI guessing at a file it cannot see.
+    const list = attachments.map((a) => `- ${a.name}`).join("\n");
+    return `${base}\n\nI am attaching these files:\n${list}`;
+  }, [prompt, values, attachments]);
 
   const requiredFiles = prompt.files.filter((f) => !f.optional);
   const filesDone =
@@ -135,11 +151,9 @@ export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
             <Badge tone="ink" className="ring-1 ring-white/15">
               ⏱ {prompt.minutes} {t("minutes", "నిమిషాలు")}
             </Badge>
-            {prompt.bestWith.map((b) => (
-              <Badge key={b} tone="ink" className="ring-1 ring-white/15">
-                {t("Best with", "దీనితో బాగా")} {TOOL_LABEL[b].name}
-              </Badge>
-            ))}
+            <Badge tone="ink" className="ring-1 ring-white/15">
+              {t("Works best with", "దీనితో బాగా పని చేస్తుంది")} {getTool(prompt.bestWith[0]).name}
+            </Badge>
           </div>
         </div>
       </section>
@@ -181,6 +195,13 @@ export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
               ))}
             </div>
           )}
+
+          <div className="mt-6">
+            <p lang={lang} className="mb-3 font-telugu text-sm font-semibold text-ink-600">
+              {t("Anything else you want it to look at?", "ఇంకా ఏమైనా చూపించాలనుకుంటున్నారా?")}
+            </p>
+            <ReferenceFiles attachments={attachments} onChange={setAttachments} />
+          </div>
         </Step>
 
         {/* 2 — details */}
@@ -314,28 +335,68 @@ export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
 
         {/* 4 — what to do */}
         <Step n={4} title="Now do this" titleTe="ఇప్పుడు ఇది చేయండి">
-          <ol className="space-y-3">
+          <p lang={lang} className="mb-3 font-telugu text-sm font-semibold text-ink-600">
+            {t("Which one do you use?", "మీరు ఏది వాడుతారు?")}
+          </p>
+          <div className="grid gap-2.5 sm:grid-cols-3">
+            {TOOLS.map((tl) => {
+              const on = tool === tl.id;
+              const recommended = prompt.bestWith[0] === tl.id;
+              return (
+                <button
+                  key={tl.id}
+                  type="button"
+                  onClick={() => {
+                    setTool(tl.id);
+                    // Remember it so the next prompt opens on their tool.
+                    save({ tool: tl.id });
+                  }}
+                  aria-pressed={on}
+                  className={`focus-ring relative rounded-2xl border p-4 text-left transition ${
+                    on
+                      ? "border-gold-500 bg-gold-50 ring-1 ring-gold-400"
+                      : "border-ink-900/12 bg-white hover:border-gold-400"
+                  }`}
+                >
+                  {recommended && (
+                    <span
+                      lang={lang}
+                      className="absolute right-3 top-3 rounded-full bg-teal-100 px-2 py-0.5 text-[0.62rem] font-bold text-teal-800"
+                    >
+                      {t("Best here", "దీనికి బెస్ట్")}
+                    </span>
+                  )}
+                  <span className="block font-bold text-ink-900">{tl.name}</span>
+                  <span lang={lang} className="mt-1 block font-telugu text-xs leading-relaxed text-ink-500">
+                    {t(tl.note, tl.noteTe)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <ol className="mt-7 space-y-3">
             {[
               [
                 "Copy the prompt above.",
                 "పైన ఉన్న ప్రాంప్ట్ కాపీ చేయండి.",
               ],
               [
-                `Open ${prompt.bestWith.map((b) => TOOL_LABEL[b].name).join(" or ")} and start a new chat.`,
-                `${prompt.bestWith.map((b) => TOOL_LABEL[b].name).join(" లేదా ")} తెరిచి కొత్త చాట్ మొదలుపెట్టండి.`,
+                `Open ${getTool(tool).name} and start a new chat.`,
+                `${getTool(tool).name} తెరిచి కొత్త చాట్ మొదలుపెట్టండి.`,
               ],
-              prompt.files.length > 0
+              prompt.files.length > 0 || attachments.length > 0
                 ? [
-                    "Attach the file(s) from step 1 using the paperclip, THEN paste the prompt.",
-                    "స్టెప్ 1 లోని ఫైల్‌(ల)ను పిన్ గుర్తుతో జత చేసి, ఆ తరువాత ప్రాంప్ట్ అతికించండి.",
+                    "Attach your files with the paperclip FIRST, then paste the prompt.",
+                    "ముందు పిన్ గుర్తుతో మీ ఫైల్స్ జత చేయండి, ఆ తరువాత ప్రాంప్ట్ పేస్ట్ చేయండి.",
                   ]
                 : [
                     "Paste the prompt and press enter.",
-                    "ప్రాంప్ట్ అతికించి ఎంటర్ నొక్కండి.",
+                    "ప్రాంప్ట్ పేస్ట్ చేసి ఎంటర్ నొక్కండి.",
                   ],
               [
                 "Read the answer. If something feels wrong, say so in the same chat and ask again — do not start over.",
-                "సమాధానం చదవండి. ఏదైనా తప్పుగా అనిపిస్తే అదే చాట్‌లో చెప్పి మళ్ళీ అడగండి — కొత్తగా మొదలుపెట్టకండి.",
+                "సమాధానం చదవండి. ఏదైనా తేడాగా అనిపిస్తే అదే చాట్‌లో చెప్పి మళ్ళీ అడగండి — కొత్తగా మొదలుపెట్టకండి.",
               ],
             ].map(([en, te], i) => (
               <li key={i} className="flex gap-3.5">
@@ -343,26 +404,44 @@ export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
                   {i + 1}
                 </span>
                 <span lang={lang} className="font-telugu leading-relaxed text-ink-700">
-                  {en && te ? t(en, te) : ""}
+                  {t(en, te)}
                 </span>
               </li>
             ))}
           </ol>
 
+          {(prompt.files.length > 0 || attachments.length > 0) && (
+            <div className="mt-6 rounded-2xl bg-ink-900/4 p-4">
+              <p lang={lang} className="font-telugu text-sm font-semibold text-ink-700">
+                {t("Files to attach in the chat", "చాట్‌లో జత చేయాల్సిన ఫైల్స్")}
+              </p>
+              <ul className="mt-2.5 space-y-1.5">
+                {prompt.files
+                  .filter((f) => !f.optional || haveFiles.includes(f.id))
+                  .map((f) => (
+                    <li key={f.id} lang={lang} className="font-telugu text-sm text-ink-600">
+                      📎 {t(f.name, f.nameTe)}
+                    </li>
+                  ))}
+                {attachments.map((a) => (
+                  <li key={a.id} className="truncate text-sm text-ink-600">
+                    📎 {a.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="mt-6 flex flex-wrap gap-2.5">
-            {prompt.bestWith.map((b) => (
-              <ButtonLink
-                key={b}
-                href={TOOL_LABEL[b].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="outline"
-                size="md"
-                lang={lang}
-              >
-                {t("Open", "తెరవండి")} {TOOL_LABEL[b].name} ↗
-              </ButtonLink>
-            ))}
+            <ButtonLink
+              href={getTool(tool).url}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="lg"
+              lang={lang}
+            >
+              {t("Open", "తెరవండి")} {getTool(tool).name} ↗
+            </ButtonLink>
           </div>
 
           {/* tips */}

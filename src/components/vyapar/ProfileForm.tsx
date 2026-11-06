@@ -140,7 +140,7 @@ export function ProfileForm({ onDone }: { onDone?: () => void }) {
         <p lang={lang} className="text-sm text-ink-400">
           {t(
             "Saved on this device only. Filled in for you on every prompt.",
-            "ఈ పరికరంలో మాత్రమే సేవ్ అవుతుంది. ప్రతి ప్రాంప్ట్‌లో దానంతట అదే నిండుతుంది.",
+            "ఈ ఫోన్‌లో మాత్రమే సేవ్ అవుతుంది. ప్రతి ప్రాంప్ట్‌లో దానంతట అదే నిండుతుంది.",
           )}
         </p>
       </div>

@@ -123,11 +123,11 @@ export default function AdminPage() {
               <p lang={lang} className="mt-2 text-sm leading-relaxed text-gold-800">
                 {t(
                   "Zoom blocks embedding, so this lesson will show an 'Open the recording' button instead of a player. For a proper in-site experience, download the MP4 from Zoom and re-upload it to YouTube as unlisted, then paste that link here.",
-                  "Zoom ఎంబెడ్ చేయడాన్ని అడ్డుకుంటుంది, అందుకే ఈ పాఠంలో ప్లేయర్ కాదు 'రికార్డింగ్ తెరవండి' బటన్ కనిపిస్తుంది. సైట్‌లోనే సరైన అనుభవం కోసం — Zoom నుంచి MP4 డౌన్‌లోడ్ చేసి YouTube లో unlisted గా అప్‌లోడ్ చేసి, ఆ లింక్ ఇక్కడ అతికించండి.",
+                  "Zoom ఎంబెడ్ చేయడాన్ని అడ్డుకుంటుంది, అందుకే ఈ పాఠంలో ప్లేయర్ కాదు 'రికార్డింగ్ తెరవండి' బటన్ కనిపిస్తుంది. సైట్‌లోనే సరైన ఎక్స్‌పీరియన్స్ కోసం — Zoom నుంచి MP4 డౌన్‌లోడ్ చేసి YouTube లో unlisted గా అప్‌లోడ్ చేసి, ఆ లింక్ ఇక్కడ అతికించండి.",
                 )}
               </p>
               <label className={`${label} mt-4`} htmlFor="passcode">
-                {t("Recording passcode (optional)", "రికార్డింగ్ పాస్‌కోడ్ (ఐచ్ఛికం)")}
+                {t("Recording passcode (optional)", "రికార్డింగ్ పాస్‌కోడ్ (తప్పనిసరి కాదు)")}
               </label>
               <input
                 id="passcode"
@@ -202,7 +202,7 @@ export default function AdminPage() {
 
           <div>
             <label className={label} htmlFor="summaryTe">
-              {t("Telugu summary (optional)", "తెలుగు సారాంశం (ఐచ్ఛికం)")}
+              {t("Telugu summary (optional)", "తెలుగు వివరం (తప్పనిసరి కాదు)")}
             </label>
             <textarea
               id="summaryTe"

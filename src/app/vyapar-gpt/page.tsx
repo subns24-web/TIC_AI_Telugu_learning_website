@@ -56,7 +56,12 @@ export default function VyaparGptPage() {
   const [filter, setFilter] = useState<string>("all");
   const [editing, setEditing] = useState(false);
 
-  const active = filter === "all" ? profile.businessType || "all" : filter;
+  /* A saved profile can hold a business type from an older version of this
+     list. Falling through to "all" beats silently hiding half the prompts. */
+  const savedType = businessTypes.some((b) => b.id === profile.businessType)
+    ? profile.businessType
+    : "all";
+  const active = filter === "all" ? savedType || "all" : filter;
   const visible = promptsFor(active === "all" ? undefined : active);
 
   return (
@@ -91,7 +96,7 @@ export default function VyaparGptPage() {
           <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6">
             {(
               [
-                [String(categories.length), t("categories", "విభాగాలు")],
+                [String(categories.length), t("categories", "కేటగిరీలు")],
                 [String(promptsFor().length), t("ready prompts", "సిద్ధ ప్రాంప్ట్‌లు")],
                 ["0", t("tech knowledge needed", "టెక్ పరిజ్ఞానం అవసరం")],
               ] as const

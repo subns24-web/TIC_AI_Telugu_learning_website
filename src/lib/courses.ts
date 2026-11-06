@@ -85,7 +85,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Santhosh Nimmani",
       role: "Founder, SN Trinetra Global AI & IT Solutions",
-      roleTe: "వ్యవస్థాపకుడు, SN Trinetra Global AI & IT Solutions",
+      roleTe: "ఫౌండర్, SN Trinetra Global AI & IT Solutions",
       initials: "SN",
     },
     modules: [
@@ -226,7 +226,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Santhosh Nimmani",
       role: "Founder, SN Trinetra Global AI & IT Solutions",
-      roleTe: "వ్యవస్థాపకుడు, SN Trinetra Global AI & IT Solutions",
+      roleTe: "ఫౌండర్, SN Trinetra Global AI & IT Solutions",
       initials: "SN",
     },
     modules: [
@@ -350,7 +350,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Santhosh Nimmani",
       role: "Founder, SN Trinetra Global AI & IT Solutions",
-      roleTe: "వ్యవస్థాపకుడు, SN Trinetra Global AI & IT Solutions",
+      roleTe: "ఫౌండర్, SN Trinetra Global AI & IT Solutions",
       initials: "SN",
     },
     modules: [
@@ -432,7 +432,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Santhosh Nimmani",
       role: "Founder, SN Trinetra Global AI & IT Solutions",
-      roleTe: "వ్యవస్థాపకుడు, SN Trinetra Global AI & IT Solutions",
+      roleTe: "ఫౌండర్, SN Trinetra Global AI & IT Solutions",
       initials: "SN",
     },
     modules: [
@@ -506,7 +506,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Santhosh Nimmani",
       role: "Founder, SN Trinetra Global AI & IT Solutions",
-      roleTe: "వ్యవస్థాపకుడు, SN Trinetra Global AI & IT Solutions",
+      roleTe: "ఫౌండర్, SN Trinetra Global AI & IT Solutions",
       initials: "SN",
     },
     modules: [
@@ -571,7 +571,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Santhosh Nimmani",
       role: "Founder, SN Trinetra Global AI & IT Solutions",
-      roleTe: "వ్యవస్థాపకుడు, SN Trinetra Global AI & IT Solutions",
+      roleTe: "ఫౌండర్, SN Trinetra Global AI & IT Solutions",
       initials: "SN",
     },
     modules: [
@@ -590,7 +590,7 @@ export const courses: Course[] = [
         titleTe: "సురక్షితంగా విడుదల",
         lessons: [
           { id: "l3", title: "Human in the loop, properly", titleTe: "మనిషి లూప్‌లో, సరిగ్గా", minutes: 23, video: yt() },
-          { id: "l4", title: "Evaluating before launch", titleTe: "లాంచ్ ముందు మూల్యాంకనం", minutes: 25, video: yt() },
+          { id: "l4", title: "Evaluating before launch", titleTe: "లాంచ్ ముందు టెస్ట్ చేయడం", minutes: 25, video: yt() },
         ],
       },
     ],
