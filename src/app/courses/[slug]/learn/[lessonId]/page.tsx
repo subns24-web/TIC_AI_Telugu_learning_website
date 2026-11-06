@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { allLessons, courses, getCourse } from "@/lib/courses";
 import { LessonPlayer } from "@/components/course/LessonPlayer";
 import { RequireLogin } from "@/components/auth/RequireLogin";
+import { ACADEMY_COURSES } from "@/lib/plans";
 
 export function generateStaticParams() {
   return courses.flatMap((c) =>
@@ -32,7 +33,7 @@ export default async function LearnPage({
   if (!course) notFound();
   if (!allLessons(course).some((l) => l.id === lessonId)) notFound();
   return (
-    <RequireLogin course>
+    <RequireLogin course={!ACADEMY_COURSES.includes(slug)}>
       <LessonPlayer course={course} lessonId={lessonId} />
     </RequireLogin>
   );

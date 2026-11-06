@@ -9,7 +9,7 @@ import { RequireLogin } from "@/components/auth/RequireLogin";
 
 export default function MyLearningPage() {
   return (
-    <RequireLogin course>
+    <RequireLogin>
       <MyLearning />
     </RequireLogin>
   );
