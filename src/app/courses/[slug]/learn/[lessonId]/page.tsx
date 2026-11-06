@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { allLessons, courses, getCourse } from "@/lib/courses";
 import { LessonPlayer } from "@/components/course/LessonPlayer";
+import { RequireLogin } from "@/components/auth/RequireLogin";
 
 export function generateStaticParams() {
   return courses.flatMap((c) =>
@@ -30,5 +31,9 @@ export default async function LearnPage({
   const course = getCourse(slug);
   if (!course) notFound();
   if (!allLessons(course).some((l) => l.id === lessonId)) notFound();
-  return <LessonPlayer course={course} lessonId={lessonId} />;
+  return (
+    <RequireLogin>
+      <LessonPlayer course={course} lessonId={lessonId} />
+    </RequireLogin>
+  );
 }

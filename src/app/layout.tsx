@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_Telugu } from "next/font/google";
 import { LangProvider } from "@/lib/lang";
+import { AuthProvider } from "@/lib/auth";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ServiceWorker } from "@/components/site/ServiceWorker";
@@ -82,11 +83,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-dvh flex flex-col">
         <Splash />
         <LangProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <InstallPrompt />
-          <ServiceWorker />
+          <AuthProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <InstallPrompt />
+            <ServiceWorker />
+          </AuthProvider>
         </LangProvider>
       </body>
     </html>

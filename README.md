@@ -22,6 +22,21 @@ npm run build
 | `/community` | Council board, weekly rituals, open seats |
 | `/admin` | Paste-a-link helper that writes the lesson snippet for you |
 
+## Student login
+
+Lessons (`/courses/[slug]/learn/...`) and `/my-learning` need a login; the home page, course
+list and course pages stay public. Pages: `/login` (with "Forgot password?") and `/account`
+(change password, log out). Built on **Supabase Auth**, see `src/lib/auth.tsx`.
+
+- There is **no public sign-up**. Accounts are created by the workshop's Google Apps Script
+  (TICAI-landing repo, `apps-script/Code.gs`) when Razorpay confirms a payment, and the student
+  is emailed the academy link, their email and a starting password.
+- Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel (see `.env.example`).
+  Without them login is off and every page stays open.
+- In Supabase: **Authentication → Sign In / Providers → Email**: turn **off** "Allow new users
+  to sign up". **Authentication → URL Configuration**: Site URL `https://tic-ai-academy.vercel.app`
+  and add `https://tic-ai-academy.vercel.app/account` to Redirect URLs (for password resets).
+
 ## Adding a recording
 
 All content lives in one file: **`src/lib/courses.ts`**. There is no database yet, which
