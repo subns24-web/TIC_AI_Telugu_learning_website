@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLang } from "@/lib/lang";
+import { useAuth } from "@/lib/auth";
 import { Logo } from "./Logo";
 import { LangToggle } from "./LangToggle";
 
@@ -17,6 +18,7 @@ const NAV = [
 
 export function Header() {
   const { t, lang } = useLang();
+  const { enabled: authOn, session } = useAuth();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -56,6 +58,15 @@ export function Header() {
           <div className="hidden sm:block">
             <LangToggle />
           </div>
+          {authOn && (
+            <Link
+              href={session ? "/account" : "/login"}
+              lang={lang}
+              className="focus-ring hidden rounded-xl border border-ink-900/15 px-4 py-2.5 text-sm font-semibold text-ink-800 transition hover:border-gold-500/50 hover:bg-gold-50 sm:inline-flex"
+            >
+              {session ? t("My account", "నా account") : t("Log in", "Login")}
+            </Link>
+          )}
           <Link
             href="/courses/ai-for-business-foundations"
             lang={lang}
@@ -95,6 +106,15 @@ export function Header() {
                 {t(item.en, item.te)}
               </Link>
             ))}
+            {authOn && (
+              <Link
+                href={session ? "/account" : "/login"}
+                lang={lang}
+                className="tap focus-ring rounded-lg px-3 text-sm font-semibold text-ink-900 hover:bg-ink-900/5"
+              >
+                {session ? t("My account", "నా account") : t("Log in", "Login")}
+              </Link>
+            )}
             <div className="mt-2 flex items-center justify-between gap-3 px-3">
               <LangToggle />
               <Link
