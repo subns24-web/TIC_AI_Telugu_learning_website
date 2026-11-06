@@ -7,8 +7,8 @@ import { supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { Button } from "@/components/ui/Bits";
 
-/* Every successful login lands on the academy home page. */
-const AFTER_LOGIN = "/";
+/* Every successful login lands on the AI for Business — Foundations course page. */
+const AFTER_LOGIN = "/courses/ai-for-business-foundations";
 
 export default function LoginPage() {
   const { t, lang } = useLang();
