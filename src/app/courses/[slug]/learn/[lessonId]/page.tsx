@@ -32,7 +32,7 @@ export default async function LearnPage({
   if (!course) notFound();
   if (!allLessons(course).some((l) => l.id === lessonId)) notFound();
   return (
-    <RequireLogin>
+    <RequireLogin course>
       <LessonPlayer course={course} lessonId={lessonId} />
     </RequireLogin>
   );

@@ -29,8 +29,14 @@ export function supabase(): SupabaseClient | null {
   return client;
 }
 
+/* What the student paid for. Set only by the payment script (Supabase app_metadata, which
+ * students cannot edit): "academy" = ₹199 workshop (academy site), "course" = ₹4999 (academy
+ * + courses). */
+export type Plan = "academy" | "course";
+
 type AuthCtx = {
   enabled: boolean;
+  plan: Plan;
   ready: boolean;          // first session check finished
   session: Session | null;
   email: string | null;
@@ -39,7 +45,7 @@ type AuthCtx = {
 };
 
 const Ctx = createContext<AuthCtx>({
-  enabled: false, ready: true, session: null, email: null, recovery: false, signOut: async () => {},
+  enabled: false, plan: "academy", ready: true, session: null, email: null, recovery: false, signOut: async () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -66,6 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<AuthCtx>(() => ({
     enabled: authEnabled,
+    plan: session?.user?.app_metadata?.plan === "course" ? "course" : "academy",
     ready,
     session,
     email: session?.user?.email ?? null,
