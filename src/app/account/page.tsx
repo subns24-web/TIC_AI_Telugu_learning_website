@@ -5,6 +5,7 @@ import { useState } from "react";
 import { supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { RequireLogin } from "@/components/auth/RequireLogin";
+import { UpgradeToCourse } from "@/components/auth/UpgradeToCourse";
 import { Button, ButtonLink } from "@/components/ui/Bits";
 
 /* Change password (optional: the starting password keeps working). Reset-password email
@@ -49,6 +50,7 @@ function AccountInner() {
               : t("Academy access (₹199 workshop)", "Academy access (₹199 workshop)")}
           </b>
         </p>
+        <UpgradeToCourse />
 
         {recovery && (
           <p className="mt-4 rounded-lg bg-gold-50 px-3 py-2 text-sm text-ink-800">

@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { ButtonLink } from "@/components/ui/Bits";
+import { UpgradeToCourse } from "./UpgradeToCourse";
 
 /* Wrap anything only registered students may see; `course` also requires the ₹4999 course
  * plan. Before sign-in is configured (no Supabase keys), it shows the page as before. */
@@ -30,11 +31,12 @@ export function RequireLogin({ children, course = false }: { children: React.Rea
           </h1>
           <p className="mt-2 text-sm text-ink-500">
             {t(
-              "Your workshop registration gives you access to the TIC AI Academy. The full course is included with the ₹4999 program. Reply to your welcome email to upgrade.",
-              "మీ workshop registration తో TIC AI Academy access ఉంది. పూర్తి course ₹4999 program లో ఉంటుంది. Upgrade కోసం మీ welcome email కి reply చేయండి.",
+              "Your workshop registration gives you access to the TIC AI Academy. The full course is included with the ₹4999 program.",
+              "మీ workshop registration తో TIC AI Academy access ఉంది. పూర్తి course ₹4999 program లో ఉంటుంది.",
             )}
           </p>
-          <ButtonLink href="/" className="mt-6 w-full justify-center">
+          <UpgradeToCourse />
+          <ButtonLink href="/" variant="ghost" className="mt-3 w-full justify-center">
             {t("Back to the academy", "Academy home కి వెళ్ళండి")}
           </ButtonLink>
         </div>
