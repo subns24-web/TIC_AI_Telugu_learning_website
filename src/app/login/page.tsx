@@ -26,6 +26,19 @@ export default function LoginPage() {
     if (ready && session) router.replace(AFTER_LOGIN);
   }, [ready, session, router]);
 
+  /* The welcome email's button opens /login?email=…#pw=… so the form arrives filled in.
+   * The password rides in the #fragment, which browsers never send to the server; it is
+   * wiped from the address bar straight away. */
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const h = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const e = (q.get("email") || "").trim();
+    const p = h.get("pw") || "";
+    if (e) setEmail(e);
+    if (p) setPassword(p);
+    if (e || p) window.history.replaceState(null, "", window.location.pathname);
+  }, []);
+
   async function onLogin(e: React.FormEvent) {
     e.preventDefault();
     setError(""); setInfo("");
