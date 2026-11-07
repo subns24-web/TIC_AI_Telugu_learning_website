@@ -7,14 +7,13 @@ import { createClient, type Session, type SupabaseClient } from "@supabase/supab
  *
  * Accounts are created by the workshop's payment script (Google Apps Script) when Razorpay
  * confirms a ₹199 payment; the student gets the academy link, their email and a starting
- * password by email. There is no public sign-up page.
- *
- * NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY are the project's public values
- * (set them in Vercel → Settings → Environment Variables). Until they are set, sign-in is
- * switched off and every page stays open, so the site never breaks half-configured. */
+ * password by email. There is no public sign-up page. */
 
-const URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+/* The academy's Supabase project. Both values are public (every browser sees them), so they
+ * live in the code: the live site then needs no Vercel settings, and stale Vercel variables
+ * from the old, expired project cannot override them. Never put the sb_secret_ key here. */
+const URL = "https://xexcztrlcnqptlhjxqjg.supabase.co";
+const ANON = "sb_publishable_1S606vRN1TYFhI7IkbcGwA_uQWnJ1nN";
 
 export const authEnabled = Boolean(URL && ANON);
 

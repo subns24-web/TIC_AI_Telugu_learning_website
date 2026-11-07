@@ -31,8 +31,11 @@ list and course pages stay public. Pages: `/login` (with "Forgot password?") and
 - There is **no public sign-up**. Accounts are created by the workshop's Google Apps Script
   (TICAI-landing repo, `apps-script/Code.gs`) when Razorpay confirms a payment, and the student
   is emailed the academy link, their email and a starting password.
-- Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel (see `.env.example`).
-  Without them login is off and every page stays open.
+- The Supabase project's public URL and publishable key are in `src/lib/auth.tsx`, so nothing
+  needs setting in Vercel. Never put the `sb_secret_` key in the code.
+- After a successful login, students land on `/courses/ai-for-business-foundations`.
+- `scripts/set-student-passwords.mjs` sets one password for every paid student (see the top of
+  that file).
 - In Supabase: **Authentication → Sign In / Providers → Email**: turn **off** "Allow new users
   to sign up". **Authentication → URL Configuration**: Site URL `https://tic-ai-academy.vercel.app`
   and add `https://tic-ai-academy.vercel.app/account` to Redirect URLs (for password resets).
