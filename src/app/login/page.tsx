@@ -143,7 +143,7 @@ export default function LoginPage() {
 
         <p className="mt-6 border-t border-ink-900/8 pt-4 text-center text-xs text-ink-400">
           {t("Not registered yet?", "ఇంకా register కాలేదా?")}{" "}
-          <Link href="https://sntg-ai-workshop.vercel.app" className="font-semibold text-ink-700 underline">
+          <Link href="https://tic-ai-workshop.vercel.app" className="font-semibold text-ink-700 underline">
             {t("Join the ₹199 workshop", "₹199 workshop లో join అవ్వండి")}
           </Link>
         </p>
