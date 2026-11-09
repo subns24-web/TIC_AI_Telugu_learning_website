@@ -57,7 +57,7 @@ export function CourseCard({ course, showProgress = false }: { course: Course; s
 
       <div className="flex flex-1 flex-col p-5">
         {lang === "te" && (
-          <h3 className="text-[1.05rem] font-bold leading-snug text-ink-900">{course.title}</h3>
+          <h3 lang="en" className="text-[1.05rem] font-bold leading-snug text-ink-900">{course.title}</h3>
         )}
         <p lang={lang} className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-500">
           {t(course.tagline, course.taglineTe)}

@@ -146,7 +146,7 @@ export default function CommunityPage() {
                   <p lang={lang} className="mt-2 font-semibold leading-snug text-ink-900">
                     {name}
                   </p>
-                  <p lang={lang} className="mt-1.5 text-sm leading-relaxed text-ink-500">
+                  <p lang={m.org[0] === m.org[1] ? "en" : lang} className="mt-1.5 text-sm leading-relaxed text-ink-500">
                     {t(m.org[0], m.org[1])}
                   </p>
                 </li>

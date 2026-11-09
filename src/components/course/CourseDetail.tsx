@@ -37,7 +37,7 @@ export function CourseDetail({ course }: { course: Course }) {
               {t("Courses", "కోర్సులు")}
             </Link>
             <span>/</span>
-            <span className="truncate text-ink-200">{course.title}</span>
+            <span lang="en" className="truncate text-ink-200">{course.title}</span>
           </nav>
 
           <div className="mt-8 grid gap-12 lg:grid-cols-[1.6fr_1fr]">
@@ -63,7 +63,7 @@ export function CourseDetail({ course }: { course: Course }) {
                 {t(course.title, course.titleTe)}
               </h1>
               {lang === "te" && (
-                <p className="mt-2 text-lg font-medium text-ink-300">{course.title}</p>
+                <p lang="en" className="mt-2 text-lg font-medium text-ink-300">{course.title}</p>
               )}
 
               <p lang={lang} className="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-ink-200">
@@ -275,7 +275,7 @@ export function CourseDetail({ course }: { course: Course }) {
                                   {t(lesson.title, lesson.titleTe)}
                                 </span>
                                 {lang === "te" && (
-                                  <span className="block truncate text-xs text-ink-400">
+                                  <span lang="en" className="block truncate text-xs text-ink-400">
                                     {lesson.title}
                                   </span>
                                 )}

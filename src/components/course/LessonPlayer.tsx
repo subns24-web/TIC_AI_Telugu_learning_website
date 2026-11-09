@@ -198,7 +198,7 @@ export function LessonPlayer({ course, lessonId }: { course: Course; lessonId: s
                   {t(lesson.title, lesson.titleTe)}
                 </h1>
                 {lang === "te" && (
-                  <p className="mt-1.5 text-sm font-medium text-ink-500">{lesson.title}</p>
+                  <p lang="en" className="mt-1.5 text-sm font-medium text-ink-500">{lesson.title}</p>
                 )}
               </div>
 

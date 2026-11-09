@@ -117,7 +117,7 @@ function MyLearning() {
                     >
                       {course.titleTe}
                     </Link>
-                    <p className="mt-1 text-sm text-ink-400">{course.title}</p>
+                    <p lang="en" className="mt-1 text-sm text-ink-400">{course.title}</p>
 
                     <div className="mt-5 max-w-md">
                       <div className="mb-2 flex items-center justify-between text-xs font-semibold text-ink-400">
