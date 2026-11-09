@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { OfflineMessage } from "@/components/site/OfflineMessage";
 
 export const metadata = { title: "Offline" };
 
@@ -13,23 +13,7 @@ export default function OfflinePage() {
         </svg>
       </span>
 
-      <h1 className="mt-7 font-telugu text-2xl font-bold tracking-tight text-ink-900">
-        ఇంటర్నెట్ కనెక్షన్ లేదు
-      </h1>
-      <p className="mt-4 max-w-md font-telugu leading-relaxed text-ink-500">
-        మీరు ఇంతకు ముందు తెరిచిన పేజీలు ఆఫ్‌లైన్‌లో కూడా పని చేస్తాయి. వీడియోలు మాత్రం
-        ఇంటర్నెట్ వచ్చాకే ప్లే అవుతాయి.
-      </p>
-      <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-400">
-        Pages you have already opened work offline. Videos need a connection.
-      </p>
-
-      <Link
-        href="/"
-        className="btn-gold focus-ring mt-9 inline-flex min-h-12 items-center rounded-xl px-6 py-3.5 font-telugu font-semibold"
-      >
-        మళ్ళీ ప్రయత్నించండి
-      </Link>
+      <OfflineMessage />
     </div>
   );
 }

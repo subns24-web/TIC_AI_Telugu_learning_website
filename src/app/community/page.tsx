@@ -71,8 +71,8 @@ export default function CommunityPage() {
           <p lang={lang} className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-400">
             {t("Community board", "కమ్యూనిటీ బోర్డ్")}
           </p>
-          <h1 className="mt-4 max-w-3xl font-telugu text-balance text-[2.1rem] font-bold leading-[1.3] tracking-tight sm:text-[2.7rem]">
-            ఒక కౌన్సిల్, ఒక కమ్యూనిటీ — తెలుగు వ్యాపారాల కోసం.
+          <h1 lang={lang} className="mt-4 max-w-3xl font-telugu text-balance text-[2.1rem] font-bold leading-[1.3] tracking-tight sm:text-[2.7rem]">
+            {t("One council, one community — for Telugu businesses.", "ఒక కౌన్సిల్, ఒక కమ్యూనిటీ — తెలుగు వ్యాపారాల కోసం.")}
           </h1>
           <p lang={lang} className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
             {t(

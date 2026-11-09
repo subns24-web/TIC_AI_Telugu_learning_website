@@ -26,12 +26,9 @@ export default function TracksPage() {
           return (
             <section key={track.id} id={track.id} className="scroll-mt-24">
               <div className="flex flex-col gap-3 border-l-4 border-gold-500 pl-5">
-                <h2 className="font-telugu text-2xl font-bold tracking-tight text-ink-900">
-                  {track.titleTe}
+                <h2 lang={lang} className="font-telugu text-2xl font-bold tracking-tight text-ink-900">
+                  {t(track.title, track.titleTe)}
                 </h2>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-400">
-                  {track.title}
-                </p>
                 <p lang={lang} className="max-w-2xl leading-relaxed text-ink-500">
                   {t(track.blurb, track.blurbTe)}
                 </p>

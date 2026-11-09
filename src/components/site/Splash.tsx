@@ -56,6 +56,11 @@ export function Splash() {
   /* Rendered in the server HTML so it is there on the very first paint —
      a splash that appears after hydration would flash the page first. */
   const [done, setDone] = useState(false);
+  // Rendered outside LangProvider, so read the saved language directly.
+  const [en, setEn] = useState(false);
+  useEffect(() => {
+    try { setEn(window.localStorage.getItem("ticai.lang") === "en"); } catch { /* ignore */ }
+  }, []);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -100,7 +105,9 @@ export function Splash() {
 
       <div className="splash-word text-center">
         <p className="text-metal text-2xl font-bold tracking-tight">TIC AI</p>
-        <p className="mt-1.5 font-telugu text-sm text-ink-400">తెలుగులో AI నేర్చుకోండి</p>
+        <p lang={en ? "en" : "te"} className="mt-1.5 font-telugu text-sm text-ink-400">
+          {en ? "Learn AI in Telugu" : "తెలుగులో AI నేర్చుకోండి"}
+        </p>
       </div>
     </div>
   );

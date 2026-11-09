@@ -80,10 +80,10 @@ export default function VyaparGptPage() {
             {t("Only on TIC AI", "TIC AI లో మాత్రమే")}
           </span>
 
-          <h1 className="mt-6 max-w-3xl font-telugu text-balance text-[2.1rem] font-bold leading-[1.3] tracking-tight sm:text-[2.8rem]">
+          <h1 lang={lang} className="mt-6 max-w-3xl font-telugu text-balance text-[2.1rem] font-bold leading-[1.3] tracking-tight sm:text-[2.8rem]">
             <span className="text-metal">Vyapar GPT</span>
             <br />
-            ప్రాంప్ట్ రాయడం మీ పని కాదు.
+            {t("Writing the prompt is not your job.", "ప్రాంప్ట్ రాయడం మీ పని కాదు.")}
           </h1>
 
           <p lang={lang} className="mt-6 max-w-2xl font-telugu text-lg leading-relaxed text-ink-200">

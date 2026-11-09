@@ -332,8 +332,8 @@ export function CourseDetail({ course }: { course: Course }) {
               {t("Who this is for", "ఇది ఎవరికి")}
             </h3>
             <ul className="mt-4 space-y-3">
-              {course.forWhom.map((w) => (
-                <li key={w} className="flex gap-2.5 text-sm leading-relaxed text-ink-600">
+              {(lang === "te" && course.forWhomTe ? course.forWhomTe : course.forWhom).map((w) => (
+                <li key={w} lang={lang} className="flex gap-2.5 text-sm leading-relaxed text-ink-600">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500 ring-2 ring-gold-200" />
                   {w}
                 </li>

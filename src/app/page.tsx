@@ -30,10 +30,20 @@ export default function HomePage() {
               )}
             </span>
 
-            <h1 className="mt-6 font-telugu text-balance text-[2.4rem] font-bold leading-[1.25] tracking-tight sm:text-5xl md:text-[3.4rem]">
-              వ్యాపారం కోసం <span className="text-metal">AI</span>,
-              <br />
-              మన తెలుగులోనే.
+            <h1 lang={lang} className="mt-6 font-telugu text-balance text-[2.4rem] font-bold leading-[1.25] tracking-tight sm:text-5xl md:text-[3.4rem]">
+              {lang === "en" ? (
+                <>
+                  <span className="text-metal">AI</span> for business,
+                  <br />
+                  in our own Telugu.
+                </>
+              ) : (
+                <>
+                  వ్యాపారం కోసం <span className="text-metal">AI</span>,
+                  <br />
+                  మన తెలుగులోనే.
+                </>
+              )}
             </h1>
 
             <p lang={lang} className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
@@ -166,10 +176,10 @@ export default function HomePage() {
                 {t("Only on TIC AI", "TIC AI లో మాత్రమే")}
               </span>
 
-              <h2 className="mt-6 font-telugu text-balance text-3xl font-bold leading-[1.3] tracking-tight sm:text-[2.3rem]">
+              <h2 lang={lang} className="mt-6 font-telugu text-balance text-3xl font-bold leading-[1.3] tracking-tight sm:text-[2.3rem]">
                 <span className="text-metal">Vyapar GPT</span>
                 <br />
-                ప్రాంప్ట్ రాయడం మీ పని కాదు.
+                {t("Writing the prompt is not your job.", "ప్రాంప్ట్ రాయడం మీ పని కాదు.")}
               </h2>
 
               <p lang={lang} className="mt-6 max-w-xl font-telugu leading-relaxed text-ink-200">
@@ -234,12 +244,9 @@ export default function HomePage() {
                 href={`/tracks#${track.id}`}
                 className="card card-hover focus-ring flex flex-col p-6"
               >
-                <h3 className="font-telugu text-lg font-bold leading-snug text-ink-900">
-                  {track.titleTe}
+                <h3 lang={lang} className="font-telugu text-lg font-bold leading-snug text-ink-900">
+                  {t(track.title, track.titleTe)}
                 </h3>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-400">
-                  {track.title}
-                </p>
                 <p lang={lang} className="mt-4 flex-1 text-sm leading-relaxed text-ink-500">
                   {t(track.blurb, track.blurbTe)}
                 </p>
@@ -338,7 +345,7 @@ export default function HomePage() {
               Santhosh Nimmani
             </h2>
             <p lang={lang} className="mt-1 font-telugu text-sm text-ink-500">
-              ఫౌండర్, SN Trinetra Global AI &amp; IT Solutions
+              {t("Founder, SN Trinetra Global AI & IT Solutions", "ఫౌండర్, SN Trinetra Global AI & IT Solutions")}
             </p>
             <p lang={lang} className="mt-5 max-w-2xl leading-relaxed text-ink-600">
               {t(
@@ -373,8 +380,9 @@ export default function HomePage() {
           <div className="absolute inset-0 grid-ink opacity-50" />
           <div className="glow-gold pointer-events-none absolute -bottom-32 left-1/2 h-96 w-96 -translate-x-1/2 opacity-30" />
           <div className="relative mx-auto max-w-2xl">
-            <h2 className="font-telugu text-balance text-3xl font-bold leading-[1.35] sm:text-4xl">
-              <span className="text-metal">మొదటి కోర్సు ఉచితం.</span> ఈ రోజే మొదలుపెట్టండి.
+            <h2 lang={lang} className="font-telugu text-balance text-3xl font-bold leading-[1.35] sm:text-4xl">
+              <span className="text-metal">{t("The first course is free.", "మొదటి కోర్సు ఉచితం.")}</span>{" "}
+              {t("Start today.", "ఈ రోజే మొదలుపెట్టండి.")}
             </h2>
             <p lang={lang} className="mt-5 leading-relaxed text-ink-200">
               {t(

@@ -77,7 +77,7 @@ export function Footer() {
         <div className="container-tic flex flex-col gap-2 py-6 text-xs text-ink-400 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} TIC AI. Built by SN Trinetra Global AI &amp; IT Solutions.</p>
           <p lang={lang} className="font-telugu">
-            తెలుగులో AI నేర్చుకోండి.
+            {t("Learn AI in Telugu.", "తెలుగులో AI నేర్చుకోండి.")}
           </p>
         </div>
       </div>

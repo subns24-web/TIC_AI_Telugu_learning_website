@@ -291,7 +291,7 @@ export default function AdminPage() {
             <ul className="mt-4 space-y-4">
               {courses.map((c) => (
                 <li key={c.slug}>
-                  <p className="font-telugu text-sm font-semibold text-ink-900">{c.titleTe}</p>
+                  <p lang={lang} className="font-telugu text-sm font-semibold text-ink-900">{t(c.title, c.titleTe)}</p>
                   <code className="text-[0.72rem] text-ink-400">{c.slug}</code>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {c.modules.map((m) => (

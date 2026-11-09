@@ -34,6 +34,11 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Tag the whole page with the chosen language (screen readers, fonts, browser translate).
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const t = useCallback((en: string, te: string) => (lang === "en" ? en : te), [lang]);
 
   return <LangContext.Provider value={{ lang, setLang, t }}>{children}</LangContext.Provider>;
