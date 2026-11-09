@@ -6,11 +6,14 @@ import type { Course } from "@/lib/types";
 import { allLessons, lessonCount, runtime, totalMinutes } from "@/lib/courses";
 import { inr, LANGUAGE_LABEL, LEVEL_LABEL } from "@/lib/format";
 import { useLang } from "@/lib/lang";
+import { useAuth } from "@/lib/auth";
 import { useCourseProgress, useEnrolment } from "@/lib/progress";
 import { Badge, Button, ButtonLink, Check, PlayIcon, ProgressBar } from "@/components/ui/Bits";
 
 export function CourseDetail({ course }: { course: Course }) {
   const { t, lang } = useLang();
+  // ₹4999 students have every course, so no prices for them.
+  const included = useAuth().plan === "course";
   const total = lessonCount(course);
   const { percent, done, isDone, reset, ready } = useCourseProgress(course.slug, total);
   const { isEnrolled, enrol, leave } = useEnrolment(course.slug);
@@ -92,9 +95,10 @@ export function CourseDetail({ course }: { course: Course }) {
                 {!course.comingSoon && (
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-white">
-                      {course.priceInr === 0 ? t("Free", "ఉచితం") : inr(course.priceInr)}
+                      {included ? t("Included in your plan ✓", "మీ plan లో ఉంది ✓")
+                        : course.priceInr === 0 ? t("Free", "ఉచితం") : inr(course.priceInr)}
                     </span>
-                    {course.mrpInr && (
+                    {course.mrpInr && !included && (
                       <span className="text-lg font-medium text-ink-400 line-through">
                         {inr(course.mrpInr)}
                       </span>

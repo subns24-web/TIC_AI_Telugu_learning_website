@@ -5,6 +5,7 @@ import type { Course } from "@/lib/types";
 import { lessonCount, runtime } from "@/lib/courses";
 import { inr, LANGUAGE_LABEL, LEVEL_LABEL } from "@/lib/format";
 import { useLang } from "@/lib/lang";
+import { useAuth } from "@/lib/auth";
 import { useCourseProgress } from "@/lib/progress";
 import { Badge, ProgressBar } from "@/components/ui/Bits";
 
@@ -21,6 +22,8 @@ const ACCENT: Record<string, string> = {
 
 export function CourseCard({ course, showProgress = false }: { course: Course; showProgress?: boolean }) {
   const { t, lang } = useLang();
+  // ₹4999 students have every course, so no prices for them.
+  const included = useAuth().plan === "course";
   const total = lessonCount(course);
   const { percent, ready } = useCourseProgress(course.slug, total);
   const started = ready && percent > 0;
@@ -77,8 +80,9 @@ export function CourseCard({ course, showProgress = false }: { course: Course; s
           ) : (
             <div className="flex items-center justify-between">
               <span className="text-[1.05rem] font-bold text-ink-900">
-                {course.priceInr === 0 ? t("Free", "ఉచితం") : inr(course.priceInr)}
-                {course.mrpInr && (
+                {included ? t("Included ✓", "మీ plan లో ఉంది ✓")
+                  : course.priceInr === 0 ? t("Free", "ఉచితం") : inr(course.priceInr)}
+                {course.mrpInr && !included && (
                   <span className="ml-2 text-sm font-medium text-ink-300 line-through">
                     {inr(course.mrpInr)}
                   </span>
