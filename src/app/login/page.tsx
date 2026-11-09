@@ -7,8 +7,10 @@ import { supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { Button } from "@/components/ui/Bits";
 
-/* Every successful login lands on the AI for Business — Foundations course page. */
+/* Every successful login lands on the AI for Business — Foundations course page, unless the link
+ * asked for another page of this site with ?next=/… (e.g. the ₹4999 email opens /courses). */
 const AFTER_LOGIN = "/courses/ai-for-business-foundations";
+const safeNext = (v: string | null) => (v && /^\/(?!\/)[\w\-/]*$/.test(v) ? v : null);
 
 export default function LoginPage() {
   const { t, lang } = useLang();
@@ -21,10 +23,11 @@ export default function LoginPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
+  const [next, setNext] = useState<string | null>(null);
 
   useEffect(() => {
-    if (ready && session) router.replace(AFTER_LOGIN);
-  }, [ready, session, router]);
+    if (ready && session) router.replace(next || AFTER_LOGIN);
+  }, [ready, session, router, next]);
 
   /* The welcome email's button opens /login?email=…#pw=… so the form arrives filled in.
    * The password rides in the #fragment, which browsers never send to the server; it is
@@ -37,11 +40,13 @@ export default function LoginPage() {
     if (e) setEmail(e);
     if (p) setPassword(p);
     const reset = q.get("reset") === "done";
+    const n = safeNext(q.get("next"));
+    if (n) setNext(n);
     if (reset) {
       setInfo(t("Your password was changed. Log in with your new password.",
                 "మీ password మారింది. కొత్త password తో login అవ్వండి."));
     }
-    if (e || p || reset) window.history.replaceState(null, "", window.location.pathname);
+    if (e || p || reset || n) window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
   async function onLogin(e: React.FormEvent) {
@@ -59,7 +64,7 @@ export default function LoginPage() {
       ));
       return;
     }
-    router.replace(AFTER_LOGIN);
+    router.replace(next || AFTER_LOGIN);
   }
 
   async function onForgot() {
