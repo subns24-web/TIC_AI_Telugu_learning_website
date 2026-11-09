@@ -5,9 +5,9 @@ import { supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { Button } from "@/components/ui/Bits";
 
-/* ₹4999 Razorpay payment page. After a successful payment the workshop script upgrades the
- * student's account to the course plan (within ~5 minutes); "Refresh my access" then picks
- * the new plan up without logging out. */
+/* ₹4999 Razorpay payment page, opened in the same tab. Razorpay then sends the buyer back to
+ * /courses?razorpay_payment_id=… (the page's redirect URL), where CourseUnlock gets the payment
+ * checked and the courses unlocked. "Refresh my access" stays as a manual fallback. */
 export const COURSE_PAYMENT_LINK = "https://rzp.io/rzp/rA9h7TtB";
 
 export function UpgradeToCourse() {
@@ -41,8 +41,6 @@ export function UpgradeToCourse() {
       </p>
       <a
         href={COURSE_PAYMENT_LINK}
-        target="_blank"
-        rel="noopener"
         className="btn-gold focus-ring mt-3 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold"
       >
         {t("Pay ₹4999 and unlock the course →", "₹4999 pay చేసి course unlock చేయండి →")}
