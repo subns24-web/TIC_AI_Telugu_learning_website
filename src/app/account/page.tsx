@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { supabase, useAuth } from "@/lib/auth";
+import { sendPasswordChangedEmail, supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { RequireLogin } from "@/components/auth/RequireLogin";
 import { UpgradeToCourse } from "@/components/auth/UpgradeToCourse";
@@ -31,6 +31,7 @@ function AccountInner() {
     setBusy(true);
     const { error } = await sb.auth.updateUser({ password: pw1 });
     if (error) { setBusy(false); setError(error.message); return; }
+    await sendPasswordChangedEmail();
     // Same ending as a reset: confirm, sign out, and log in again with the new password.
     // Sign out only when leaving, so this page (behind the login check) can show the message.
     setPw1(""); setPw2(""); setDone(true);

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { createClient, type Session, type SupabaseClient } from "@supabase/supabase-js";
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./supabase-config";
 
 /* Student sign-in, backed by Supabase Auth.
  *
@@ -9,11 +10,8 @@ import { createClient, type Session, type SupabaseClient } from "@supabase/supab
  * confirms a ₹199 payment; the student gets the academy link, their email and a starting
  * password by email. There is no public sign-up page. */
 
-/* The academy's Supabase project. Both values are public (every browser sees them), so they
- * live in the code: the live site then needs no Vercel settings, and stale Vercel variables
- * from the old, expired project cannot override them. Never put the sb_secret_ key here. */
-const URL = "https://xexcztrlcnqptlhjxqjg.supabase.co";
-const ANON = "sb_publishable_1S606vRN1TYFhI7IkbcGwA_uQWnJ1nN";
+const URL = SUPABASE_URL;
+const ANON = SUPABASE_PUBLISHABLE_KEY;
 
 export const authEnabled = Boolean(URL && ANON);
 
@@ -84,4 +82,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   return useContext(Ctx);
+}
+
+/* Ask the server to email "password changed successfully". Call right after updateUser
+ * succeeds and before signing out (it needs the session). Never blocks the student: if the
+ * email can't be sent, the password change itself still stands. */
+export async function sendPasswordChangedEmail() {
+  try {
+    const { data } = await supabase()?.auth.getSession() ?? { data: { session: null } };
+    const token = data.session?.access_token;
+    if (!token) return;
+    await fetch("/api/password-changed", { method: "POST", headers: { Authorization: `Bearer ${token}` } });
+  } catch {
+    /* ignore */
+  }
 }

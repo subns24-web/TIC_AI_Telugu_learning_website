@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { supabase, useAuth } from "@/lib/auth";
+import { sendPasswordChangedEmail, supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { Button } from "@/components/ui/Bits";
 
@@ -45,6 +45,7 @@ export default function ResetPasswordPage() {
         : error.message);
       return;
     }
+    await sendPasswordChangedEmail();
     setDone(true);
     await sb.auth.signOut();
     setTimeout(() => router.replace("/login?reset=done"), 3000);
