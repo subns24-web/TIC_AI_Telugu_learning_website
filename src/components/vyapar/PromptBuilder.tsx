@@ -94,12 +94,14 @@ export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
 
   const missing = useMemo(() => missingFields(prompt, values), [prompt, values]);
   const built = useMemo(() => {
-    const base = buildPrompt(prompt, values);
+    const base = buildPrompt(prompt, values, lang);
     if (attachments.length === 0) return base;
     // Telling it what is attached stops the AI guessing at a file it cannot see.
     const list = attachments.map((a) => `- ${a.name}`).join("\n");
-    return `${base}\n\nI am attaching these files:\n${list}`;
-  }, [prompt, values, attachments]);
+    return lang === "te" && prompt.templateTe
+      ? `${base}\n\nఈ files attach చేస్తున్నాను:\n${list}`
+      : `${base}\n\nI am attaching these files:\n${list}`;
+  }, [prompt, values, attachments, lang]);
 
   const requiredFiles = prompt.files.filter((f) => !f.optional);
   const filesDone =

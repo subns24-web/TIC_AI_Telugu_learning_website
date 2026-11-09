@@ -65,6 +65,8 @@ export type VyaparPrompt = {
   files: RequiredFile[];
   /** Placeholders are {{fieldId}}; unfilled ones stay visible as blanks. */
   template: string;
+  /** The same prompt in spoken Telugu, used when the site is in Telugu. Same placeholders. */
+  templateTe?: string;
   tips: string[];
   tipsTe: string[];
   /** Which assistant handles this best, and why it matters. */
