@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useLang } from "@/lib/lang";
 import { Dice } from "./Dice";
 
@@ -46,6 +47,7 @@ export function InstallPrompt() {
   const [deferred, setDeferred] = useState<InstallEvent | null>(null);
   const [showIosHelp, setShowIosHelp] = useState(false);
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
 
   const dismiss = useCallback(() => {
     setVisible(false);
@@ -104,7 +106,8 @@ export function InstallPrompt() {
     else dismiss();
   };
 
-  if (!visible) return null;
+  // /app is the full install page; the floating card would only repeat it.
+  if (!visible || pathname === "/app") return null;
 
   return (
     <div
