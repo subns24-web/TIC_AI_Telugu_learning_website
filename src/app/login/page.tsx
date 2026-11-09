@@ -36,7 +36,12 @@ export default function LoginPage() {
     const p = h.get("pw") || "";
     if (e) setEmail(e);
     if (p) setPassword(p);
-    if (e || p) window.history.replaceState(null, "", window.location.pathname);
+    const reset = q.get("reset") === "done";
+    if (reset) {
+      setInfo(t("Your password was changed. Log in with your new password.",
+                "మీ password మారింది. కొత్త password తో login అవ్వండి."));
+    }
+    if (e || p || reset) window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
   async function onLogin(e: React.FormEvent) {
@@ -67,10 +72,15 @@ export default function LoginPage() {
       return;
     }
     setBusy(true);
-    await sb.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
-      redirectTo: `${window.location.origin}/account`,
+    const { error } = await sb.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+      redirectTo: `${window.location.origin}/reset-password`,
     });
     setBusy(false);
+    if (error && error.status === 429) {
+      setError(t("Too many reset requests. Please wait a few minutes and try again.",
+                 "చాలా సార్లు అడిగారు. కొన్ని నిమిషాలు ఆగి మళ్ళీ ప్రయత్నించండి."));
+      return;
+    }
     // Same message whether or not the email exists, so nobody can probe for accounts.
     setInfo(t(
       "If that email is registered, a password-reset link is on its way. Check Spam / Promotions too.",

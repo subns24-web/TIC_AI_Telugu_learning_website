@@ -30,9 +30,11 @@ function AccountInner() {
     if (!sb) return;
     setBusy(true);
     const { error } = await sb.auth.updateUser({ password: pw1 });
-    setBusy(false);
-    if (error) { setError(error.message); return; }
+    if (error) { setBusy(false); setError(error.message); return; }
+    // Same ending as a reset: confirm, sign out, and log in again with the new password.
+    // Sign out only when leaving, so this page (behind the login check) can show the message.
     setPw1(""); setPw2(""); setDone(true);
+    setTimeout(async () => { await signOut(); router.replace("/login?reset=done"); }, 3000);
   }
 
   return (
@@ -72,7 +74,8 @@ function AccountInner() {
             className="focus-ring mt-3 w-full rounded-xl border border-ink-900/15 px-4 py-3 text-ink-900" />
           {error && <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">{error}</p>}
           {done && <p className="mt-3 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-800" role="status">
-            {t("Password changed. Use the new one next time you log in.", "Password మారింది. తదుపరి login కి కొత్త password వాడండి.")}
+            {t("Password changed successfully. We've emailed you a confirmation. Taking you to the login page…",
+               "Password విజయవంతంగా మారింది. మీ email కి confirmation పంపాము. Login page కి తీసుకెళ్తున్నాం…")}
           </p>}
           <Button type="submit" disabled={busy} className="mt-4 w-full justify-center">
             {busy ? t("Saving…", "Save అవుతోంది…") : t("Save new password", "కొత్త password save చేయండి")}
