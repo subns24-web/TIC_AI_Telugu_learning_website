@@ -50,7 +50,7 @@ function AccountInner() {
           <b className="text-ink-800">
             {plan === "course"
               ? t("Academy + full course (₹4999)", "Academy + పూర్తి course (₹4999)")
-              : t("Academy access (₹199 workshop)", "Academy access (₹199 workshop)")}
+              : t("Academy access (₹99 workshop)", "Academy access (₹99 workshop)")}
           </b>
         </p>
         <UpgradeToCourse />
