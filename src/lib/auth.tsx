@@ -7,7 +7,7 @@ import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./supabase-config";
 /* Student sign-in, backed by Supabase Auth.
  *
  * Accounts are created by the workshop's payment script (Google Apps Script) when Razorpay
- * confirms a ₹199 payment; the student gets the academy link, their email and a starting
+ * confirms a ₹99 payment; the student gets the academy link, their email and a starting
  * password by email. There is no public sign-up page. */
 
 const URL = SUPABASE_URL;
@@ -27,7 +27,7 @@ export function supabase(): SupabaseClient | null {
 }
 
 /* What the student paid for. Set only by the payment script (Supabase app_metadata, which
- * students cannot edit): "academy" = ₹199 workshop (academy site), "course" = ₹4999 (academy
+ * students cannot edit): "academy" = ₹99 workshop (academy site), "course" = ₹4999 (academy
  * + courses). */
 export type Plan = "academy" | "course";
 
