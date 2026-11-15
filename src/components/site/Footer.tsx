@@ -44,7 +44,6 @@ export function Footer() {
               head: ["Council", "కౌన్సిల్"],
               links: [
                 { href: "/community", en: "Community board", te: "కమ్యూనిటీ బోర్డ్" },
-                { href: "/community#board", en: "Members", te: "సభ్యులు" },
                 { href: "/admin", en: "Upload a recording", te: "రికార్డింగ్ అప్‌లోడ్" },
               ],
             },
