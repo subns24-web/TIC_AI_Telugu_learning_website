@@ -1,26 +1,25 @@
 "use client";
 
 import { useLang } from "@/lib/lang";
-import { Badge } from "@/components/ui/Bits";
 
 /* The workshop's WhatsApp community (same link as the payment emails). */
 const WHATSAPP_COMMUNITY = "https://chat.whatsapp.com/KUMcVB1BMy64Pvjbu79zj0";
 
-const RITUALS = [
+const POINTS = [
   {
-    title: ["Council call", "కౌన్సిల్ కాల్"],
-    body: [
-      "Ninety minutes on Zoom. You bring a real problem from your business and we build the solution on screen, together — join the call live to be part of it.",
-      "Zoom లో తొంభై నిమిషాలు. మీ వ్యాపారం నుంచి ఒక నిజమైన సమస్య తీసుకురండి, స్క్రీన్ మీదే కలిసి పరిష్కారం తయారు చేస్తాం — ఇందులో భాగం కావాలంటే call లో live గా join అవ్వండి.",
-    ],
+    icon: "🙌",
+    en: "Please be active in the community — say hello, share what you are working on, and help others when you can.",
+    te: "దయచేసి community లో active గా ఉండండి — పలకరించండి, మీరు ఏం చేస్తున్నారో పంచుకోండి, వీలైనప్పుడు ఇతరులకు సహాయం చేయండి.",
   },
   {
-    when: ["Always open", "ఎప్పుడూ తెరిచి ఉంది"],
-    title: ["WhatsApp group", "WhatsApp గ్రూప్"],
-    body: [
-      "Stuck at 11 pm with a broken prompt? Ask there. Most answers come inside an hour, from people who hit the same wall last month.",
-      "రాత్రి 11 గంటలకు ప్రాంప్ట్ పని చేయలేదా? అక్కడ అడగండి. గత నెల అదే గోడకు కొట్టుకున్న వారి నుంచి గంటలోపే సమాధానాలు.",
-    ],
+    icon: "💬",
+    en: "Ask any question in the WhatsApp community and get it answered — about AI, prompts or your business.",
+    te: "WhatsApp community లో ఏ ప్రశ్న అయినా అడగండి, సమాధానం పొందండి — AI, prompts లేదా మీ వ్యాపారం గురించి.",
+  },
+  {
+    icon: "✨",
+    en: "Learn new prompts with the help of the community — see what works for other business owners and try it in yours.",
+    te: "Community సహాయంతో కొత్త prompts నేర్చుకోండి — ఇతర వ్యాపారులకు ఏది పని చేసిందో చూసి, మీ వ్యాపారంలో ప్రయత్నించండి.",
   },
 ] as const;
 
@@ -61,26 +60,35 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* rituals */}
-      <section className="container-tic py-20">
-        <p lang={lang} className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-700">
-          {t("How we meet", "ఎలా కలుస్తాం")}
-        </p>
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
-          {RITUALS.map((r) => (
-            <div key={r.title[0]} className="card flex flex-col p-6">
-              {"when" in r && <Badge tone="gold">{t(r.when[0], r.when[1])}</Badge>}
-              <h3 lang={lang} className={`${"when" in r ? "mt-5" : ""} text-lg font-bold leading-snug text-ink-900`}>
-                {t(r.title[0], r.title[1])}
-              </h3>
-              <p lang={lang} className="mt-3 flex-1 text-sm leading-relaxed text-ink-500">
-                {t(r.body[0], r.body[1])}
-              </p>
-            </div>
-          ))}
+      {/* how to use the community */}
+      <section className="container-tic py-16">
+        <div className="card mx-auto max-w-3xl p-6 sm:p-8">
+          <h2 lang={lang} className="font-telugu text-xl font-bold leading-snug text-ink-900 sm:text-2xl">
+            {t("Make the most of the community", "Community ని పూర్తిగా ఉపయోగించుకోండి")}
+          </h2>
+          <ul className="mt-6 space-y-4">
+            {POINTS.map((p) => (
+              <li key={p.en} className="flex gap-3.5">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gold-100 text-lg" aria-hidden="true">
+                  {p.icon}
+                </span>
+                <p lang={lang} className="pt-1.5 font-telugu leading-relaxed text-ink-700">
+                  {t(p.en, p.te)}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={WHATSAPP_COMMUNITY}
+            target="_blank"
+            rel="noopener noreferrer"
+            lang={lang}
+            className="focus-ring mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-[0.95rem] font-semibold text-white transition hover:bg-[#1ebe5a]"
+          >
+            {t("Open the WhatsApp community", "WhatsApp community తెరవండి")} ↗
+          </a>
         </div>
       </section>
-
     </div>
   );
 }
