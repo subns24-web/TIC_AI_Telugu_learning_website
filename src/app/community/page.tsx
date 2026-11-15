@@ -1,7 +1,7 @@
 "use client";
 
 import { useLang } from "@/lib/lang";
-import { Badge, SectionHead } from "@/components/ui/Bits";
+import { Badge } from "@/components/ui/Bits";
 
 /* The workshop's WhatsApp community (same link as the payment emails). */
 const WHATSAPP_COMMUNITY = "https://chat.whatsapp.com/KUMcVB1BMy64Pvjbu79zj0";
@@ -12,14 +12,6 @@ const RITUALS = [
     body: [
       "Ninety minutes on Zoom. You bring a real problem from your business and we build the solution on screen, together — join the call live to be part of it.",
       "Zoom లో తొంభై నిమిషాలు. మీ వ్యాపారం నుంచి ఒక నిజమైన సమస్య తీసుకురండి, స్క్రీన్ మీదే కలిసి పరిష్కారం తయారు చేస్తాం — ఇందులో భాగం కావాలంటే call లో live గా join అవ్వండి.",
-    ],
-  },
-  {
-    when: ["First Saturday monthly", "నెల మొదటి శనివారం"],
-    title: ["Build day", "బిల్డ్ డే"],
-    body: [
-      "One workflow, start to finish, together. Everyone leaves with the same automation running in their own account.",
-      "ఒక వర్క్‌ఫ్లో, మొదలు నుంచి చివరి వరకు, కలిసి. అందరూ తమ ఖాతాలో అదే ఆటోమేషన్ నడుస్తూ వెళ్తారు.",
     ],
   },
   {
@@ -71,12 +63,10 @@ export default function CommunityPage() {
 
       {/* rituals */}
       <section className="container-tic py-20">
-        <SectionHead
-          eyebrow={t("How we meet", "ఎలా కలుస్తాం")}
-          title={t("Three standing commitments", "మూడు పక్కా ఏర్పాట్లు")}
-          lang={lang}
-        />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <p lang={lang} className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-700">
+          {t("How we meet", "ఎలా కలుస్తాం")}
+        </p>
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
           {RITUALS.map((r) => (
             <div key={r.title[0]} className="card flex flex-col p-6">
               {"when" in r && <Badge tone="gold">{t(r.when[0], r.when[1])}</Badge>}
