@@ -153,23 +153,6 @@ export default function CommunityPage() {
               );
             })}
           </ul>
-
-          <div className="card mt-10 flex flex-wrap items-center justify-between gap-6 p-7">
-            <div>
-              <h3 lang={lang} className="text-lg font-bold text-ink-900">
-                {t("Want a seat?", "ఒక స్థానం కావాలా?")}
-              </h3>
-              <p lang={lang} className="mt-2 max-w-xl text-sm leading-relaxed text-ink-500">
-                {t(
-                  "Board members host one session a quarter and help shape the curriculum. Tell us which sector you represent and what you would teach.",
-                  "బోర్డ్ సభ్యులు క్వార్టర్‌కు ఒక సెషన్ నిర్వహిస్తారు, కోర్సులో ఏమేం ఉన్నాయి రూపొందించడంలో సహాయం చేస్తారు. మీరు ఏ రంగానికి ఉంటారు, ఏం బోధిస్తారో చెప్పండి.",
-                )}
-              </p>
-            </div>
-            <ButtonLink href="mailto:hello@ticai.in?subject=TIC%20AI%20board%20nomination" size="lg" lang={lang}>
-              {t("Write to the council", "కౌన్సిల్‌కు రాయండి")}
-            </ButtonLink>
-          </div>
         </div>
       </section>
     </div>
