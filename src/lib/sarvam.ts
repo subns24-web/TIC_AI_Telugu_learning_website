@@ -15,6 +15,8 @@ export const LIMITS = {
   turns: 12,                // messages kept in one conversation
   maxTokens: 4096,          // Sarvam Starter plan allows up to 4096 per answer
   perUserPerHour: 30,       // answers per student per hour (per server instance)
+  translationsPerHour: 60,  // language-button translations per student per hour
+  translateChars: 16_000,   // one answer to translate
 };
 
 /* How Vyapar GPT behaves. Written for small Telugu businesses: practical, honest, local. */
@@ -72,6 +74,21 @@ SAFETY AND COMPLIANCE CHECKS (always follow)
   and offer an honest alternative.
 
 If the request is unclear, give your best useful answer first, then ask at most two short questions to improve it.`;
+}
+
+/* For the language button: turn an answer already on the page into the other language. */
+export function translatePrompt(lang: "te" | "en") {
+  const target = lang === "te"
+    ? `simple spoken Telugu (Telugu script), the way shop owners in Andhra Pradesh and Telangana talk. Keep everyday
+English business words people use — customer, stock, offer, bill, rate, profit, GST, WhatsApp, UPI — in English letters`
+    : "simple, clear Indian English";
+  return `You translate business answers for TIC AI's Vyapar GPT. Translate the user's text into ${target}.
+Rules:
+- Output ONLY the translation — no preface, no notes, no quotation marks around it.
+- Keep exactly the same structure: headings, numbered lists, bullets, bold (**…**), blank lines and separators.
+- Keep every number, ₹ amount, date, percentage, phone number, name, brand, product and file name exactly as written.
+- Keep placeholders in square brackets like [Customer Name] — translate only the words inside them.
+- Do not add, remove or change any advice. If part of the text is already in the target language, keep it as it is.`;
 }
 
 export type ChatMessage = { role: "user" | "assistant"; content: string };

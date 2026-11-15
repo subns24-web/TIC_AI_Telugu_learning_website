@@ -1,6 +1,6 @@
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "@/lib/supabase-config";
 import {
-  ERRORS, LIMITS, SARVAM_MODEL, SARVAM_URL, csvFacts, looksSensitive, systemPrompt, type ChatMessage,
+  ERRORS, LIMITS, SARVAM_MODEL, SARVAM_URL, csvFacts, looksSensitive, systemPrompt, translatePrompt, type ChatMessage,
 } from "@/lib/sarvam";
 
 /* POST /api/vyapar — Vyapar GPT answers, from Sarvam AI.
@@ -18,9 +18,19 @@ import {
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-type Body = { messages?: unknown; files?: unknown; lang?: unknown };
+type Body = { messages?: unknown; files?: unknown; lang?: unknown; mode?: unknown; text?: unknown };
 
 const hits = new Map<string, number[]>();   // user id → request times (this server instance)
+const translations = new Map<string, number[]>();
+
+function allow(map: Map<string, number[]>, id: string, max: number) {
+  const now = Date.now();
+  const recent = (map.get(id) || []).filter((t) => now - t < 3_600_000);
+  if (recent.length >= max) return false;
+  recent.push(now);
+  map.set(id, recent);
+  return true;
+}
 
 function fail(key: keyof typeof ERRORS, lang: "te" | "en", status: number) {
   return Response.json({ error: ERRORS[key][lang], code: key }, { status });
@@ -54,12 +64,40 @@ export async function POST(request: Request) {
   }
   if (!userId) return fail("notSignedIn", lang, 401);
 
+  // Language button: translate an answer already on the page into `lang` (te / en).
+  if (body.mode === "translate") {
+    const text = typeof body.text === "string" ? body.text : "";
+    if (!text.trim()) return fail("failed", lang, 400);
+    if (text.length > LIMITS.translateChars) return fail("tooLong", lang, 413);
+    if (!allow(translations, userId, LIMITS.translationsPerHour)) return fail("tooMany", lang, 429);
+    try {
+      const res = await fetch(SARVAM_URL, {
+        method: "POST",
+        headers: { "api-subscription-key": key, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: SARVAM_MODEL,
+          messages: [{ role: "system", content: translatePrompt(lang) }, { role: "user", content: text }],
+          reasoning_effort: null,
+          temperature: 0.1,
+          max_tokens: LIMITS.maxTokens,
+        }),
+      });
+      if (!res.ok) {
+        console.error("sarvam translate error", res.status, (await res.text().catch(() => "")).slice(0, 300));
+        return fail(res.status === 429 || res.status === 503 ? "busy" : "failed", lang, 502);
+      }
+      const j = (await res.json()) as { choices?: { message?: { content?: string }; finish_reason?: string }[] };
+      const out = (j.choices?.[0]?.message?.content || "").trim();
+      if (!out) return fail("failed", lang, 502);
+      return Response.json({ text: out, truncated: j.choices?.[0]?.finish_reason === "length" });
+    } catch (err) {
+      console.error("sarvam translate failed:", err);
+      return fail("busy", lang, 502);
+    }
+  }
+
   // 3. rate limit
-  const now = Date.now();
-  const recent = (hits.get(userId) || []).filter((t) => now - t < 3_600_000);
-  if (recent.length >= LIMITS.perUserPerHour) return fail("tooMany", lang, 429);
-  recent.push(now);
-  hits.set(userId, recent);
+  if (!allow(hits, userId, LIMITS.perUserPerHour)) return fail("tooMany", lang, 429);
 
   // 4. validate input
   if (!Array.isArray(body.messages) || body.messages.length === 0) return fail("failed", lang, 400);

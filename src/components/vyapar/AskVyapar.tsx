@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { Button } from "@/components/ui/Bits";
@@ -9,13 +9,19 @@ import type { Attachment } from "./ReferenceFiles";
 /* "Ask Vyapar GPT" — sends the finished prompt to /api/vyapar (Sarvam AI) and shows the
  * answer here as it is written. Follow-up questions continue the same conversation. */
 
-type Msg = { role: "user" | "assistant"; content: string };
+type Lang = "te" | "en";
+/* Each answer remembers the language it was written in; `tr` holds its translations, made when
+ * the language button is switched (and kept, so switching back is instant). */
+type Msg = { role: "user" | "assistant"; content: string; lang: Lang; tr?: Partial<Record<Lang, string>> };
+
+/* Telugu script anywhere → Telugu, otherwise English (for the lang="" tag on typed questions). */
+const scriptLang = (s: string): Lang => (/[\u0C00-\u0C7F]/.test(s) ? "te" : "en");
 const TRUNC = "\n[[TRUNCATED]]";
 
 /* Just enough Markdown for readable answers: headings, bold, bullets, numbered lists. */
 function Rich({ text }: { text: string }) {
   const inline = (s: string, k: string) =>
-    s.replace(/`([^`]+)`/g, "$1").split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    s.replace(/`([^`]+)`/g, "$1").replace(/(^|[^*])\*(?!\s)([^*\n]+?)\*(?!\*)/g, "$1$2").split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
       part.startsWith("**") && part.endsWith("**") && part.length > 4
         ? <strong key={`${k}-${i}`} className="font-semibold text-ink-900">{part.slice(2, -2)}</strong>
         : part,
@@ -51,13 +57,50 @@ export function AskVyapar({
   const [followUp, setFollowUp] = useState("");
   const [copied, setCopied] = useState(-1);
   const abort = useRef<AbortController | null>(null);
+  const [translating, setTranslating] = useState<Set<string>>(new Set());
+  const [trFailed, setTrFailed] = useState<Set<string>>(new Set());
+
+  /* The answer in the page's current language: the original, or its translation. */
+  const shown = (m: Msg) => (m.lang === lang ? m.content : m.tr?.[lang] ?? "");
+  const shownLang = (m: Msg): Lang => (m.lang === lang || m.tr?.[lang] ? lang : m.lang);
+
+  /* Language button switched: translate any answer that isn't in this language yet. */
+  useEffect(() => {
+    if (busy) return;
+    msgs.forEach((m, i) => {
+      if (m.role !== "assistant" || !m.content.trim() || m.lang === lang || m.tr?.[lang]) return;
+      const key = `${i}:${lang}`;
+      if (translating.has(key) || trFailed.has(key)) return;
+      setTranslating((s) => new Set(s).add(key));
+      (async () => {
+        try {
+          const { data } = (await supabase()?.auth.getSession()) ?? { data: { session: null } };
+          const token = data.session?.access_token;
+          const res = await fetch("/api/vyapar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+            body: JSON.stringify({ mode: "translate", lang, text: m.content.replace(TRUNC, "") }),
+          });
+          const j = (await res.json().catch(() => ({}))) as { text?: string };
+          if (!res.ok || !j.text) throw new Error("translate failed");
+          setMsgs((all) => all.map((x, k) => (k === i ? { ...x, tr: { ...x.tr, [lang]: j.text } } : x)));
+        } catch {
+          setTrFailed((s) => new Set(s).add(key));
+        } finally {
+          setTranslating((s) => { const n = new Set(s); n.delete(key); return n; });
+        }
+      })();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang, msgs, busy]);
 
   const textFiles = attachments.filter((a) => a.text);
   const otherFiles = attachments.filter((a) => !a.text);
 
   async function send(history: Msg[]) {
     setError(""); setBusy(true);
-    setMsgs([...history, { role: "assistant", content: "" }]);
+    const answerLang: Lang = lang;
+    setMsgs([...history, { role: "assistant", content: "", lang: answerLang }]);
     const ctrl = new AbortController();
     abort.current = ctrl;
     try {
@@ -70,7 +113,10 @@ export function AskVyapar({
         body: JSON.stringify({
           lang,
           // The model never sees our "[[TRUNCATED]]" marker.
-          messages: history.map((m) => ({ ...m, content: m.content.replace(TRUNC, "") })),
+          messages: history.map((m) => ({
+            role: m.role,
+            content: (m.role === "assistant" ? shown(m) || m.content : m.content).replace(TRUNC, ""),
+          })),
           files: textFiles.map((f) => ({ name: f.name, text: f.text })),
         }),
       });
@@ -85,7 +131,7 @@ export function AskVyapar({
         const { value, done } = await reader.read();
         if (done) break;
         answer += dec.decode(value, { stream: true });
-        setMsgs([...history, { role: "assistant", content: answer.replace(/\n?\[\[ERROR\]\]$/, "") }]);
+        setMsgs([...history, { role: "assistant", content: answer.replace(/\n?\[\[ERROR\]\]$/, ""), lang: answerLang }]);
       }
       if (answer.endsWith("[[ERROR]]")) {
         const partial = answer.replace(/\n?\[\[ERROR\]\]$/, "").trim();
@@ -106,15 +152,15 @@ export function AskVyapar({
     }
   }
 
-  const start = () => send([{ role: "user", content: prompt }]);
+  const start = () => send([{ role: "user", content: prompt, lang }]);
   const ask = () => {
     const q = followUp.trim();
     if (!q || busy) return;
     setFollowUp("");
-    send([...msgs, { role: "user", content: q }]);
+    send([...msgs, { role: "user", content: q, lang: scriptLang(q) }]);
   };
   const cont = () =>
-    send([...msgs, { role: "user", content: lang === "te" ? "ఆగిన చోట నుంచి కొనసాగించండి." : "Continue from where you stopped." }]);
+    send([...msgs, { role: "user", content: lang === "te" ? "ఆగిన చోట నుంచి కొనసాగించండి." : "Continue from where you stopped.", lang }]);
 
   const copy = async (i: number, text: string) => {
     try { await navigator.clipboard.writeText(text.replace(TRUNC, "")); setCopied(i); setTimeout(() => setCopied(-1), 2000); } catch { /* ignore */ }
@@ -172,14 +218,29 @@ export function AskVyapar({
         <div className="mt-5 space-y-4">
           {msgs.map((m, i) =>
             i === 0 ? null : m.role === "user" ? (
-              <div key={i} lang={lang} className="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-ink-900 px-4 py-2.5 font-telugu text-sm text-white">
+              <div key={i} lang={m.lang} className="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-ink-900 px-4 py-2.5 font-telugu text-sm text-white">
                 {m.content}
               </div>
             ) : (
-              <div key={i} className="card p-5" lang={lang}>
+              <div key={i} className="card p-5" lang={shownLang(m)}>
+                {translating.has(`${i}:${lang}`) && (
+                  <p lang={lang} className="mb-3 animate-pulse rounded-lg bg-teal-50 px-3 py-1.5 font-telugu text-xs font-semibold text-teal-800">
+                    {t("Translating to English…", "తెలుగులోకి మారుస్తున్నాం…")}
+                  </p>
+                )}
+                {trFailed.has(`${i}:${lang}`) && (
+                  <p lang={lang} className="mb-3 rounded-lg bg-gold-50 px-3 py-1.5 font-telugu text-xs text-ink-700">
+                    {t("Couldn't translate this answer right now — showing it in Telugu.",
+                       "ఈ సమాధానాన్ని ఇప్పుడు మార్చలేకపోయాం — English లోనే చూపిస్తున్నాం.")}{" "}
+                    <button type="button" className="font-semibold underline"
+                      onClick={() => setTrFailed((s) => { const n = new Set(s); n.delete(`${i}:${lang}`); return n; })}>
+                      {t("Try again", "మళ్ళీ ప్రయత్నించండి")}
+                    </button>
+                  </p>
+                )}
                 {m.content ? (
-                  <div className="font-telugu text-[0.95rem] leading-relaxed text-ink-700">
-                    <Rich text={m.content.replace(TRUNC, "")} />
+                  <div className={`font-telugu text-[0.95rem] leading-relaxed text-ink-700 ${shown(m) ? "" : "opacity-50"}`}>
+                    <Rich text={(shown(m) || m.content).replace(TRUNC, "")} />
                   </div>
                 ) : (
                   <p className="animate-pulse font-telugu text-sm text-ink-500">
@@ -188,7 +249,7 @@ export function AskVyapar({
                 )}
                 {m.content && !(busy && i === msgs.length - 1) && (
                   <div className="mt-4 flex flex-wrap gap-2 border-t border-ink-900/8 pt-3">
-                    <Button size="sm" variant="outline" onClick={() => copy(i, m.content)} lang={lang}>
+                    <Button size="sm" variant="outline" onClick={() => copy(i, shown(m) || m.content)} lang={lang}>
                       {copied === i ? t("Copied ✓", "కాపీ అయింది ✓") : t("Copy answer", "సమాధానం కాపీ")}
                     </Button>
                   </div>
