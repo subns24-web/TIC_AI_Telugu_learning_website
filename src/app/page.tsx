@@ -25,8 +25,8 @@ export default function HomePage() {
             >
               <span className="h-1.5 w-1.5 rounded-full bg-gold-400 shadow-[0_0_8px_1px] shadow-gold-400/60" />
               {t(
-                "Telugu International Council of AI for Business",
-                "Telugu International Council of AI for Business",
+                "Telugu International Council for AI in Business",
+                "Telugu International Council for AI in Business",
               )}
             </span>
 

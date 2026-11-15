@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "TIC AI — AI for Business in Telugu",
     short_name: "TIC AI",
     description:
-      "Learn AI for business in Telugu. Courses, webinar recordings and workflows from the Telugu International Council of AI for Business.",
+      "Learn AI for business in Telugu. Courses, webinar recordings and workflows from the Telugu International Council for AI in Business.",
     id: "/",
     start_url: "/",
     scope: "/",

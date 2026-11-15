@@ -1,6 +1,6 @@
 # TIC AI Academy
 
-Telugu-first course platform for the **Telugu International Council of AI for Business**.
+Telugu-first course platform for the **Telugu International Council for AI in Business**.
 Next.js 16 · React 19 · Tailwind 4 · TypeScript. Static export friendly — deploys to Vercel as-is.
 
 ```bash

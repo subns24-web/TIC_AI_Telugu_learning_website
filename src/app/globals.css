@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TIC AI — Telugu International Council of AI for Business
+   TIC AI — Telugu International Council for AI in Business
    Deep ink ground for authority, gold for Telugu warmth,
    teal for the "it works" moments. Light reading surfaces,
    because people sit with these pages for hours.
@@ -353,11 +353,23 @@
     grid-template-rows: repeat(3, 1fr);
     gap: 3px;
     padding: 13px;
-    border-radius: 15px;
-    background-image: linear-gradient(145deg, var(--color-gold-300), var(--color-gold-600));
+    border-radius: 11px;
+    /* Two layers: a soft specular blooming from the upper left over the
+       body colour. One flat gradient reads as plastic. */
+    background-image:
+      radial-gradient(
+        70% 60% at 26% 20%,
+        color-mix(in srgb, #fff 42%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(152deg, var(--color-gold-200), var(--color-gold-500) 55%, var(--color-gold-700));
     box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, #fff 38%, transparent),
-      inset 0 -10px 22px -10px color-mix(in srgb, var(--color-gold-900) 75%, transparent);
+      /* the bevel catching light along the top edge */
+      inset 0 1.5px 0 color-mix(in srgb, #fff 62%, transparent),
+      /* and falling into shade at the bottom */
+      inset 0 -2px 0 color-mix(in srgb, var(--color-gold-900) 55%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-gold-800) 45%, transparent),
+      inset 0 -14px 26px -12px color-mix(in srgb, var(--color-gold-900) 70%, transparent);
     backface-visibility: hidden;
   }
 
@@ -375,13 +387,24 @@
     filter: brightness(0.8);
   }
 
+  /* A pip is a drilled hole, not a sticker: dark on the upper-left wall
+     where the light cannot reach, with the lower-right wall catching it,
+     and a hairline of gold on the rim below. */
   .splash-pip {
     place-self: center;
     width: 17px;
     height: 17px;
     border-radius: 999px;
-    background: var(--color-ink-950);
-    box-shadow: inset 0 1.5px 2px color-mix(in srgb, #000 55%, transparent);
+    background-image: radial-gradient(
+      circle at 34% 30%,
+      #05080f,
+      #0d1424 55%,
+      #2a3752
+    );
+    box-shadow:
+      inset 0 2px 3px color-mix(in srgb, #000 70%, transparent),
+      inset 0 -1.5px 1px color-mix(in srgb, var(--color-gold-300) 45%, transparent),
+      0 1px 0 color-mix(in srgb, #fff 28%, transparent);
   }
 
   .splash-word {
