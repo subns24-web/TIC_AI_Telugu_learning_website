@@ -17,7 +17,12 @@ export type Attachment = {
   size: number;
   type: string;
   previewUrl?: string;
+  /** Contents of a small CSV / text file, so Vyapar GPT (Sarvam AI) can read it. */
+  text?: string;
 };
+
+const TEXT_FILE = /\.(csv|txt|tsv|json|md)$/i;
+const MAX_TEXT_BYTES = 200_000;
 
 function readableSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
@@ -44,11 +49,16 @@ export function ReferenceFiles({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const add = (files: FileList | null) => {
+  const add = async (files: FileList | null) => {
     if (!files?.length) return;
     const next: Attachment[] = [];
     for (const file of Array.from(files)) {
+      let text: string | undefined;
+      if (TEXT_FILE.test(file.name) && file.size <= MAX_TEXT_BYTES) {
+        try { text = (await file.text()).slice(0, 24_000); } catch { text = undefined; }
+      }
       next.push({
+        text,
         id: `${file.name}-${file.size}-${Date.now()}-${Math.random()}`,
         name: file.name,
         size: file.size,
@@ -157,8 +167,8 @@ export function ReferenceFiles({
 
       <p lang={lang} className="mt-3 font-telugu text-xs leading-relaxed text-ink-400">
         {t(
-          "These stay on your phone — this page has no server and uploads nothing. Listing them here just reminds you what to attach in the chat, and tells the AI what is coming.",
-          "ఇవి మీ ఫోన్‌లోనే ఉంటాయి — ఈ పేజీకి సర్వర్ లేదు, ఎక్కడికీ అప్‌లోడ్ కావు. చాట్‌లో ఏం జత చేయాలో గుర్తు చేయడానికి, AI కి ఏం వస్తుందో చెప్పడానికి మాత్రమే ఇక్కడ చూపిస్తున్నాం.",
+          "Files stay on your phone. Only if you press “Ask Vyapar GPT” are CSV / text files sent to Sarvam AI to answer you. For ChatGPT, attach them there yourself.",
+          "Files మీ ఫోన్‌లోనే ఉంటాయి. “Vyapar GPT ని అడగండి” నొక్కినప్పుడు మాత్రమే CSV / text files సమాధానం కోసం Sarvam AI కి వెళ్తాయి. ChatGPT కోసం అక్కడ మీరే attach చేయండి.",
         )}
       </p>
     </div>

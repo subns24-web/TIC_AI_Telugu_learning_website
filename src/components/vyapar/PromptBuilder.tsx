@@ -10,6 +10,7 @@ import { Badge, Button, ButtonLink } from "@/components/ui/Bits";
 import { FileCard } from "./FileCard";
 import { ProfileForm } from "./ProfileForm";
 import { ReferenceFiles, type Attachment } from "./ReferenceFiles";
+import { AskVyapar } from "./AskVyapar";
 
 /* Four steps, always in the same order: what to bring, what to tell it,
  * the finished prompt, what to do with it. A shop owner should never have
@@ -333,6 +334,8 @@ export function PromptBuilder({ prompt }: { prompt: VyaparPrompt }) {
           <Button size="lg" onClick={copy} lang={lang} className="mt-4 w-full sm:w-auto">
             {copied ? t("Copied ✓", "కాపీ అయింది ✓") : t("Copy the whole prompt", "మొత్తం ప్రాంప్ట్ కాపీ చేయండి")}
           </Button>
+
+          <AskVyapar prompt={built} attachments={attachments} ready={missing.length === 0} />
         </Step>
 
         {/* 4 — what to do */}
