@@ -43,7 +43,7 @@ export function Header() {
 
   return (
     <header className="safe-top sticky top-0 z-50 border-b border-ink-900/8 bg-paper-100/85 backdrop-blur-md">
-      <div className="container-tic flex h-16 items-center justify-between gap-4">
+      <div className="container-tic flex min-h-16 items-center justify-between gap-4 py-2">
         <Link href="/" className="focus-ring rounded-lg" aria-label="TIC AI home">
           <Logo />
         </Link>

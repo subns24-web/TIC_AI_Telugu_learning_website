@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "TIC AI — AI for Business in Telugu",
+    name: "TIC AI — Telugu International Council for AI in Business",
     short_name: "TIC AI",
     description:
       "Learn AI for business in Telugu. Courses, webinar recordings and workflows from the Telugu International Council for AI in Business.",

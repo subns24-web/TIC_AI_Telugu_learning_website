@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     "AI training Vijayawada",
   ],
   openGraph: {
-    title: "TIC AI — AI for Business, in Telugu",
+    title: "TIC AI — Telugu International Council for AI in Business",
     description:
       "The Telugu-first learning platform for AI in business. Courses, recordings and templates you can use the same day.",
     type: "website",

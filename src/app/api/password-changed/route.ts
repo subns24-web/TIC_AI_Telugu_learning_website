@@ -20,7 +20,7 @@ const escape = (s: string) =>
 function html(email: string) {
   const e = escape(email);
   return `<div style="font-family:Arial,sans-serif;max-width:480px;margin:auto;padding:24px;color:#0b1020">
-  <h2 style="margin:0 0 4px">TIC AI — AI for Business</h2>
+  <h2 style="margin:0 0 4px">TIC AI — Telugu International Council for AI in Business</h2>
   <p style="color:#555;margin:0 0 20px">Password changed / Password మారింది</p>
   <p>The password for <b>${e}</b> was changed successfully. Log in with your new password:</p>
   <p>మీ TIC AI account password విజయవంతంగా మారింది. కొత్త password తో login అవ్వండి:</p>

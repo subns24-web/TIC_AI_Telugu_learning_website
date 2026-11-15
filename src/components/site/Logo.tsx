@@ -1,5 +1,8 @@
 import { Dice } from "./Dice";
 
+/* The lockup carries the full form, not a tagline. "AI for Business" read
+ * like a strapline somebody chose; the council's actual name is the name. */
+
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
     <span className="inline-flex items-center gap-2.5">
@@ -17,12 +20,14 @@ export function Logo({ dark = false }: { dark?: boolean }) {
         >
           TIC AI
         </span>
+        {/* Wraps on a phone, where the header grows to take it; one line
+            from sm up, where there is room and two lines looked cramped. */}
         <span
-          className={`block text-[0.62rem] font-medium uppercase tracking-[0.14em] ${
+          className={`mt-0.5 block max-w-[11rem] text-[0.56rem] font-semibold uppercase leading-[1.3] tracking-[0.09em] sm:max-w-none sm:whitespace-nowrap ${
             dark ? "text-ink-300" : "text-ink-400"
           }`}
         >
-          AI for Business
+          Telugu International Council for AI in Business
         </span>
       </span>
     </span>

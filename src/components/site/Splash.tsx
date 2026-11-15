@@ -116,6 +116,9 @@ export function Splash() {
 
       <div className="splash-word text-center">
         <p className="text-metal text-2xl font-bold tracking-tight">TIC AI</p>
+        <p className="mx-auto mt-1.5 max-w-[15rem] text-[0.6rem] font-semibold uppercase leading-[1.4] tracking-[0.1em] text-ink-400">
+          Telugu International Council for AI in Business
+        </p>
         <p lang={en ? "en" : "te"} className="mt-1.5 font-telugu text-sm text-ink-400">
           {en ? "Learn AI in Telugu" : "తెలుగులో AI నేర్చుకోండి"}
         </p>
