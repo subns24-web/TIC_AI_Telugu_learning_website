@@ -18,8 +18,8 @@ export function Footer() {
           <Logo dark />
           <p lang={lang} className="mt-4 max-w-xs text-sm leading-relaxed text-ink-300">
             {t(
-              "The Telugu International Council of AI for Business — a learning community for owners, teams and builders across Andhra Pradesh, Telangana and the Telugu diaspora.",
-              "Telugu International Council of AI for Business — ఆంధ్రప్రదేశ్, తెలంగాణ, ప్రవాస తెలుగు వారి కోసం ఒక నేర్చుకునే కమ్యూనిటీ.",
+              "The Telugu International Council for AI in Business — a learning community for owners, teams and builders across Andhra Pradesh, Telangana and the Telugu diaspora.",
+              "Telugu International Council for AI in Business — ఆంధ్రప్రదేశ్, తెలంగాణ, ప్రవాస తెలుగు వారి కోసం ఒక నేర్చుకునే కమ్యూనిటీ.",
             )}
           </p>
         </div>

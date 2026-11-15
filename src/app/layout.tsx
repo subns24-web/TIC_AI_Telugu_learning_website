@@ -24,11 +24,11 @@ const telugu = Noto_Sans_Telugu({
 
 export const metadata: Metadata = {
   title: {
-    default: "TIC AI — Telugu International Council of AI for Business",
+    default: "TIC AI — Telugu International Council for AI in Business",
     template: "%s · TIC AI",
   },
   description:
-    "Learn AI for business in Telugu. Courses, live webinar recordings and workflows from the Telugu International Council of AI for Business.",
+    "Learn AI for business in Telugu. Courses, live webinar recordings and workflows from the Telugu International Council for AI in Business.",
   keywords: [
     "AI in Telugu",
     "Telugu AI course",

@@ -24,7 +24,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 rounded-full border border-gold-400/35 bg-gold-400/8 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-gold-200"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-gold-400 shadow-[0_0_8px_1px] shadow-gold-400/60" />
-              Telugu International Council of AI for Business
+              Telugu International Council for AI in Business
             </span>
 
             <h1 lang={lang} className="mt-6 font-telugu text-balance text-[2.4rem] font-bold leading-[1.25] tracking-tight sm:text-5xl md:text-[3.4rem]">
