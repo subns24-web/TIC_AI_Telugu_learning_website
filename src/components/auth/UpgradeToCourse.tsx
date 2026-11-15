@@ -14,6 +14,10 @@ import { Button } from "@/components/ui/Bits";
  * course plan arrives sends the student to /courses, where every course is open. */
 export const COURSE_PAYMENT_LINK = "https://rzp.io/rzp/rA9h7TtB";
 
+/* ₹4999 enrolment is paused for now: the button stays on screen but can't be clicked.
+ * Set to true to open enrolment again. */
+export const COURSE_ENROLMENT_OPEN = false;
+
 export function UpgradeToCourse() {
   const { t } = useLang();
   const { email, plan } = useAuth();
@@ -54,13 +58,23 @@ export function UpgradeToCourse() {
         {t("Pay with the same email you log in with", "మీరు login అయ్యే email తోనే pay చేయండి")}
         {email ? <>: <b className="text-ink-700">{email}</b></> : null}
       </p>
-      <a
-        href={COURSE_PAYMENT_LINK}
-        className="btn-gold focus-ring mt-3 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold"
-      >
-        {t("Pay ₹4999 and unlock the course →", "₹4999 pay చేసి course unlock చేయండి →")}
-      </a>
-      <Button variant="outline" disabled={busy} onClick={refresh} className="mt-2 w-full justify-center">
+      {COURSE_ENROLMENT_OPEN ? (
+        <a
+          href={COURSE_PAYMENT_LINK}
+          className="btn-gold focus-ring mt-3 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold"
+        >
+          {t("Pay ₹4999 and unlock the course →", "₹4999 pay చేసి course unlock చేయండి →")}
+        </a>
+      ) : (
+        <span
+          role="link"
+          aria-disabled="true"
+          className="btn-gold mt-3 inline-flex w-full cursor-not-allowed select-none items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold opacity-50"
+        >
+          {t("Pay ₹4999 and unlock the course →", "₹4999 pay చేసి course unlock చేయండి →")}
+        </span>
+      )}
+      <Button variant="outline" disabled={busy || !COURSE_ENROLMENT_OPEN} onClick={refresh} className="mt-2 w-full justify-center">
         {busy ? t("Checking your payment…", "మీ payment చెక్ చేస్తున్నాం…") : t("I've paid — refresh my access", "Pay చేశాను — access refresh చేయండి")}
       </Button>
       {note && <p className="mt-2 text-xs text-ink-600" role="status">{note}</p>}
