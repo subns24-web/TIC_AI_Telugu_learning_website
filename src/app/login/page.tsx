@@ -6,15 +6,16 @@ import { useEffect, useState } from "react";
 import { supabase, useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { Button } from "@/components/ui/Bits";
+import { canOpen, homeFor } from "@/lib/access";
 
-/* Every successful login lands on the AI for Business — Foundations course page, unless the link
- * asked for another page of this site with ?next=/… (e.g. the ₹4999 email opens /courses). */
-const AFTER_LOGIN = "/courses/ai-for-business-foundations";
+/* After login: the page the link asked for with ?next=/… (e.g. the ₹4999 email opens /courses)
+ * if this student may open it, otherwise their plan's home — Foundations for ₹4999, Vyapar GPT
+ * for ₹99. */
 const safeNext = (v: string | null) => (v && /^\/(?!\/)[\w\-/]*$/.test(v) ? v : null);
 
 export default function LoginPage() {
   const { t, lang } = useLang();
-  const { enabled, ready, session } = useAuth();
+  const { enabled, ready, session, plan } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -26,8 +27,8 @@ export default function LoginPage() {
   const [next, setNext] = useState<string | null>(null);
 
   useEffect(() => {
-    if (ready && session) router.replace(next || AFTER_LOGIN);
-  }, [ready, session, router, next]);
+    if (ready && session) router.replace(next && canOpen(next, true, plan) ? next : homeFor(plan));
+  }, [ready, session, plan, router, next]);
 
   /* The welcome email's button opens /login?email=…#pw=… so the form arrives filled in.
    * The password rides in the #fragment, which browsers never send to the server; it is
@@ -55,7 +56,7 @@ export default function LoginPage() {
     const sb = supabase();
     if (!sb) return;
     setBusy(true);
-    const { error } = await sb.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
+    const { data, error } = await sb.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
     setBusy(false);
     if (error) {
       setError(t(
@@ -64,7 +65,8 @@ export default function LoginPage() {
       ));
       return;
     }
-    router.replace(next || AFTER_LOGIN);
+    const p = data.user?.app_metadata?.plan === "course" ? "course" : "academy";
+    router.replace(next && canOpen(next, true, p) ? next : homeFor(p));
   }
 
   async function onForgot() {

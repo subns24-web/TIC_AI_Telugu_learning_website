@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLang } from "@/lib/lang";
 import { useAuth } from "@/lib/auth";
+import { canOpen } from "@/lib/access";
 import { Logo } from "./Logo";
 import { LangToggle } from "./LangToggle";
 
@@ -18,7 +19,10 @@ const NAV = [
 
 export function Header() {
   const { t, lang } = useLang();
-  const { enabled: authOn, session } = useAuth();
+  const { enabled: authOn, session, plan } = useAuth();
+  // Only the tabs this person may open (none when logged out).
+  const nav = NAV.filter((item) => !authOn || canOpen(item.href, !!session, plan));
+  const showStart = !authOn || (!!session && plan === "course");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -35,7 +39,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {NAV.map((item) => {
+          {nav.map((item) => {
             const active = pathname === item.href || pathname.startsWith(item.href + "/");
             return (
               <Link
@@ -67,13 +71,15 @@ export function Header() {
               {session ? t("My account", "నా account") : t("Log in", "Login")}
             </Link>
           )}
-          <Link
-            href="/courses/ai-for-business-foundations"
-            lang={lang}
-            className="focus-ring hidden rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-ink-800 sm:inline-flex"
-          >
-            {t("Start free", "ఉచితంగా మొదలుపెట్టండి")}
-          </Link>
+          {showStart && (
+            <Link
+              href="/courses/ai-for-business-foundations"
+              lang={lang}
+              className="focus-ring hidden rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-ink-800 sm:inline-flex"
+            >
+              {t("Start free", "ఉచితంగా మొదలుపెట్టండి")}
+            </Link>
+          )}
 
           <button
             type="button"
@@ -96,7 +102,7 @@ export function Header() {
       {open && (
         <div className="border-t border-ink-900/8 bg-paper-100 md:hidden">
           <div className="container-tic flex flex-col gap-1 py-3">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -117,13 +123,15 @@ export function Header() {
             )}
             <div className="mt-2 flex items-center justify-between gap-3 px-3">
               <LangToggle />
-              <Link
-                href="/courses/ai-for-business-foundations"
-                lang={lang}
-                className="focus-ring rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-semibold text-white"
-              >
-                {t("Start free", "ఉచితంగా")}
-              </Link>
+              {showStart && (
+                <Link
+                  href="/courses/ai-for-business-foundations"
+                  lang={lang}
+                  className="focus-ring rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-semibold text-white"
+                >
+                  {t("Start free", "ఉచితంగా")}
+                </Link>
+              )}
             </div>
           </div>
         </div>

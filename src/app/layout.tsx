@@ -6,6 +6,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ServiceWorker } from "@/components/site/ServiceWorker";
 import { InstallPrompt } from "@/components/site/InstallPrompt";
+import { AuthGate } from "@/components/auth/AuthGate";
 import { Splash } from "@/components/site/Splash";
 import "./globals.css";
 
@@ -85,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LangProvider>
           <AuthProvider>
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1"><AuthGate>{children}</AuthGate></main>
             <Footer />
             <InstallPrompt />
             <ServiceWorker />

@@ -3,10 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "@/lib/lang";
+import { useAuth } from "@/lib/auth";
+import { canOpen } from "@/lib/access";
 import { Logo } from "./Logo";
 
 export function Footer() {
   const { t, lang } = useLang();
+  const { enabled: authOn, session, plan } = useAuth();
+  // External links (mail, LinkedIn) always show; site links only if this person can open them.
+  const allowed = (href: string) => !href.startsWith("/") || !authOn || canOpen(href, !!session, plan);
   const pathname = usePathname();
 
   if (pathname.includes("/learn/")) return null;
@@ -51,7 +56,9 @@ export function Footer() {
               ],
             },
           ] as const
-        ).map((col) => (
+        ).map((col) => ({ ...col, links: col.links.filter((l) => allowed(l.href)) }))
+         .filter((col) => col.links.length > 0)
+         .map((col) => (
           <div key={col.head[0]}>
             <h3 lang={lang} className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-400">
               {t(col.head[0], col.head[1])}
