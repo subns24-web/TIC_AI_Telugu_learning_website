@@ -10,8 +10,8 @@ import { Logo } from "./Logo";
 export function Footer() {
   const { t, lang } = useLang();
   const { enabled: authOn, session, plan } = useAuth();
-  // External links (mail, LinkedIn) always show; site links only if this person can open them.
-  const allowed = (href: string) => !href.startsWith("/") || !authOn || canOpen(href, !!session, plan);
+  // Site links show only if this person can open them.
+  const allowed = (href: string) => !authOn || canOpen(href, !!session, plan);
   const pathname = usePathname();
 
   if (pathname.includes("/learn/")) return null;
@@ -46,13 +46,6 @@ export function Footer() {
                 { href: "/community", en: "Community board", te: "కమ్యూనిటీ బోర్డ్" },
                 { href: "/community#board", en: "Members", te: "సభ్యులు" },
                 { href: "/admin", en: "Upload a recording", te: "రికార్డింగ్ అప్‌లోడ్" },
-              ],
-            },
-            {
-              head: ["Contact", "సంప్రదించండి"],
-              links: [
-                { href: "mailto:hello@ticai.in", en: "hello@ticai.in", te: "hello@ticai.in" },
-                { href: "https://www.linkedin.com/", en: "LinkedIn", te: "LinkedIn" },
               ],
             },
           ] as const
