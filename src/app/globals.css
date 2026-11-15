@@ -299,7 +299,7 @@
     gap: 2rem;
     align-content: center;
     background: var(--color-ink-950);
-    animation: splash-out 460ms ease 1920ms forwards;
+    animation: splash-out 450ms ease 2150ms forwards;
   }
 
   @keyframes splash-out {
@@ -324,7 +324,7 @@
     width: 108px;
     height: 108px;
     transform-style: preserve-3d;
-    animation: dice-roll 1900ms cubic-bezier(0.24, 0.62, 0.3, 1) forwards;
+    animation: dice-roll 1500ms cubic-bezier(0.24, 0.62, 0.3, 1) forwards;
   }
 
   /* It falls, hits, bounces, hits again, settles on the 3. A die that only
@@ -348,10 +348,10 @@
       transform: translateY(5px) rotateX(-28deg) rotateY(-4deg) rotateZ(0deg) scale(1.02);
     }
     89% {
-      transform: translateY(-9px) rotateX(-19deg) rotateY(-27deg) scale(1);
+      transform: translateY(-9px) rotateX(-23deg) rotateY(-32deg) scale(1);
     }
     100% {
-      transform: translateY(0) rotateX(-16deg) rotateY(-21deg) scale(1);
+      transform: translateY(0) rotateX(-20deg) rotateY(-26deg) scale(1);
     }
   }
 
@@ -369,7 +369,7 @@
       color-mix(in srgb, #000 55%, transparent),
       transparent
     );
-    animation: dice-shadow 1900ms cubic-bezier(0.24, 0.62, 0.3, 1) forwards;
+    animation: dice-shadow 1500ms cubic-bezier(0.24, 0.62, 0.3, 1) forwards;
   }
 
   @keyframes dice-shadow {
@@ -493,7 +493,7 @@
   @media (prefers-reduced-motion: reduce) {
     .splash-cube {
       animation: none;
-      transform: rotateX(-16deg) rotateY(-21deg);
+      transform: rotateX(-20deg) rotateY(-26deg);
     }
 
     .splash-shadow {

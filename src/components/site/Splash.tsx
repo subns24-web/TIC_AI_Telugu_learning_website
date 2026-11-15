@@ -68,7 +68,7 @@ export function Splash() {
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const total = reduced ? 1000 : 2420;
+    const total = reduced ? 1000 : 2650;
 
     const timer = window.setTimeout(() => setDone(true), total);
     // Anyone who has seen it once can tap straight past it.
