@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description:
       "Learn AI for business in Telugu. Courses, webinar recordings and workflows from the Telugu International Council for AI in Business.",
     id: "/",
-    start_url: "/",
+    start_url: "/login",   // the installed app opens on the TIC-AI login page
     scope: "/",
     display: "standalone",
     orientation: "portrait-primary",

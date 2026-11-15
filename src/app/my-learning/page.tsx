@@ -5,8 +5,17 @@ import { allLessons, courses, getCourse, lessonCount } from "@/lib/courses";
 import { useLang } from "@/lib/lang";
 import { useAllProgress, useEnrolment } from "@/lib/progress";
 import { Badge, ButtonLink, PlayIcon, ProgressBar, SectionHead } from "@/components/ui/Bits";
+import { RequireLogin } from "@/components/auth/RequireLogin";
 
 export default function MyLearningPage() {
+  return (
+    <RequireLogin>
+      <MyLearning />
+    </RequireLogin>
+  );
+}
+
+function MyLearning() {
   const { t, lang } = useLang();
   const { enrolled, ready: enrolReady, leave } = useEnrolment();
   const { map, ready: progReady } = useAllProgress();
@@ -108,7 +117,7 @@ export default function MyLearningPage() {
                     >
                       {course.titleTe}
                     </Link>
-                    <p className="mt-1 text-sm text-ink-400">{course.title}</p>
+                    <p lang="en" className="mt-1 text-sm text-ink-400">{course.title}</p>
 
                     <div className="mt-5 max-w-md">
                       <div className="mb-2 flex items-center justify-between text-xs font-semibold text-ink-400">

@@ -6,11 +6,14 @@ import type { Course } from "@/lib/types";
 import { allLessons, lessonCount, runtime, totalMinutes } from "@/lib/courses";
 import { inr, LANGUAGE_LABEL, LEVEL_LABEL } from "@/lib/format";
 import { useLang } from "@/lib/lang";
+import { useAuth } from "@/lib/auth";
 import { useCourseProgress, useEnrolment } from "@/lib/progress";
 import { Badge, Button, ButtonLink, Check, PlayIcon, ProgressBar } from "@/components/ui/Bits";
 
 export function CourseDetail({ course }: { course: Course }) {
   const { t, lang } = useLang();
+  // ₹4999 students have every course, so no prices for them.
+  const included = useAuth().plan === "course";
   const total = lessonCount(course);
   const { percent, done, isDone, reset, ready } = useCourseProgress(course.slug, total);
   const { isEnrolled, enrol, leave } = useEnrolment(course.slug);
@@ -34,7 +37,7 @@ export function CourseDetail({ course }: { course: Course }) {
               {t("Courses", "కోర్సులు")}
             </Link>
             <span>/</span>
-            <span className="truncate text-ink-200">{course.title}</span>
+            <span lang="en" className="truncate text-ink-200">{course.title}</span>
           </nav>
 
           <div className="mt-8 grid gap-12 lg:grid-cols-[1.6fr_1fr]">
@@ -60,7 +63,7 @@ export function CourseDetail({ course }: { course: Course }) {
                 {t(course.title, course.titleTe)}
               </h1>
               {lang === "te" && (
-                <p className="mt-2 text-lg font-medium text-ink-300">{course.title}</p>
+                <p lang="en" className="mt-2 text-lg font-medium text-ink-300">{course.title}</p>
               )}
 
               <p lang={lang} className="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-ink-200">
@@ -92,9 +95,10 @@ export function CourseDetail({ course }: { course: Course }) {
                 {!course.comingSoon && (
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl font-bold text-white">
-                      {course.priceInr === 0 ? t("Free", "ఉచితం") : inr(course.priceInr)}
+                      {included ? t("Included in your plan ✓", "మీ plan లో ఉంది ✓")
+                        : course.priceInr === 0 ? t("Free", "ఉచితం") : inr(course.priceInr)}
                     </span>
-                    {course.mrpInr && (
+                    {course.mrpInr && !included && (
                       <span className="text-lg font-medium text-ink-400 line-through">
                         {inr(course.mrpInr)}
                       </span>
@@ -271,7 +275,7 @@ export function CourseDetail({ course }: { course: Course }) {
                                   {t(lesson.title, lesson.titleTe)}
                                 </span>
                                 {lang === "te" && (
-                                  <span className="block truncate text-xs text-ink-400">
+                                  <span lang="en" className="block truncate text-xs text-ink-400">
                                     {lesson.title}
                                   </span>
                                 )}
@@ -328,8 +332,8 @@ export function CourseDetail({ course }: { course: Course }) {
               {t("Who this is for", "ఇది ఎవరికి")}
             </h3>
             <ul className="mt-4 space-y-3">
-              {course.forWhom.map((w) => (
-                <li key={w} className="flex gap-2.5 text-sm leading-relaxed text-ink-600">
+              {(lang === "te" && course.forWhomTe ? course.forWhomTe : course.forWhom).map((w) => (
+                <li key={w} lang={lang} className="flex gap-2.5 text-sm leading-relaxed text-ink-600">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500 ring-2 ring-gold-200" />
                   {w}
                 </li>

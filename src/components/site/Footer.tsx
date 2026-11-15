@@ -3,10 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "@/lib/lang";
+import { useAuth } from "@/lib/auth";
+import { canOpen } from "@/lib/access";
 import { Logo } from "./Logo";
 
 export function Footer() {
   const { t, lang } = useLang();
+  const { enabled: authOn, session, plan } = useAuth();
+  // Site links show only if this person can open them.
+  const allowed = (href: string) => !authOn || canOpen(href, !!session, plan);
   const pathname = usePathname();
 
   if (pathname.includes("/learn/")) return null;
@@ -39,19 +44,13 @@ export function Footer() {
               head: ["Council", "కౌన్సిల్"],
               links: [
                 { href: "/community", en: "Community board", te: "కమ్యూనిటీ బోర్డ్" },
-                { href: "/community#board", en: "Members", te: "సభ్యులు" },
                 { href: "/admin", en: "Upload a recording", te: "రికార్డింగ్ అప్‌లోడ్" },
               ],
             },
-            {
-              head: ["Contact", "సంప్రదించండి"],
-              links: [
-                { href: "mailto:hello@ticai.in", en: "hello@ticai.in", te: "hello@ticai.in" },
-                { href: "https://www.linkedin.com/", en: "LinkedIn", te: "LinkedIn" },
-              ],
-            },
           ] as const
-        ).map((col) => (
+        ).map((col) => ({ ...col, links: col.links.filter((l) => allowed(l.href)) }))
+         .filter((col) => col.links.length > 0)
+         .map((col) => (
           <div key={col.head[0]}>
             <h3 lang={lang} className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-400">
               {t(col.head[0], col.head[1])}
@@ -75,9 +74,9 @@ export function Footer() {
 
       <div className="border-t border-white/8">
         <div className="container-tic flex flex-col gap-2 py-6 text-xs text-ink-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} TIC AI. Built by SN Trinetra Global AI &amp; IT Solutions.</p>
+          <p lang="en">© {new Date().getFullYear()} TIC AI. Built by SN Trinetra Global AI &amp; IT Solutions.</p>
           <p lang={lang} className="font-telugu">
-            తెలుగులో AI నేర్చుకోండి.
+            {t("Learn AI in Telugu.", "తెలుగులో AI నేర్చుకోండి.")}
           </p>
         </div>
       </div>

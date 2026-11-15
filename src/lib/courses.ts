@@ -81,6 +81,11 @@ export const courses: Course[] = [
       "Anyone who has heard 'use AI' twenty times and still does not know where to start",
       "Team leads asked to 'do something with AI' this quarter",
     ],
+    forWhomTe: [
+      "AP & తెలంగాణలో షాప్, క్లినిక్, ఫ్యాక్టరీ, ఏజెన్సీ యజమానులు",
+      "'AI వాడండి' అని ఇరవై సార్లు విని, ఇంకా ఎక్కడ మొదలుపెట్టాలో తెలియని వారు",
+      "ఈ quarter లో 'AI తో ఏదైనా చేయండి' అని చెప్పబడిన team leads",
+    ],
     tools: ["ChatGPT", "Google Gemini", "Claude", "WhatsApp Business"],
     instructor: {
       name: "Santhosh Nimmani",
@@ -222,6 +227,11 @@ export const courses: Course[] = [
       "Teams writing content, replies or reports every day",
       "Freelancers and consultants billing for output",
     ],
+    forWhomTe: [
+      "ఇప్పటికే ChatGPT వాడుతున్నా సాధారణ ఫలితాలే వస్తున్న వారు",
+      "ప్రతిరోజూ content, replies లేదా reports రాసే teams",
+      "తమ పనికి bill చేసే freelancers, consultants",
+    ],
     tools: ["ChatGPT", "Claude", "Gemini", "Perplexity"],
     instructor: {
       name: "Santhosh Nimmani",
@@ -346,6 +356,11 @@ export const courses: Course[] = [
       "Sales teams in real estate, education, healthcare and manufacturing",
       "Founders doing their own marketing",
     ],
+    forWhomTe: [
+      "సేవలు అమ్మే ఏజెన్సీ యజమానులు, freelancers",
+      "real estate, education, healthcare, manufacturing లో sales teams",
+      "తమ marketing తామే చేసుకునే founders",
+    ],
     tools: ["ChatGPT", "Google Maps", "WhatsApp Business", "Canva", "Meta Ads"],
     instructor: {
       name: "Santhosh Nimmani",
@@ -428,6 +443,11 @@ export const courses: Course[] = [
       "Agency owners who want to deliver automation to clients",
       "Anyone who finished the Foundations course",
     ],
+    forWhomTe: [
+      "copy-paste పనిలో మునిగిపోయిన operations, admin teams",
+      "clients కి automation అందించాలనుకునే ఏజెన్సీ యజమానులు",
+      "Foundations course పూర్తి చేసిన ఎవరైనా",
+    ],
     tools: ["n8n", "Google Sheets", "WhatsApp Cloud API", "OpenAI API", "Gmail"],
     instructor: {
       name: "Santhosh Nimmani",
@@ -502,6 +522,11 @@ export const courses: Course[] = [
       "Developers building for Indian-language markets",
       "Agencies selling voice automation",
     ],
+    forWhomTe: [
+      "calls మిస్ అవుతున్న clinics, diagnostic labs, hospitals",
+      "భారతీయ భాషల markets కోసం build చేసే developers",
+      "voice automation అమ్మే ఏజెన్సీలు",
+    ],
     tools: ["Twilio", "Sarvam AI", "OpenAI Realtime", "Node.js"],
     instructor: {
       name: "Santhosh Nimmani",
@@ -566,6 +591,11 @@ export const courses: Course[] = [
       "Developers and technical founders",
       "Agency owners moving up from automation to agents",
       "Anyone who finished the n8n course",
+    ],
+    forWhomTe: [
+      "developers, technical founders",
+      "automation నుంచి agents వైపు ఎదుగుతున్న ఏజెన్సీ యజమానులు",
+      "n8n course పూర్తి చేసిన ఎవరైనా",
     ],
     tools: ["Claude", "OpenAI API", "n8n", "Python"],
     instructor: {

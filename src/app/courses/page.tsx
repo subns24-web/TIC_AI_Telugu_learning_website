@@ -5,6 +5,7 @@ import { courses, tracks } from "@/lib/courses";
 import { LEVEL_LABEL } from "@/lib/format";
 import { useLang } from "@/lib/lang";
 import { CourseCard } from "@/components/course/CourseCard";
+import { CourseUnlock } from "@/components/auth/CourseUnlock";
 import { SectionHead } from "@/components/ui/Bits";
 import type { Level } from "@/lib/types";
 
@@ -41,6 +42,7 @@ export default function CoursesPage() {
 
   return (
     <div className="container-tic py-14 md:py-20">
+      <CourseUnlock />
       <SectionHead
         eyebrow={t("Catalogue", "కోర్సు జాబితా")}
         title={t("Every course, in Telugu", "అన్ని కోర్సులు, తెలుగులో")}

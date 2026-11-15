@@ -1,53 +1,17 @@
 "use client";
 
 import { useLang } from "@/lib/lang";
-import { Badge, ButtonLink, SectionHead } from "@/components/ui/Bits";
+import { Badge } from "@/components/ui/Bits";
 
-const BOARD = [
-  {
-    role: ["Council Chair", "కౌన్సిల్ ఛైర్"],
-    name: "Santhosh Nimmani",
-    org: ["SN Trinetra Global AI & IT Solutions", "SN Trinetra Global AI & IT Solutions"],
-    initials: "SN",
-  },
-  {
-    role: ["Open seat — Education", "ఖాళీ స్థానం — విద్య"],
-    name: ["Nominations open", "నామినేషన్లు తెరిచి ఉన్నాయి"],
-    org: ["For a college or training institute leader", "కళాశాల లేదా శిక్షణ సంస్థ నాయకుడి కోసం"],
-    initials: "—",
-    open: true,
-  },
-  {
-    role: ["Open seat — MSME", "ఖాళీ స్థానం — MSME"],
-    name: ["Nominations open", "నామినేషన్లు తెరిచి ఉన్నాయి"],
-    org: ["For a manufacturing or retail owner", "తయారీ లేదా రిటైల్ యజమాని కోసం"],
-    initials: "—",
-    open: true,
-  },
-  {
-    role: ["Open seat — Healthcare", "ఖాళీ స్థానం — ఆరోగ్య సంరక్షణ"],
-    name: ["Nominations open", "నామినేషన్లు తెరిచి ఉన్నాయి"],
-    org: ["For a clinic or hospital administrator", "క్లినిక్ లేదా ఆసుపత్రి నిర్వాహకుడి కోసం"],
-    initials: "—",
-    open: true,
-  },
-] as const;
+/* The workshop's WhatsApp community (same link as the payment emails). */
+const WHATSAPP_COMMUNITY = "https://chat.whatsapp.com/KUMcVB1BMy64Pvjbu79zj0";
 
 const RITUALS = [
   {
-    when: ["Every Sunday, 8 pm IST", "ప్రతి ఆదివారం, రాత్రి 8 గంటలు"],
     title: ["Council call", "కౌన్సిల్ కాల్"],
     body: [
-      "Ninety minutes on Zoom. You bring a real problem from your business, we build the solution on screen, and the recording becomes a lesson here.",
-      "Zoom లో తొంభై నిమిషాలు. మీ వ్యాపారం నుంచి ఒక నిజమైన సమస్య తీసుకురండి, స్క్రీన్ మీదే పరిష్కారం తయారు చేస్తాం, ఆ రికార్డింగ్ ఇక్కడ పాఠం అవుతుంది.",
-    ],
-  },
-  {
-    when: ["First Saturday monthly", "నెల మొదటి శనివారం"],
-    title: ["Build day", "బిల్డ్ డే"],
-    body: [
-      "One workflow, start to finish, together. Everyone leaves with the same automation running in their own account.",
-      "ఒక వర్క్‌ఫ్లో, మొదలు నుంచి చివరి వరకు, కలిసి. అందరూ తమ ఖాతాలో అదే ఆటోమేషన్ నడుస్తూ వెళ్తారు.",
+      "Ninety minutes on Zoom. You bring a real problem from your business and we build the solution on screen, together — join the call live to be part of it.",
+      "Zoom లో తొంభై నిమిషాలు. మీ వ్యాపారం నుంచి ఒక నిజమైన సమస్య తీసుకురండి, స్క్రీన్ మీదే కలిసి పరిష్కారం తయారు చేస్తాం — ఇందులో భాగం కావాలంటే call లో live గా join అవ్వండి.",
     ],
   },
   {
@@ -71,35 +35,42 @@ export default function CommunityPage() {
           <p lang={lang} className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-400">
             {t("Community board", "కమ్యూనిటీ బోర్డ్")}
           </p>
-          <h1 className="mt-4 max-w-3xl font-telugu text-balance text-[2.1rem] font-bold leading-[1.3] tracking-tight sm:text-[2.7rem]">
-            ఒక కౌన్సిల్, ఒక కమ్యూనిటీ — తెలుగు వ్యాపారాల కోసం.
+          <h1 lang={lang} className="mt-4 max-w-3xl font-telugu text-balance text-[2.1rem] font-bold leading-[1.3] tracking-tight sm:text-[2.7rem]">
+            {t("One council, one community — for Telugu businesses.", "ఒక కౌన్సిల్, ఒక కమ్యూనిటీ — తెలుగు వ్యాపారాల కోసం.")}
           </h1>
           <p lang={lang} className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-200">
             {t(
-              "TIC AI is not a course shop. It is a council: business owners, trainers and builders who meet every week, solve each other's problems in public, and turn those sessions into the lessons on this site.",
-              "TIC AI ఒక కోర్సు దుకాణం కాదు. ఇది ఒక కౌన్సిల్ — వ్యాపారులు, శిక్షకులు, బిల్డర్లు ప్రతి వారం కలిసి, ఒకరి సమస్యలు మరొకరు బహిరంగంగా పరిష్కరించి, ఆ సెషన్లను ఈ సైట్‌లో పాఠాలుగా మారుస్తారు.",
+              "TIC AI is not a course shop. It is a council: business owners, trainers and builders who meet regularly and solve each other's problems together.",
+              "TIC AI ఒక కోర్సు దుకాణం కాదు. ఇది ఒక కౌన్సిల్ — వ్యాపారులు, శిక్షకులు, బిల్డర్లు తరచూ కలిసి, ఒకరి సమస్యలు మరొకరు కలిసి పరిష్కరిస్తారు.",
             )}
           </p>
           <div className="mt-9">
-            <ButtonLink href="/courses/ai-for-business-foundations" size="lg" lang={lang}>
-              {t("Join with the free course", "ఉచిత కోర్సుతో చేరండి")}
-            </ButtonLink>
+            <a
+              href={WHATSAPP_COMMUNITY}
+              target="_blank"
+              rel="noopener noreferrer"
+              lang={lang}
+              className="focus-ring inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-[0.95rem] font-semibold text-white transition hover:bg-[#1ebe5a]"
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+                <path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 01-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 00-.7.3 3 3 0 00-.9 2.2 5.2 5.2 0 001.1 2.8 11.9 11.9 0 004.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2s.2-1.1.1-1.2-.2-.2-.5-.3z"/>
+              </svg>
+              {t("Join the WhatsApp community", "WhatsApp community లో join అవ్వండి")}
+            </a>
           </div>
         </div>
       </section>
 
       {/* rituals */}
       <section className="container-tic py-20">
-        <SectionHead
-          eyebrow={t("How we meet", "ఎలా కలుస్తాం")}
-          title={t("Three standing commitments", "మూడు పక్కా ఏర్పాట్లు")}
-          lang={lang}
-        />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <p lang={lang} className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-700">
+          {t("How we meet", "ఎలా కలుస్తాం")}
+        </p>
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
           {RITUALS.map((r) => (
             <div key={r.title[0]} className="card flex flex-col p-6">
-              <Badge tone="gold">{t(r.when[0], r.when[1])}</Badge>
-              <h3 lang={lang} className="mt-5 text-lg font-bold leading-snug text-ink-900">
+              {"when" in r && <Badge tone="gold">{t(r.when[0], r.when[1])}</Badge>}
+              <h3 lang={lang} className={`${"when" in r ? "mt-5" : ""} text-lg font-bold leading-snug text-ink-900`}>
                 {t(r.title[0], r.title[1])}
               </h3>
               <p lang={lang} className="mt-3 flex-1 text-sm leading-relaxed text-ink-500">
@@ -110,68 +81,6 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* board */}
-      <section id="board" className="bg-paper-200/60 py-20 scroll-mt-20">
-        <div className="container-tic">
-          <SectionHead
-            eyebrow={t("The board", "బోర్డ్")}
-            title={t("Who sits on the council", "కౌన్సిల్‌లో ఎవరు ఉన్నారు")}
-            blurb={t(
-              "Four seats, each representing a sector that AI is changing fastest in our region. Three are open — if that is your world, write in.",
-              "నాలుగు స్థానాలు, మన ప్రాంతంలో AI వేగంగా మారుస్తున్న ఒక్కో రంగానికి ఒకటి. మూడు ఖాళీగా ఉన్నాయి — అది మీ రంగమైతే, రాయండి.",
-            )}
-            lang={lang}
-          />
-
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {BOARD.map((m) => {
-              const name = typeof m.name === "string" ? m.name : t(m.name[0], m.name[1]);
-              return (
-                <li key={m.role[0]} className={`card p-6 ${"open" in m && m.open ? "border-dashed" : ""}`}>
-                  <span
-                    className={`grid h-14 w-14 place-items-center rounded-full text-base font-bold ${
-                      "open" in m && m.open
-                        ? "bg-ink-900/5 text-ink-300"
-                        : "text-metal bg-ink-900"
-                    }`}
-                  >
-                    {m.initials}
-                  </span>
-                  <p
-                    lang={lang}
-                    className="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-gold-700"
-                  >
-                    {t(m.role[0], m.role[1])}
-                  </p>
-                  <p lang={lang} className="mt-2 font-semibold leading-snug text-ink-900">
-                    {name}
-                  </p>
-                  <p lang={lang} className="mt-1.5 text-sm leading-relaxed text-ink-500">
-                    {t(m.org[0], m.org[1])}
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
-
-          <div className="card mt-10 flex flex-wrap items-center justify-between gap-6 p-7">
-            <div>
-              <h3 lang={lang} className="text-lg font-bold text-ink-900">
-                {t("Want a seat?", "ఒక స్థానం కావాలా?")}
-              </h3>
-              <p lang={lang} className="mt-2 max-w-xl text-sm leading-relaxed text-ink-500">
-                {t(
-                  "Board members host one session a quarter and help shape the curriculum. Tell us which sector you represent and what you would teach.",
-                  "బోర్డ్ సభ్యులు క్వార్టర్‌కు ఒక సెషన్ నిర్వహిస్తారు, కోర్సులో ఏమేం ఉన్నాయి రూపొందించడంలో సహాయం చేస్తారు. మీరు ఏ రంగానికి ఉంటారు, ఏం బోధిస్తారో చెప్పండి.",
-                )}
-              </p>
-            </div>
-            <ButtonLink href="mailto:hello@ticai.in?subject=TIC%20AI%20board%20nomination" size="lg" lang={lang}>
-              {t("Write to the council", "కౌన్సిల్‌కు రాయండి")}
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

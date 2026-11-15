@@ -59,6 +59,7 @@ export type Course = {
   outcomes: string[];
   outcomesTe: string[];
   forWhom: string[];
+  forWhomTe?: string[];
   tools: string[];
   instructor: Instructor;
   modules: Module[];

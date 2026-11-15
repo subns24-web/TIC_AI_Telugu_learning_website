@@ -23,6 +23,7 @@ export function LangToggle({ dark = false }: { dark?: boolean }) {
           key={code}
           type="button"
           onClick={() => setLang(code)}
+          lang={code}
           aria-pressed={lang === code}
           className={`focus-ring rounded-full px-2.5 py-1 transition ${
             lang === code

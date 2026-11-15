@@ -323,6 +323,19 @@ Help me find more like them.
 5. Tell me what each type will most likely object to, and how to answer honestly.
 
 Do not invent business names, phone numbers or addresses. Only give me categories and how to find them myself.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను. మేము {{sells}} అమ్ముతాము, {{radius}} లోపల ఉన్న customers కి సర్వీస్ ఇవ్వగలం.
+
+ప్రస్తుతం నా బెస్ట్ customer ఇలా ఉంటారు: {{bestCustomer}}
+
+ఇలాంటి వాళ్ళను ఇంకా ఎక్కువ మందిని కనుక్కోవడానికి సహాయం చేయండి.
+
+1. నేను అమ్మే దానికి అవసరం ఉండే 10 రకాల వ్యాపారాలను చెప్పండి. స్పష్టంగా ఉండాలి — "hospitals" అంటే ఉపయోగం లేదు, "సొంతంగా housekeeping చేసుకునే 20-50 బెడ్ల private hospitals" అంటే ఉపయోగం.
+2. ప్రతి రకం నా ఏరియాలో సుమారుగా ఎక్కడ ఎక్కువగా ఉంటాయి, వాళ్ళను ఎలా కనుక్కోవాలి — Google Maps searches, local associations, trade bodies, markets — అసలు search terms ఇవ్వండి.
+3. వీటికి ranking ఇవ్వండి: ఎవరిని ముందు approach చేయాలి — ఎంత సులభంగా చేరుకోవచ్చు, ఎంత ఖర్చు పెట్టే అవకాశం ఉంది అనే దాని బట్టి.
+4. టాప్ 3 కి, మాట్లాడే తెలుగులో మొదటి WhatsApp message రాయండి. చిన్నగా. "Dear Sir, I hope this finds you well" లాంటివి వద్దు. sales script లాగా కాకుండా {{city}} మనిషి మాట్లాడినట్టు ఉండాలి.
+5. ప్రతి రకం customer ఎక్కువగా ఏ అభ్యంతరం చెప్తారో, దానికి నిజాయితీగా ఎలా జవాబు ఇవ్వాలో చెప్పండి.
+
+వ్యాపారాల పేర్లు, phone numbers, addresses కల్పించి ఇవ్వకండి. categories, వాళ్ళను నేనే ఎలా కనుక్కోవాలో మాత్రమే చెప్పండి.`,
     tips: [
       "That last rule matters — AI will cheerfully invent phone numbers if you let it. Collect real contacts yourself",
       "Try the Google Maps search terms it gives you before trusting the list",
@@ -404,6 +417,24 @@ Give me four different replies in spoken Telugu, each {{tone}} and under 60 word
 For each, tell me how to recognise which situation I am actually in, from what the customer says or does.
 
 Then tell me honestly: at what point should I let this customer go instead of chasing them? Give me a clear line.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+
+ఒక customer నా rate చాలా ఎక్కువ అంటున్నారు.
+Item: {{item}}
+నా rate: {{yourRate}}
+వేరే చోట వాళ్ళకు వస్తుందని చెప్తున్న rate: {{competitor}}
+నాది నిజంగా ఎందుకు మెరుగైనది: {{better}}
+
+మాట్లాడే తెలుగులో నాలుగు వేర్వేరు జవాబులు ఇవ్వండి — ప్రతిదీ {{tone}}, 60 పదాల లోపు:
+
+1. వాళ్ళు నిజంగా అంత పెట్టలేకపోతే — వాయిదాలు, తక్కువ quantity, లేదా తక్కువ ధర option ఇవ్వండి, వాళ్ళను అవమానించకుండా.
+2. అదే quality కాని దానితో పోలుస్తుంటే — తేడాను spec sheet లాగా కాకుండా, సాధారణ మనిషికి అర్థమయ్యేలా చెప్పండి.
+3. నేను rate తగ్గిస్తానో లేదో పరీక్షిస్తుంటే — అహంకారంగా అనిపించకుండా rate మీదే నిలబడండి.
+4. కాపాడుకోవాల్సిన పెద్ద, తరచూ కొనే customer అయితే — discount కాకుండా నేను ఏమి ఇవ్వగలను.
+
+ప్రతిదానికి, customer చెప్పే మాటలు లేదా చేసే పనుల బట్టి నేను నిజంగా ఏ పరిస్థితిలో ఉన్నానో ఎలా గుర్తించాలో చెప్పండి.
+
+తర్వాత నిజాయితీగా చెప్పండి: ఏ దశలో ఈ customer ని వెంటాడడం మానేసి వదిలేయాలి? స్పష్టమైన హద్దు చెప్పండి.`,
     tips: [
       "Most 'too costly' is situation 3 — a test. Dropping the rate immediately teaches every customer to push you",
       "Situation 4 is where discounts quietly kill a business. Give extra service, longer credit, free delivery — not a lower rate",
@@ -502,6 +533,25 @@ Then tell me:
 - What I have forgotten to mention that businesses in my trade usually forget
 
 If I attached an old quotation, follow its format and wording style rather than making your own.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+
+దీని కోసం quotation రాయండి: {{customer}}
+పని లేదా items: {{work}}
+నా ధర: {{amount}}
+నాకు కావాల్సిన payment terms: {{terms}}
+
+Quotation ని రెండు సార్లు ఇవ్వండి — ఒకసారి English లో, ఒకసారి మాట్లాడే తెలుగులో — వీటితో:
+- line-by-line స్పష్టమైన breakdown, వాళ్ళు దేనికి డబ్బు కడుతున్నారో కనిపించేలా
+- ఈ rate ఎన్ని రోజులు valid
+- ఏమి included, ఇంకా ముఖ్యంగా ఏమి included కాదు
+- payment terms సూటిగా
+- delivery లేదా పని పూర్తయ్యే సమయం
+
+తర్వాత చెప్పండి:
+- ఈ quotation లో ఏ రెండు lines తర్వాత గొడవకు దారి తీసే అవకాశం ఎక్కువ, వాటిని ఇంకా గట్టిగా ఎలా రాయాలి
+- నా రంగంలో వ్యాపారులు సాధారణంగా మర్చిపోయేది, నేను కూడా మర్చిపోయింది ఏమిటి
+
+నేను పాత quotation attach చేస్తే, మీ సొంత format కాకుండా దాని format, wording style నే పాటించండి.`,
     tips: [
       "The 'what is NOT included' section prevents most arguments. Never leave it out",
       "Attach one old quotation and everything afterwards comes out in your own format",
@@ -573,6 +623,19 @@ Design the offer for me.
 6. When to start and stop the offer, and why those dates.
 
 Do not suggest a discount that puts me below cost. If my margin is too thin for a discount at all, say so and suggest something else — a combo, a free add-on, longer credit.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+నా సాధారణ margin {{margin}}. {{festival}} కి నేను కోరుకునేది: {{goal}}
+
+నా కోసం offer ని design చేయండి.
+
+1. నా లక్ష్యానికి సరిపోయే మూడు వేర్వేరు offer పద్ధతులు. ప్రతిదానికి లెక్క చూపించండి: ఒక్కో sale కి నేను ఎంత వదులుకుంటాను, కేవలం break even కావడానికి ఎన్ని extra sales కావాలి, పని చేస్తే ఎంత సంపాదిస్తాను.
+2. నా margin బట్టి మీరు ఏది సూచిస్తారో, ఎందుకో స్పష్టంగా చెప్పండి.
+3. ప్రతిదానిలో ఏమి తప్పు జరగవచ్చో చెప్పండి — offer లేకపోయినా పూర్తి rate కట్టే customers తో సహా.
+4. ఆంధ్రప్రదేశ్, తెలంగాణ లో ప్రజలు {{festival}} కి నిజంగా ఏమి కొంటారో బట్టి, ముందే ఏ stock పెంచుకోవాలి.
+5. ఒక WhatsApp message, ఒక Instagram caption, ఒక shop banner line — అన్నీ మాట్లాడే తెలుగులో, అన్నీ చిన్నగా.
+6. Offer ఎప్పుడు మొదలుపెట్టాలి, ఎప్పుడు ఆపాలి, ఆ తేదీలు ఎందుకు.
+
+నన్ను cost కంటే కిందకు తీసుకెళ్ళే discount సూచించకండి. నా margin discount కి సరిపోనంత తక్కువగా ఉంటే, అదే చెప్పి వేరేది సూచించండి — combo, free add-on, ఎక్కువ credit రోజులు.`,
     tips: [
       "Point 6 matters: an offer with no end date teaches customers to wait for the next one",
       "Combos usually beat straight discounts when your margin is thin",
@@ -634,6 +697,24 @@ Write it the way a shop owner in {{city}} actually talks. Use the English words 
 
 Give me the result as a table: Name, Phone, Message.
 Then tell me which 5 customers are worth a phone call instead of a message, and why.`,
+    templateTe: `{{city}} లో {{sells}} అమ్మే {{businessName}} అనే వ్యాపారానికి మీరు సహాయం చేస్తున్నారు.
+
+నా customer list ఉన్న file ని attach చేస్తున్నాను.
+
+గత {{gap}} నెలల్లో ఏమీ కొనని ప్రతి customer ని కనుక్కోండి.
+
+ప్రతి ఒక్కరికి మాట్లాడే తెలుగులో WhatsApp message రాయండి, అది:
+- వాళ్ళ పేరుతో ఉండాలి
+- గతసారి మా దగ్గర ఏమి కొన్నారో సహజంగా గుర్తు చేయాలి, record చదివినట్టు కాదు
+- {{tone}} అనిపించాలి
+- 60 పదాల లోపు ఉండాలి, ఎందుకంటే పెద్ద WhatsApp messages ఎవరూ చదవరు
+- బతిమాలడం, guilt కలిగించడం, టచ్ లో లేనందుకు అతిగా క్షమాపణ చెప్పడం ఉండకూడదు
+{{offer|- ఈ offer ని సహజంగా చెప్పండి: }}
+
+{{city}} లో ఒక షాప్ యజమాని నిజంగా మాట్లాడినట్టు రాయండి. తెలుగు మాట్లాడేటప్పుడు ప్రజలు వాడే English పదాలనే వాడండి — ఆఫర్, స్టాక్, డెలివరీ — వాటిని అనువదించకండి. ఎవరూ మాట్లాడని గ్రాంథిక తెలుగు వద్దు.
+
+ఫలితాన్ని table గా ఇవ్వండి: Name, Phone, Message.
+తర్వాత message కి బదులు phone call చేయదగిన 5 customers ఎవరో, ఎందుకో చెప్పండి.`,
     tips: [
       "Send 20 a day by hand, not 200 at once — WhatsApp blocks numbers that blast messages",
       "Read the first five before sending any. If one sounds wrong, tell the AI what felt off and ask again",
@@ -704,6 +785,22 @@ Rules:
 - No ALL CAPS, no rows of emojis, no "hurry up limited stock" if it is not true.
 - Use the English words Telugu speakers really use — కలెక్షన్, డిజైన్, స్టాక్, రేంజ్.
 - Mention the price range. Messages that hide the rate get ignored.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+
+కొత్త stock వచ్చింది: {{newStock}}
+
+నేను photos attach చేస్తే, వాటిని చూసి అందులో నిజంగా ఏముందో వివరించండి — రంగులు, designs, ఏది ప్రత్యేకంగా కనిపిస్తుంది — సాధారణ మాటల్లో కాదు.
+
+నాకు ఇవ్వండి:
+1. మాట్లాడే తెలుగులో ఒక broadcast message, 40 పదాల లోపు, {{tone}}. ప్రజలు skip చేయకుండా నిజంగా చదివేలా.
+2. WhatsApp Status కోసం ఇంకా చిన్న version — 15 పదాల లోపు.
+3. నేను customer list attach చేస్తే: గతంలో కొన్న దాని బట్టి ఈ item ని ఎక్కువగా కోరుకునే customers ని ఎంచుకుని, ప్రతి ఒక్కరికి personal message రాయండి. table గా ఇవ్వండి: Name, Phone, Message.
+4. ఎవరైనా "ఎప్పుడో" కాకుండా ఈ వారమే షాప్ కి వచ్చేలా చేసే మూడు మాటలు.
+
+నియమాలు:
+- అన్నీ CAPITAL letters వద్దు, emoji వరుసలు వద్దు, నిజం కాకపోతే "hurry up limited stock" వద్దు.
+- తెలుగు మాట్లాడేవాళ్ళు నిజంగా వాడే English పదాలు వాడండి — కలెక్షన్, డిజైన్, స్టాక్, రేంజ్.
+- ధర range చెప్పండి. Rate దాచే messages ని ఎవరూ పట్టించుకోరు.`,
     tips: [
       "Point 3 is the one that sells. A broadcast to everyone gets ignored; eight personal messages do not",
       "Mention the price range. People assume expensive when you hide it",
@@ -774,6 +871,22 @@ If I attached a screenshot of a bad review, also:
 6. Tell me whether this review is worth replying to at all, honestly.
 
 Never offer a discount or gift in exchange for a review. That is against Google's rules and it shows in the writing.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+
+ఇప్పటికే సంతోషంగా ఉన్న customers నుంచి ఎక్కువ Google reviews కావాలి.
+నా review link: {{reviewLink}}
+
+నాకు ఇవ్వండి:
+1. Review అడిగే మాట్లాడే తెలుగు WhatsApp message, {{tone}}, 35 పదాల లోపు. బతిమాలినట్టు ఉండకూడదు, బదులుగా ఏమీ promise చేయకూడదు.
+2. ఏళ్ళుగా వస్తున్న customer కోసం వేరే version.
+3. Customer సంతోషంగా ఉన్నానని చెప్పిన వెంటనే, counter దగ్గర మా staff తెలుగులో చెప్పగలిగే ఒక మాట.
+4. పంపడానికి సరైన సమయం — "కొన్న వెంటనే" కాదు, సరిగ్గా ఎప్పుడో చెప్పండి.
+
+నేను ఒక చెడ్డ review screenshot attach చేస్తే, ఇవి కూడా:
+5. దాన్ని చదివి తెలుగు, English లో public reply రాయండి. వాదించవద్దు, సాకులు చెప్పవద్దు, వాళ్ళ complaint ని మళ్ళీ వాళ్ళకే చెప్పవద్దు. మేము ఏమి చేస్తామో చెప్పండి.
+6. అసలు ఈ review కి reply ఇవ్వడం విలువైనదా కాదా, నిజాయితీగా చెప్పండి.
+
+Review కి బదులుగా discount లేదా gift ఎప్పుడూ ఇవ్వకండి. అది Google నియమాలకు విరుద్ధం, రాతలో కూడా తెలిసిపోతుంది.`,
     tips: [
       "Timing beats wording. Ask within an hour of a customer saying they are happy, not days later",
       "Never pay for reviews, in cash or discounts. Google removes them and can penalise your listing",
@@ -860,6 +973,24 @@ Mix the types so it does not turn into one long advertisement:
 
 Lay it out as a table I can print and hand to whoever does the posting.
 Keep captions under 40 words. Nobody reads more on a phone.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను. మేము {{sells}} అమ్ముతాము.
+నేను {{platform}} లో post చేస్తాను. నా కోసం {{month}} ని plan చేయండి.
+
+నాకు 30 posts ఇవ్వండి. ప్రతి దానికి:
+- రోజు నంబర్, post చేయడానికి వారంలో ఏ రోజు బెస్ట్
+- {{tone}} అనిపించే మాట్లాడే తెలుగు caption — English నుంచి అనువదించినది కాదు, {{city}} ప్రజల కోసం రాసినది
+- సరిగ్గా ఏ photo లేదా video తీయాలి, నేను లేకపోయినా మా staff తీయగలిగేలా వివరంగా
+- 5 hashtags, ఇక్కడ ప్రజలు నిజంగా search చేసేలా తెలుగు, English కలిపి
+
+ఇదంతా ఒకే పెద్ద advertisement లా మారకుండా రకాలు కలపండి:
+- సుమారు 10 products లేదా పనిని చూపించేవి
+- సుమారు 6 ఎప్పుడూ కొనకపోయినా customers కి ఉపయోగపడే tips
+- సుమారు 5 behind the scenes — staff, deliveries, ఒక సాధారణ ఉదయం
+- సుమారు 4 customer stories లేదా reviews
+- సుమారు 5 ఆంధ్రప్రదేశ్, తెలంగాణ లో {{month}} లో వచ్చే పండుగలు, events కి సంబంధించినవి
+
+Print తీసి post చేసే వాళ్ళకు ఇవ్వగలిగేలా table గా ఇవ్వండి.
+Captions 40 పదాల లోపు ఉంచండి. Phone లో అంతకంటే ఎక్కువ ఎవరూ చదవరు.`,
     tips: [
       "Shoot a whole week of photos on one Sunday. The writing is never the bottleneck — the photos are",
       "Keep the festival posts and reuse them next year with new pictures",
@@ -915,6 +1046,24 @@ Rules:
 - No jargon. If you must use a business term, explain it in the same sentence.
 - If the data is incomplete or looks wrong, say so plainly instead of guessing.
 - Give rupee figures, not just percentages.`,
+    templateTe: `మీరు {{city}} లోని {{sells}} వ్యాపారం {{businessName}} కి సూటిగా మాట్లాడే business advisor.
+
+గత 3 నెలల నా sales data attach చేస్తున్నాను.
+
+నా మనసులో ఉన్నది: {{worry}}
+
+Data చదివి నాకు చెప్పండి:
+1. Revenue ప్రకారం నా టాప్ 10 items, data అనుమతిస్తే profit ప్రకారం టాప్ 10 వేరుగా. అనుమతించకపోతే అదే స్పష్టంగా చెప్పండి.
+2. అసలు కదలని items — నా షాప్ లో కదలకుండా కూర్చున్న డబ్బు.
+3. ఏ వారాలు లేదా నెలలు బలహీనంగా ఉన్నాయి, దానికి కారణం ఏమిటని data సూచిస్తోంది.
+4. నేను సొంతంగా గమనించని ఆశ్చర్యకరమైన విషయం ఏదైనా.
+5. వచ్చే నెల చేయాల్సిన మూడు స్పష్టమైన పనులు. "marketing మెరుగుపరచండి" లాంటి సలహా కాదు — ఏ item కి, ఏ rate లో, ఏమి చేయాలో చెప్పండి.
+
+నియమాలు:
+- మాట్లాడే తెలుగులో వివరించండి. business school కి వెళ్ళని వాళ్ళకు కూడా ప్రతి line అర్థమవ్వాలి.
+- Jargon వద్దు. ఏదైనా business పదం వాడాల్సి వస్తే, అదే వాక్యంలో దాని అర్థం చెప్పండి.
+- Data అసంపూర్ణంగా లేదా తప్పుగా అనిపిస్తే, ఊహించకుండా సూటిగా చెప్పండి.
+- Percentages మాత్రమే కాకుండా రూపాయల్లో లెక్కలు ఇవ్వండి.`,
     tips: [
       "Ask follow-up questions in the same chat — 'why did October drop?' — it still has your data",
       "If the answer feels generic, your file is probably missing item names or amounts",
@@ -974,6 +1123,22 @@ Work out:
 Also write me two short Telugu WhatsApp messages to announce the clearance — one for regular customers, one for a broadcast list.
 
 Be honest: if an item is not worth discounting and I should just accept the loss, say so.`,
+    templateTe: `{{city}} లో {{sells}} అమ్మే {{businessName}} కి మీరు సహాయం చేస్తున్నారు.
+
+నా ప్రస్తుత stock list ని, ఉంటే sales data ని attach చేస్తున్నాను.
+
+నాకు సుమారు {{cashNeeded}} cash కావాలి. {{minMargin}} margin కంటే తక్కువకు అమ్మను.
+
+లెక్కించండి:
+1. నేను ఉంచుకున్న stock తో పోలిస్తే ఏ items అమ్ముడవలేదు, లేదా చాలా నెమ్మదిగా అమ్ముడయ్యాయి.
+2. ఆ ప్రతి item లో, కొన్న rate ప్రకారం, ఎంత cash ఇరుక్కుపోయింది.
+3. ప్రతి దానికి నా కనీస margin పైనే ఉండే clearance rate — లెక్క చూపించండి.
+4. Discount ఇవ్వాల్సిన వాటి నుంచి వేరుగా, అసలు మళ్ళీ order చేయకూడని items ఏవి.
+5. రాబోయే 6 వారాల్లో వాటిని clear చేయడానికి ఆచరణీయమైన క్రమం.
+
+Clearance ప్రకటించడానికి రెండు చిన్న తెలుగు WhatsApp messages కూడా రాయండి — ఒకటి regular customers కి, ఒకటి broadcast list కి.
+
+నిజాయితీగా ఉండండి: ఏదైనా item discount కి విలువైనది కాకపోతే, నష్టాన్ని ఒప్పుకోవాలంటే, అదే చెప్పండి.`,
     tips: [
       "Start with the biggest cash-stuck items, not the most items",
       "If something has not moved in a year, the discount that clears it is almost always bigger than feels comfortable",
@@ -1045,6 +1210,21 @@ I am attaching my purchase records (or photos of my purchase bills).
 5. What are the signs that I should quietly start looking for a second supplier?
 
 Do not suggest I bluff about a competitor's rate. If I get caught, I lose the relationship and my credit line with it.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+
+నా supplier: {{supplier}}
+ప్రతి నెల వాళ్ళ దగ్గర సుమారు {{spend}} కొంటాను.
+నాకు కావాల్సింది: {{want}}
+
+నా purchase records (లేదా purchase bills photos) attach చేస్తున్నాను.
+
+1. నా కొనుగోలు rates చదవండి. నా రంగానికి, నా volume కి ఎక్కడ ఎక్కువగా అనిపిస్తున్నాయి? ఈ data నుంచి చెప్పలేకపోతే స్పష్టంగా చెప్పండి.
+2. నేను కొనే దాని బట్టి, అడగడానికి న్యాయమైనది ఏమిటి? అన్యాయమైనది డిమాండ్ చేయమని చెప్పకండి — నాకు ఈ supplier కావాలి.
+3. Phone లో వాళ్ళతో మాట్లాడుతున్నట్టు, మాట్లాడే తెలుగులో సరిగ్గా ఏమి చెప్పాలో రాయండి. మొదటి మాట, వాళ్ళు కాదంటే ఏమి చెప్పాలి, ఎలా ముగించాలి.
+4. నాకు పెద్దగా ఖర్చు లేకుండా బదులుగా వాళ్ళకు ఏమి ఇవ్వగలను? త్వరగా payment, పెద్ద single orders, ఏడాది commitment.
+5. రెండో supplier కోసం నిశ్శబ్దంగా వెతకడం మొదలుపెట్టాలని చెప్పే సంకేతాలు ఏమిటి?
+
+Competitor rate గురించి bluff చేయమని చెప్పకండి. దొరికిపోతే relationship తో పాటు నా credit line కూడా పోతుంది.`,
     tips: [
       "Never bluff about a rival's rate in a small market. It gets back to them the same week",
       "Faster payment is the cheapest thing you can offer — suppliers value it more than volume",
@@ -1116,6 +1296,24 @@ Give me:
 5. A one-page scoring sheet I can print, so if two of us interview we judge on the same things.
 
 Write everything in Telugu except the job words people expect in English.`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+నేను ఈ పని కోసం hire చేస్తున్నాను: {{role}}. జీతం {{salary}} ఇవ్వగలను.
+
+తప్పు మనిషిని hire చేస్తే జరిగేది ఇది: {{dealbreaker}}
+
+నాకు ఇవ్వండి:
+
+1. WhatsApp groups, local notice boards కోసం మాట్లాడే తెలుగులో job post. Phone లో చదివేంత చిన్నగా. పని గురించి నిజాయితీగా — "exciting opportunity with a dynamic team" లాంటివి వద్దు.
+
+2. ఈ పని ఎవరైనా నిజంగా చేయగలరో లేదో బయటపెట్టే పది interview ప్రశ్నలు. "మీ అతిపెద్ద బలహీనత ఏమిటి" లాంటివి కాదు. నా లాంటి వ్యాపారంలో {{role}} కి ఎదురయ్యే నిజమైన పరిస్థితుల గురించి ప్రశ్నలు.
+
+3. ప్రతి ప్రశ్నకు, మంచి జవాబు ఎలా ఉంటుంది, ఆందోళన కలిగించే జవాబు ఎలా ఉంటుంది.
+
+4. Interview లో 15 నిమిషాల్లో ఇవ్వగలిగే, వాళ్ళ సామర్థ్యాన్ని నేరుగా చూపించే ఒక practical task.
+
+5. ఇద్దరం interview చేస్తే ఒకే విషయాల మీద judge చేసేలా, print తీసుకోగలిగే ఒక పేజీ scoring sheet.
+
+ప్రజలు English లోనే ఆశించే job పదాలు తప్ప, అంతా తెలుగులో రాయండి.`,
     tips: [
       "The 15-minute task tells you more than the whole interview. Make everyone do it",
       "Score immediately after each person leaves, not at the end of the day",
@@ -1205,6 +1403,29 @@ Then, separately, tell me:
 - What probably went wrong inside my business for this to happen
 - One change that stops it happening again
 - Whether this is worth a refund, a replacement, or neither — and why`,
+    templateTe: `నేను {{city}} లో {{businessName}} నడుపుతున్నాను, {{sells}} అమ్ముతాను.
+
+ఒక customer ఇలా అన్నారు:
+"""
+{{complaint}}
+"""
+
+నిజం చెప్పాలంటే, మా వైపు నుంచి: {{truth}}
+
+మాట్లాడే తెలుగులో మూడు replies రాయండి, ప్రతిదీ {{tone}}, 80 పదాల లోపు:
+1. రాబోయే పది నిమిషాల్లో పంపేది, ఒక మనిషి చదివారని వాళ్ళకు తెలిసేలా.
+2. నేను check చేసిన తర్వాత పంపేది — తప్పు మాదే అనుకుని.
+3. నేను check చేసిన తర్వాత పంపేది — తప్పు మాది కాదు అనుకుని, కానీ వాళ్ళను అబద్ధాలకోరు అన్నట్టు కాకుండా.
+
+ప్రతి reply లో:
+- Corporate భాష వద్దు. "we regret the inconvenience caused" లాంటివి వద్దు.
+- క్షమాపణ ఒక్కసారే. పదే పదే క్షమాపణ చెప్తే శ్రద్ధ కాదు, బలహీనతలా అనిపిస్తుంది.
+- తర్వాత ఏమి జరుగుతుందో, ఎప్పటికల్లా అనేది చెప్పండి. "మేము చూస్తాం" లాంటి అస్పష్టమైన మాట ఎప్పుడూ వద్దు.
+
+తర్వాత, వేరుగా చెప్పండి:
+- ఇది జరగడానికి నా వ్యాపారంలో లోపల బహుశా ఏమి తప్పు జరిగింది
+- మళ్ళీ జరగకుండా ఆపే ఒక మార్పు
+- దీనికి refund, replacement, లేదా రెండూ కాదా — ఎందుకో`,
     tips: [
       "Send reply 1 immediately, even before you know the facts. Silence turns a complaint into a public review",
       "The internal note at the end is the valuable part. One complaint usually means ten silent ones",
@@ -1291,19 +1512,28 @@ export function promptsFor(businessType?: string) {
 export function buildPrompt(
   prompt: VyaparPrompt,
   values: Record<string, string>,
+  lang: "te" | "en" = "en",
 ): string {
-  const labelFor = (id: string) =>
-    prompt.fields.find((f) => f.id === id)?.label ?? id;
+  const te = lang === "te" && !!prompt.templateTe;
+  const labelFor = (id: string) => {
+    const f = prompt.fields.find((x) => x.id === id);
+    return (te ? f?.labelTe : f?.label) ?? id;
+  };
 
   const out: string[] = [];
 
-  for (const line of prompt.template.split("\n")) {
+  for (const line of (te ? prompt.templateTe! : prompt.template).split("\n")) {
     let dropLine = false;
 
     const filled = line.replace(
       /\{\{(\w+)(?:\|([^}]*))?\}\}/g,
       (_match, id: string, prefix?: string) => {
-        const value = (values[id] ?? "").trim();
+        let value = (values[id] ?? "").trim();
+        // In Telugu, a dropdown choice goes in as its Telugu label, not the English value.
+        if (te && value) {
+          const opt = prompt.fields.find((x) => x.id === id)?.options?.find((o) => o.value === value);
+          if (opt) value = opt.labelTe;
+        }
         if (value) return prefix ? `${prefix}${value}` : value;
         // An optional insert with nothing in it takes its line with it.
         if (prefix !== undefined) {

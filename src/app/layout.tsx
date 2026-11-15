@@ -1,11 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_Telugu } from "next/font/google";
 import { LangProvider } from "@/lib/lang";
+import { AuthProvider } from "@/lib/auth";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ServiceWorker } from "@/components/site/ServiceWorker";
 import { InstallPrompt } from "@/components/site/InstallPrompt";
+import { AuthGate } from "@/components/auth/AuthGate";
 import { Splash } from "@/components/site/Splash";
+import { PUBLIC_PATHS } from "@/lib/access";
+import { SUPABASE_URL } from "@/lib/supabase-config";
 import "./globals.css";
 
 const inter = Inter({
@@ -76,17 +80,34 @@ export const viewport: Viewport = {
   ],
 };
 
+/* Runs before anything else on the page: no saved login → straight to /login, without waiting
+ * for the app's JavaScript to load. (AuthGate does the full check once the app is running.) */
+const STORAGE_KEY = `sb-${new URL(SUPABASE_URL || "https://x.supabase.co").hostname.split(".")[0]}-auth-token`;
+const LOGIN_REDIRECT = `(function(){try{
+var p=location.pathname,pub=${JSON.stringify(PUBLIC_PATHS)};
+for(var i=0;i<pub.length;i++){if(p===pub[i]||p.indexOf(pub[i]+"/")===0)return;}
+if(localStorage.getItem(${JSON.stringify(STORAGE_KEY)}))return;
+var q=new URLSearchParams(location.search);
+if(q.get("razorpay_payment_id")||q.get("paid")==="1"){try{sessionStorage.setItem("ticai.coursePaid",q.get("razorpay_payment_id")||"1")}catch(e){}}
+location.replace(p==="/"?"/login":"/login?next="+encodeURIComponent(p));
+}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="te" className={`${inter.variable} ${telugu.variable}`}>
+      <head>
+        {SUPABASE_URL && <script dangerouslySetInnerHTML={{ __html: LOGIN_REDIRECT }} />}
+      </head>
       <body className="min-h-dvh flex flex-col">
         <Splash />
         <LangProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <InstallPrompt />
-          <ServiceWorker />
+          <AuthProvider>
+            <Header />
+            <main className="flex-1"><AuthGate>{children}</AuthGate></main>
+            <Footer />
+            <InstallPrompt />
+            <ServiceWorker />
+          </AuthProvider>
         </LangProvider>
       </body>
     </html>
