@@ -8,13 +8,17 @@ import { useEffect, useState } from "react";
 
 const HALF = 54; // half the 108px cube
 
+/* Every face is lit identically. The light is a fixed layer that does not
+   rotate with the cube, so the highlight stays put in the room while the die
+   turns under it. Baking brightness into each face meant the "top" face
+   stayed bright even once it had tumbled to the bottom. */
 const FACES = [
-  { value: 3, shade: "", transform: `translateZ(${HALF}px)` }, // front — what it lands on
-  { value: 4, shade: "", transform: `rotateY(180deg) translateZ(${HALF}px)` },
-  { value: 1, shade: "splash-face--side", transform: `rotateY(90deg) translateZ(${HALF}px)` },
-  { value: 6, shade: "splash-face--side", transform: `rotateY(-90deg) translateZ(${HALF}px)` },
-  { value: 2, shade: "splash-face--top", transform: `rotateX(90deg) translateZ(${HALF}px)` },
-  { value: 5, shade: "splash-face--bottom", transform: `rotateX(-90deg) translateZ(${HALF}px)` },
+  { value: 3, transform: `translateZ(${HALF}px)` }, // front — what it lands on
+  { value: 4, transform: `rotateY(180deg) translateZ(${HALF}px)` },
+  { value: 1, transform: `rotateY(90deg) translateZ(${HALF}px)` },
+  { value: 6, transform: `rotateY(-90deg) translateZ(${HALF}px)` },
+  { value: 2, transform: `rotateX(90deg) translateZ(${HALF}px)` },
+  { value: 5, transform: `rotateX(-90deg) translateZ(${HALF}px)` },
 ] as const;
 
 /** Grid cells (row, column) for each face value, as a die arranges them. */
@@ -64,7 +68,7 @@ export function Splash() {
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const total = reduced ? 1000 : 2050;
+    const total = reduced ? 1000 : 2420;
 
     const timer = window.setTimeout(() => setDone(true), total);
     // Anyone who has seen it once can tap straight past it.
@@ -85,10 +89,15 @@ export function Splash() {
     <div className="splash" role="status" aria-label="Loading TIC AI">
       <div className="splash-scene">
         <div className="splash-cube">
+          {/* Three orthogonal planes fill the interior, so the die never
+              shows the background through its own corners mid-tumble. */}
+          <div className="splash-core" />
+          <div className="splash-core splash-core--y" />
+          <div className="splash-core splash-core--x" />
           {FACES.map((face) => (
             <div
               key={face.value}
-              className={`splash-face ${face.shade}`}
+              className="splash-face"
               style={{ transform: face.transform }}
             >
               {PIPS[face.value].map(([row, col]) => (
@@ -101,6 +110,8 @@ export function Splash() {
             </div>
           ))}
         </div>
+        <div className="splash-shadow" aria-hidden="true" />
+        <div className="splash-light" aria-hidden="true" />
       </div>
 
       <div className="splash-word text-center">
