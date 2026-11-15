@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLang } from "@/lib/lang";
 import { Dice } from "@/components/site/Dice";
@@ -41,6 +42,12 @@ export default function InstallAppPage() {
   const [env, setEnv] = useState<ReturnType<typeof detect> | null>(null);
   const [deferred, setDeferred] = useState<InstallEvent | null>(null);
   const [installed, setInstalled] = useState(false);
+  const router = useRouter();
+
+  // Installed (or opened as the app): go straight to the TIC-AI login page.
+  useEffect(() => {
+    if (installed || env?.standalone) router.replace("/login");
+  }, [installed, env, router]);
 
   useEffect(() => {
     setEnv(detect());
