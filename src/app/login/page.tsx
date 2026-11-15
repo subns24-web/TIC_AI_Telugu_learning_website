@@ -9,8 +9,7 @@ import { Button } from "@/components/ui/Bits";
 import { canOpen, homeFor } from "@/lib/access";
 
 /* After login: the page the link asked for with ?next=/… (e.g. the ₹4999 email opens /courses)
- * if this student may open it, otherwise their plan's home — Foundations for ₹4999, Vyapar GPT
- * for ₹99. */
+ * if this student may open it, otherwise Vyapar GPT (for both plans). */
 const safeNext = (v: string | null) => (v && /^\/(?!\/)[\w\-/]*$/.test(v) ? v : null);
 
 export default function LoginPage() {

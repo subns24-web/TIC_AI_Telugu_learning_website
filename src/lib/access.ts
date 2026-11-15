@@ -20,5 +20,5 @@ export const canOpen = (href: string, loggedIn: boolean, plan: Plan) => {
   return ACADEMY_PATHS.some((p) => under(path, p));
 };
 
-/** Where each plan lands after logging in. */
-export const homeFor = (plan: Plan) => (plan === "course" ? "/courses/ai-for-business-foundations" : "/vyapar-gpt");
+/** Where everyone lands after logging in (both plans). */
+export const homeFor = (_plan: Plan) => "/vyapar-gpt";
