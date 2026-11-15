@@ -24,8 +24,14 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     if (!open && ready && session && path === "/" && plan !== "course") router.replace(homeFor(plan));
   }, [open, ready, session, path, plan, router]);
 
+  // No saved login at all → go now; don't wait for Supabase to answer.
+  const noSavedLogin = () => {
+    try { return !Object.keys(localStorage).some((k) => /^sb-.*-auth-token$/.test(k)); } catch { return false; }
+  };
+
   useEffect(() => {
-    if (open || !ready || session) return;
+    if (open || session) return;
+    if (!ready && !noSavedLogin()) return;
     // Coming back from the ₹4999 payment: remember it so /courses can unlock after login.
     const q = new URLSearchParams(window.location.search);
     if (q.get("razorpay_payment_id") || q.get("paid") === "1") {
@@ -38,7 +44,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   if (!ready || !session) {
     return (
       <div className="grid min-h-[60vh] place-items-center text-sm text-ink-500" lang={lang}>
-        {t("Taking you to the login page…", "Login page కి తీసుకెళ్తున్నాం…")}
+        {null}
       </div>
     );
   }
