@@ -6,6 +6,8 @@ import { useLang } from "@/lib/lang";
 import { useAllProgress, useEnrolment } from "@/lib/progress";
 import { Badge, ButtonLink, PlayIcon, ProgressBar, SectionHead } from "@/components/ui/Bits";
 import { RequireLogin } from "@/components/auth/RequireLogin";
+import { CourseCard } from "@/components/course/CourseCard";
+import { COURSES_OPEN } from "@/lib/access";
 
 export default function MyLearningPage() {
   return (
@@ -58,7 +60,23 @@ function MyLearning() {
         lang={lang}
       />
 
-      {!ready ? (
+      {!COURSES_OPEN ? (
+        /* Courses are locked for now: list them with a lock, nothing to open or continue. */
+        <>
+          <div className="mt-12 flex items-start gap-3 rounded-2xl border border-gold-300 bg-gold-50/70 p-5">
+            <span className="text-xl" aria-hidden="true">🔒</span>
+            <p lang={lang} className="font-telugu leading-relaxed text-ink-700">
+              {t("Your courses are locked for now. They will open here soon.",
+                 "మీ courses ప్రస్తుతం లాక్ అయ్యాయి. త్వరలో ఇక్కడ open అవుతాయి.")}
+            </p>
+          </div>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {courses.map((c) => (
+              <CourseCard key={c.slug} course={c} />
+            ))}
+          </div>
+        </>
+      ) : !ready ? (
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {[0, 1].map((i) => (
             <div key={i} className="card h-36 animate-pulse bg-white/60" />
