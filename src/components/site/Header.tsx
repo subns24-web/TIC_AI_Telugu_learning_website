@@ -18,6 +18,7 @@ const NAV = [
   { href: "/vyapar-gpt", en: "Vyapar GPT", te: "Vyapar GPT" },
   { href: "/tracks", en: "Learning paths", te: "లెర్నింగ్ పాత్‌లు" },
   { href: "/my-learning", en: "My learning", te: "నా కోర్సులు" },
+  { href: "/live", en: "Live sessions", te: "Live సెషన్లు" },
   { href: "/community", en: "Community", te: "కమ్యూనిటీ" },
 ] as const;
 
@@ -94,7 +95,7 @@ export function Header() {
         </Link>
 
         {/* Wide screens: tabs sit in the top bar. */}
-        <nav className="hidden items-center gap-0.5 min-[1360px]:flex" aria-label="Main">
+        <nav className="hidden items-center gap-0.5 min-[1600px]:flex" aria-label="Main">
           {nav.map(tab)}
         </nav>
 
@@ -151,7 +152,7 @@ export function Header() {
 
       {/* Smaller screens: the same tabs in their own row, always visible (scrolls sideways on a phone). */}
       {nav.length > 0 && (
-        <nav className="border-t border-ink-900/8 min-[1360px]:hidden" aria-label="Main">
+        <nav className="border-t border-ink-900/8 min-[1600px]:hidden" aria-label="Main">
           <div className="container-tic thin-scroll flex items-center gap-1 overflow-x-auto py-1.5">
             {nav.map(tab)}
           </div>

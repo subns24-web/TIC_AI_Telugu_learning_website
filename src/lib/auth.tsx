@@ -34,6 +34,7 @@ export type Plan = "academy" | "course";
 type AuthCtx = {
   enabled: boolean;
   plan: Plan;
+  isAdmin: boolean;        // may add / delete live session recordings
   ready: boolean;          // first session check finished
   session: Session | null;
   email: string | null;
@@ -42,7 +43,7 @@ type AuthCtx = {
 };
 
 const Ctx = createContext<AuthCtx>({
-  enabled: false, plan: "academy", ready: true, session: null, email: null, recovery: false, signOut: async () => {},
+  enabled: false, plan: "academy", isAdmin: false, ready: true, session: null, email: null, recovery: false, signOut: async () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -91,7 +92,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<AuthCtx>(() => ({
     enabled: authEnabled,
-    plan: session?.user?.app_metadata?.plan === "course" ? "course" : "academy",
+    // Admins (app_metadata.role = "admin") see everything a Mastermind member sees.
+    plan: session?.user?.app_metadata?.plan === "course" || session?.user?.app_metadata?.role === "admin" ? "course" : "academy",
+    isAdmin: session?.user?.app_metadata?.role === "admin",
     ready,
     session,
     email: session?.user?.email ?? null,

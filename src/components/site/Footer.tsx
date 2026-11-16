@@ -38,13 +38,13 @@ export function Footer() {
                 { href: "/vyapar-gpt", en: "Vyapar GPT", te: "Vyapar GPT" },
                 { href: "/tracks", en: "Learning paths", te: "లెర్నింగ్ పాత్‌లు" },
                 { href: "/my-learning", en: "My learning", te: "నా కోర్సులు" },
+                { href: "/live", en: "Live sessions", te: "Live సెషన్లు" },
               ],
             },
             {
               head: ["Council", "కౌన్సిల్"],
               links: [
                 { href: "/community", en: "Community board", te: "కమ్యూనిటీ బోర్డ్" },
-                { href: "/admin", en: "Upload a recording", te: "రికార్డింగ్ అప్‌లోడ్" },
               ],
             },
           ] as const
