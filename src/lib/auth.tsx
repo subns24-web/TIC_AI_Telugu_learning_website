@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!sb) return;
     let alive = true;
     /* The plan lives in the login session, which Supabase only renews about once an hour. A ₹99
-     * student who has just paid ₹4999 is upgraded by the payment script within ~5 minutes, so ask
+     * student who has just paid ₹4999 is upgraded by the payment script within about a minute, so ask
      * for a fresh session on page load and whenever they come back to the tab (at most once a
      * minute) — a refresh is then enough to see TICAI Mastermind unlocked. */
     let lastCheck = 0;

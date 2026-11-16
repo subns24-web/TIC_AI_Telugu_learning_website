@@ -14,8 +14,8 @@ import { Button } from "@/components/ui/Bits";
  * course plan arrives sends the student to /courses, where every course is open. */
 export const COURSE_PAYMENT_LINK = "https://rzp.io/rzp/rA9h7TtB";
 
-/* ₹4999 enrolment is paused for now: the button stays on screen but can't be clicked.
- * Set to true to open enrolment again. */
+/* ₹4999 enrolment is paused for now: the Pay button stays on screen but can't be clicked
+ * ("I've paid — refresh my access" still works). Set to true to open enrolment again. */
 export const COURSE_ENROLMENT_OPEN = false;
 
 export function UpgradeToCourse() {
@@ -33,7 +33,8 @@ export function UpgradeToCourse() {
     try {
       navigator.sendBeacon(PAYMENT_SCRIPT_URL, new Blob([JSON.stringify({ type: "paid", payment_id: "" })], { type: "text/plain" }));
     } catch { /* ignore */ }
-    // Then check our access for up to a minute; the upgrade usually lands within seconds.
+    // Then check our access for up to a minute; the upgrade usually lands within seconds
+    // (and the payment script also checks Razorpay on its own every minute).
     for (let i = 0; i < 12; i++) {
       const { data } = (await supabase()?.auth.refreshSession()) ?? { data: null };
       if (data?.session?.user?.app_metadata?.plan === "course") {
@@ -44,8 +45,8 @@ export function UpgradeToCourse() {
     }
     setBusy(false);
     setNote(t(
-      "Not unlocked yet. It can take up to 5 minutes after payment — please try again shortly. Make sure you paid with this same email.",
-      "ఇంకా unlock కాలేదు. Payment తర్వాత 5 నిమిషాల వరకు పట్టవచ్చు — కాసేపు ఆగి మళ్ళీ ప్రయత్నించండి. ఇదే email తో pay చేశారో చూసుకోండి.",
+      "Not unlocked yet. It can take up to 2 minutes after payment — please try again shortly. Make sure you paid with this same email.",
+      "ఇంకా unlock కాలేదు. Payment తర్వాత 2 నిమిషాల వరకు పట్టవచ్చు — కాసేపు ఆగి మళ్ళీ ప్రయత్నించండి. ఇదే email తో pay చేశారో చూసుకోండి.",
     ));
   }
 
@@ -74,7 +75,8 @@ export function UpgradeToCourse() {
           {t("Pay ₹4999 and unlock the course →", "₹4999 pay చేసి course unlock చేయండి →")}
         </span>
       )}
-      <Button variant="outline" disabled={busy || !COURSE_ENROLMENT_OPEN} onClick={refresh} className="mt-2 w-full justify-center">
+      {/* Always on: someone who paid through the Razorpay link directly can unlock straight away. */}
+      <Button variant="outline" disabled={busy} onClick={refresh} className="mt-2 w-full justify-center">
         {busy ? t("Checking your payment…", "మీ payment చెక్ చేస్తున్నాం…") : t("I've paid — refresh my access", "Pay చేశాను — access refresh చేయండి")}
       </Button>
       {note && <p className="mt-2 text-xs text-ink-600" role="status">{note}</p>}

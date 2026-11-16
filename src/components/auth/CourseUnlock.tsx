@@ -106,8 +106,8 @@ export function CourseUnlock() {
       </p>
       <p className="mt-1 text-ink-600">
         {slow
-          ? t(`This is taking longer than usual. It can take up to 5 minutes — refresh this page in a little while. Make sure you paid with ${email}.`,
-              `సాధారణం కంటే ఎక్కువ సమయం పడుతోంది. 5 నిమిషాల వరకు పట్టవచ్చు — కాసేపటి తర్వాత page refresh చేయండి. ${email} తోనే pay చేశారో చూసుకోండి.`)
+          ? t(`This is taking longer than usual. It can take up to 2 minutes — refresh this page in a little while. Make sure you paid with ${email}.`,
+              `సాధారణం కంటే ఎక్కువ సమయం పడుతోంది. 2 నిమిషాల వరకు పట్టవచ్చు — కాసేపటి తర్వాత page refresh చేయండి. ${email} తోనే pay చేశారో చూసుకోండి.`)
           : t("This usually takes under a minute. This page updates by itself — no need to do anything.",
               "సాధారణంగా ఒక్క నిమిషం లోపే అవుతుంది. ఈ page తనంతట తానే update అవుతుంది — మీరు ఏమీ చేయనక్కర్లేదు.")}
       </p>
