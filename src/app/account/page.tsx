@@ -49,8 +49,8 @@ function AccountInner() {
           {t("Your plan:", "మీ plan:")}{" "}
           <b className="text-ink-800">
             {plan === "course"
-              ? t("Academy + full course (₹4999)", "Academy + పూర్తి course (₹4999)")
-              : t("Academy access (₹99 workshop)", "Academy access (₹99 workshop)")}
+              ? t("TICAI Mastermind (₹4999)", "TICAI Mastermind (₹4999)")
+              : t("Workshop access (₹99) — Vyapar GPT & Community", "Workshop access (₹99) — Vyapar GPT & Community")}
           </b>
         </p>
         <UpgradeToCourse />

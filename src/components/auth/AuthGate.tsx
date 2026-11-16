@@ -57,11 +57,11 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
           {/* Just paid ₹4999 and sent here: this keeps checking and opens the page once unlocked. */}
           <CourseUnlock />
           <h1 className="text-xl font-bold text-ink-900">
-            {t("This is part of the ₹4999 program", "ఇది ₹4999 program లో భాగం")}
+            {t("TICAI Mastermind has access to this", "ఇది TICAI Mastermind వారికి మాత్రమే అందుబాటులో ఉంది")}
           </h1>
           <p className="mt-2 text-sm text-ink-500">
-            {t("Your ₹99 workshop access includes Vyapar GPT and the Community. Courses, Learning paths and My courses open with the full ₹4999 program.",
-               "మీ ₹99 workshop access లో Vyapar GPT, Community ఉన్నాయి. Courses, లెర్నింగ్ పాత్‌లు, నా కోర్సులు పూర్తి ₹4999 program తో open అవుతాయి.")}
+            {t("Your ₹99 workshop access includes Vyapar GPT and the Community. Courses, Learning paths and My learning are for TICAI Mastermind (₹4999) members.",
+               "మీ ₹99 workshop access లో Vyapar GPT, Community ఉన్నాయి. కోర్సులు, లెర్నింగ్ పాత్‌లు, నా కోర్సులు TICAI Mastermind (₹4999) సభ్యులకు మాత్రమే.")}
           </p>
           <UpgradeToCourse />
           <ButtonLink href="/vyapar-gpt" variant="ghost" className="mt-3 w-full justify-center">

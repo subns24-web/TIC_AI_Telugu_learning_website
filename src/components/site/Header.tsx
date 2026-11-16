@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth";
 import { canOpen } from "@/lib/access";
 import { Logo } from "./Logo";
 import { LangToggle } from "./LangToggle";
+import { MastermindPopup } from "./MastermindPopup";
 
 /* The ₹99 workshop registration page (landing site). */
 const REGISTER_URL = "https://sntg-ai-workshop.vercel.app/";
@@ -24,8 +25,18 @@ export function Header() {
   const { t, lang } = useLang();
   const { enabled: authOn, session, plan, signOut } = useAuth();
   const router = useRouter();
-  // Only the tabs this person may open (none when logged out).
-  const nav = NAV.filter((item) => !authOn || canOpen(item.href, !!session, plan));
+  // Logged out: no tabs. ₹99 students see every tab, but the TICAI Mastermind (₹4999) ones are
+  // greyed out and only explain themselves when tapped.
+  const nav = NAV.filter((item) => !authOn || !!session || canOpen(item.href, false, plan)).map((item) => ({
+    ...item,
+    locked: authOn && !!session && !canOpen(item.href, true, plan),
+  }));
+  const [mastermind, setMastermind] = useState(false);
+  const lockIcon = (
+    <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+      <path d="M10 2a4 4 0 00-4 4v2H5a1 1 0 00-1 1v8a1 1 0 001 1h10a1 1 0 001-1V9a1 1 0 00-1-1h-1V6a4 4 0 00-4-4zm-2 6V6a2 2 0 114 0v2H8z" />
+    </svg>
+  );
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   // Black button: "Want to register?" on the login page (→ the ₹99 workshop page), "Logout" once
@@ -43,20 +54,36 @@ export function Header() {
 
   return (
     <header className="safe-top sticky top-0 z-50 border-b border-ink-900/8 bg-paper-100/85 backdrop-blur-md">
-      <div className="container-tic flex min-h-16 items-center justify-between gap-4 py-2">
+      <div className="container-tic flex min-h-16 items-center justify-between gap-3 py-2">
         <Link href="/" className="focus-ring rounded-lg" aria-label="TIC AI home">
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-0.5 min-[1360px]:flex">
           {nav.map((item) => {
             const active = pathname === item.href || pathname.startsWith(item.href + "/");
+            if (item.locked) {
+              return (
+                <button
+                  key={item.href}
+                  type="button"
+                  aria-disabled="true"
+                  onClick={() => setMastermind(true)}
+                  lang={lang}
+                  title={t("TICAI Mastermind has access to this", "ఇది TICAI Mastermind వారికి మాత్రమే")}
+                  className="focus-ring inline-flex cursor-not-allowed items-center gap-1 whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium text-ink-400 opacity-60"
+                >
+                  {lockIcon}
+                  {t(item.en, item.te)}
+                </button>
+              );
+            }
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 lang={lang}
-                className={`focus-ring rounded-lg px-3 py-2 text-sm font-medium transition ${
+                className={`focus-ring whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium transition ${
                   active
                     ? "bg-ink-900/5 text-ink-900"
                     : "text-ink-500 hover:bg-ink-900/5 hover:text-ink-900"
@@ -68,7 +95,7 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2">
           <div className="hidden sm:block">
             <LangToggle />
           </div>
@@ -76,7 +103,7 @@ export function Header() {
             <Link
               href={session ? "/account" : "/login"}
               lang={lang}
-              className="focus-ring hidden rounded-xl border border-ink-900/15 px-4 py-2.5 text-sm font-semibold text-ink-800 transition hover:border-gold-500/50 hover:bg-gold-50 sm:inline-flex"
+              className="focus-ring hidden whitespace-nowrap rounded-xl border border-ink-900/15 px-4 py-2.5 text-sm font-semibold text-ink-800 transition hover:border-gold-500/50 hover:bg-gold-50 sm:inline-flex"
             >
               {session ? t("My account", "నా account") : t("Log in", "Login")}
             </Link>
@@ -106,7 +133,7 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label="Menu"
-            className="focus-ring grid h-10 w-10 place-items-center rounded-xl border border-ink-900/10 md:hidden"
+            className="focus-ring grid h-10 w-10 place-items-center rounded-xl border border-ink-900/10 min-[1360px]:hidden"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
               {open ? (
@@ -120,9 +147,21 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-ink-900/8 bg-paper-100 md:hidden">
+        <div className="border-t border-ink-900/8 bg-paper-100 min-[1360px]:hidden">
           <div className="container-tic flex flex-col gap-1 py-3">
-            {nav.map((item) => (
+            {nav.map((item) => item.locked ? (
+              <button
+                key={item.href}
+                type="button"
+                aria-disabled="true"
+                onClick={() => setMastermind(true)}
+                lang={lang}
+                className="tap focus-ring inline-flex cursor-not-allowed items-center gap-2 rounded-lg px-3 text-left text-sm font-medium text-ink-400 opacity-60"
+              >
+                {lockIcon}
+                {t(item.en, item.te)}
+              </button>
+            ) : (
               <Link
                 key={item.href}
                 href={item.href}
@@ -159,6 +198,7 @@ export function Header() {
           </div>
         </div>
       )}
+      <MastermindPopup open={mastermind} onClose={() => setMastermind(false)} />
     </header>
   );
 }
