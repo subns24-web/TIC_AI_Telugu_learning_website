@@ -30,7 +30,7 @@ export function Header() {
   const nav = NAV.filter((item) => !authOn || !!session || canOpen(item.href, false, plan)).map((item) => ({
     ...item,
     locked: authOn && !!session && !canOpen(item.href, true, plan),
-  }));
+  })).sort((a, b) => Number(a.locked) - Number(b.locked));   // open tabs first, locked ones after
   const [mastermind, setMastermind] = useState(false);
   const lockIcon = (
     <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
@@ -49,6 +49,40 @@ export function Header() {
 
   useEffect(() => setOpen(false), [pathname]);
 
+  // One tab: a link, or — for TICAI Mastermind tabs a ₹99 student can't open — a greyed-out
+  // button that shows the pop-up instead.
+  const tab = (item: (typeof nav)[number]) => {
+    const active = pathname === item.href || pathname.startsWith(item.href + "/");
+    if (item.locked) {
+      return (
+        <button
+          key={item.href}
+          type="button"
+          aria-disabled="true"
+          onClick={() => setMastermind(true)}
+          lang={lang}
+          title={t("TICAI Mastermind has access to this", "ఇది TICAI Mastermind వారికి మాత్రమే")}
+          className="focus-ring inline-flex shrink-0 cursor-not-allowed items-center gap-1 whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium text-ink-400 opacity-60"
+        >
+          {lockIcon}
+          {t(item.en, item.te)}
+        </button>
+      );
+    }
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        lang={lang}
+        className={`focus-ring shrink-0 whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium transition ${
+          active ? "bg-ink-900/8 text-ink-900" : "text-ink-600 hover:bg-ink-900/5 hover:text-ink-900"
+        }`}
+      >
+        {t(item.en, item.te)}
+      </Link>
+    );
+  };
+
   // The lesson player owns the whole screen — it renders its own slim bar.
   if (pathname.includes("/learn/")) return null;
 
@@ -59,40 +93,9 @@ export function Header() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-0.5 min-[1360px]:flex">
-          {nav.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(item.href + "/");
-            if (item.locked) {
-              return (
-                <button
-                  key={item.href}
-                  type="button"
-                  aria-disabled="true"
-                  onClick={() => setMastermind(true)}
-                  lang={lang}
-                  title={t("TICAI Mastermind has access to this", "ఇది TICAI Mastermind వారికి మాత్రమే")}
-                  className="focus-ring inline-flex cursor-not-allowed items-center gap-1 whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium text-ink-400 opacity-60"
-                >
-                  {lockIcon}
-                  {t(item.en, item.te)}
-                </button>
-              );
-            }
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                lang={lang}
-                className={`focus-ring whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium transition ${
-                  active
-                    ? "bg-ink-900/5 text-ink-900"
-                    : "text-ink-500 hover:bg-ink-900/5 hover:text-ink-900"
-                }`}
-              >
-                {t(item.en, item.te)}
-              </Link>
-            );
-          })}
+        {/* Wide screens: tabs sit in the top bar. */}
+        <nav className="hidden items-center gap-0.5 min-[1360px]:flex" aria-label="Main">
+          {nav.map(tab)}
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
@@ -133,7 +136,7 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label="Menu"
-            className="focus-ring grid h-10 w-10 place-items-center rounded-xl border border-ink-900/10 min-[1360px]:hidden"
+            className="focus-ring grid h-10 w-10 place-items-center rounded-xl border border-ink-900/10 sm:hidden"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
               {open ? (
@@ -146,31 +149,18 @@ export function Header() {
         </div>
       </div>
 
+      {/* Smaller screens: the same tabs in their own row, always visible (scrolls sideways on a phone). */}
+      {nav.length > 0 && (
+        <nav className="border-t border-ink-900/8 min-[1360px]:hidden" aria-label="Main">
+          <div className="container-tic thin-scroll flex items-center gap-1 overflow-x-auto py-1.5">
+            {nav.map(tab)}
+          </div>
+        </nav>
+      )}
+
       {open && (
-        <div className="border-t border-ink-900/8 bg-paper-100 min-[1360px]:hidden">
+        <div className="border-t border-ink-900/8 bg-paper-100 sm:hidden">
           <div className="container-tic flex flex-col gap-1 py-3">
-            {nav.map((item) => item.locked ? (
-              <button
-                key={item.href}
-                type="button"
-                aria-disabled="true"
-                onClick={() => setMastermind(true)}
-                lang={lang}
-                className="tap focus-ring inline-flex cursor-not-allowed items-center gap-2 rounded-lg px-3 text-left text-sm font-medium text-ink-400 opacity-60"
-              >
-                {lockIcon}
-                {t(item.en, item.te)}
-              </button>
-            ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                lang={lang}
-                className="tap focus-ring rounded-lg px-3 text-sm font-medium text-ink-700 hover:bg-ink-900/5"
-              >
-                {t(item.en, item.te)}
-              </Link>
-            ))}
             {showLoginLink && (
               <Link
                 href={session ? "/account" : "/login"}
