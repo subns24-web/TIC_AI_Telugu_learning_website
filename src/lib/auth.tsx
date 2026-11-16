@@ -54,17 +54,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const sb = supabase();
     if (!sb) return;
     let alive = true;
+    /* The plan lives in the login session, which Supabase only renews about once an hour. A ₹99
+     * student who has just paid ₹4999 is upgraded by the payment script within ~5 minutes, so ask
+     * for a fresh session on page load and whenever they come back to the tab (at most once a
+     * minute) — a refresh is then enough to see TICAI Mastermind unlocked. */
+    let lastCheck = 0;
+    const recheckPlan = (s: Session | null) => {
+      if (!s || s.user?.app_metadata?.plan === "course" || Date.now() - lastCheck < 60_000) return;
+      lastCheck = Date.now();
+      sb.auth.refreshSession().catch(() => {});
+    };
+    const onFocus = () => {
+      if (document.visibilityState !== "visible") return;
+      sb.auth.getSession().then(({ data }) => recheckPlan(data.session));
+    };
     sb.auth.getSession().then(({ data }) => {
       if (!alive) return;
       setSession(data.session);
       setReady(true);
+      recheckPlan(data.session);
     });
+    document.addEventListener("visibilitychange", onFocus);
+    window.addEventListener("focus", onFocus);
     const { data: sub } = sb.auth.onAuthStateChange((event, s) => {
       setSession(s);
       if (event === "PASSWORD_RECOVERY") setRecovery(true);
       setReady(true);
     });
-    return () => { alive = false; sub.subscription.unsubscribe(); };
+    return () => {
+      alive = false;
+      sub.subscription.unsubscribe();
+      document.removeEventListener("visibilitychange", onFocus);
+      window.removeEventListener("focus", onFocus);
+    };
   }, []);
 
   const value = useMemo<AuthCtx>(() => ({
