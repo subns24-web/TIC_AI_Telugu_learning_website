@@ -22,3 +22,9 @@ export const canOpen = (href: string, loggedIn: boolean, plan: Plan) => {
 
 /** Where everyone lands after logging in (both plans). */
 export const homeFor = (_plan: Plan) => "/vyapar-gpt";
+
+/* Course content is locked for everyone for now — TICAI Mastermind members included. The
+ * courses still show on Courses / Learning paths (with a lock) but can't be opened.
+ * Set to true to open them. */
+export const COURSES_OPEN = false;
+export const isCoursePage = (path: string) => path.startsWith("/courses/");

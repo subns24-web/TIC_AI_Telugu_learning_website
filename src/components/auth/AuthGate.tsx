@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
-import { canOpen, homeFor, isPublicPath } from "@/lib/access";
+import { canOpen, COURSES_OPEN, homeFor, isCoursePage, isPublicPath } from "@/lib/access";
 import { ButtonLink } from "@/components/ui/Bits";
 import { UpgradeToCourse } from "./UpgradeToCourse";
 import { CourseUnlock } from "./CourseUnlock";
@@ -66,6 +66,24 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
           <UpgradeToCourse />
           <ButtonLink href="/vyapar-gpt" variant="ghost" className="mt-3 w-full justify-center">
             {t("Go to Vyapar GPT", "Vyapar GPT కి వెళ్ళండి")}
+          </ButtonLink>
+        </div>
+      </div>
+    );
+  }
+  // A course opened by its address while courses are locked.
+  if (!COURSES_OPEN && isCoursePage(path)) {
+    return (
+      <div className="container-tic grid min-h-[70vh] place-items-center py-16" lang={lang}>
+        <div className="w-full max-w-md rounded-2xl border border-ink-900/10 bg-white p-8 text-center shadow-sm">
+          <div className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full bg-gold-100 text-xl">🔒</div>
+          <h1 className="text-xl font-bold text-ink-900">{t("This course is locked for now", "ఈ course ప్రస్తుతం లాక్ అయింది")}</h1>
+          <p className="mt-2 text-sm text-ink-500">
+            {t("You can see all the courses on the Courses and Learning paths pages. They will open here soon.",
+               "అన్ని courses ని Courses, లెర్నింగ్ పాత్‌లు pages లో చూడవచ్చు. త్వరలో ఇక్కడ open అవుతాయి.")}
+          </p>
+          <ButtonLink href="/courses" variant="ghost" className="mt-5 w-full justify-center">
+            {t("Back to Courses", "Courses కి తిరిగి వెళ్ళండి")}
           </ButtonLink>
         </div>
       </div>

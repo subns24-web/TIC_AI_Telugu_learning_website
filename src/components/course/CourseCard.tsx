@@ -8,6 +8,7 @@ import { useLang } from "@/lib/lang";
 import { useAuth } from "@/lib/auth";
 import { useCourseProgress } from "@/lib/progress";
 import { Badge, ProgressBar } from "@/components/ui/Bits";
+import { COURSES_OPEN } from "@/lib/access";
 
 /* Each course gets a metal-leaning gradient band. Two stops look flat at
    this size, so every one runs light -> mid -> deep. */
@@ -28,11 +29,25 @@ export function CourseCard({ course, showProgress = false }: { course: Course; s
   const { percent, ready } = useCourseProgress(course.slug, total);
   const started = ready && percent > 0;
 
+  // Locked: shown with a lock, but not a link.
+  const locked = !COURSES_OPEN;
+  const Wrap = ({ children }: { children: React.ReactNode }) =>
+    locked ? (
+      <div
+        aria-disabled="true"
+        title={t("Locked for now", "ప్రస్తుతం లాక్ అయింది")}
+        className="card flex cursor-not-allowed select-none flex-col overflow-hidden"
+      >
+        {children}
+      </div>
+    ) : (
+      <Link href={`/courses/${course.slug}`} className="card card-hover focus-ring group flex flex-col overflow-hidden">
+        {children}
+      </Link>
+    );
+
   return (
-    <Link
-      href={`/courses/${course.slug}`}
-      className="card card-hover focus-ring group flex flex-col overflow-hidden"
-    >
+    <Wrap>
       <div
         className={`relative h-28 bg-gradient-to-br ${ACCENT[course.accent] ?? ACCENT.gold}`}
       >
@@ -45,6 +60,16 @@ export function CourseCard({ course, showProgress = false }: { course: Course; s
             {t(course.title, course.titleTe)}
           </span>
         </div>
+        {locked && (
+          <span
+            className="absolute left-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-ink-950/70 text-white backdrop-blur"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor">
+              <path d="M10 2a4 4 0 00-4 4v2H5a1 1 0 00-1 1v8a1 1 0 001 1h10a1 1 0 001-1V9a1 1 0 00-1-1h-1V6a4 4 0 00-4-4zm-2 6V6a2 2 0 114 0v2H8z" />
+            </svg>
+          </span>
+        )}
         {course.comingSoon && (
           <span
             lang={lang}
@@ -88,16 +113,22 @@ export function CourseCard({ course, showProgress = false }: { course: Course; s
                   </span>
                 )}
               </span>
-              <span
-                lang={lang}
-                className="text-sm font-semibold text-gold-700 transition group-hover:translate-x-0.5"
-              >
-                {t("View", "చూడండి")} →
-              </span>
+              {locked ? (
+                <span lang={lang} className="inline-flex items-center gap-1 text-sm font-semibold text-ink-400">
+                  🔒 {t("Locked", "లాక్")}
+                </span>
+              ) : (
+                <span
+                  lang={lang}
+                  className="text-sm font-semibold text-gold-700 transition group-hover:translate-x-0.5"
+                >
+                  {t("View", "చూడండి")} →
+                </span>
+              )}
             </div>
           )}
         </div>
       </div>
-    </Link>
+    </Wrap>
   );
 }
